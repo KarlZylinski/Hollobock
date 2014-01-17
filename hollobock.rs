@@ -20,9 +20,14 @@ fn main () -> () {
         None => fail!("Cannot create a new Render Window.")
     };
 
-    let world = world::World
-    {
-        entities: ~world::list::Cons(world::entity::Entity { position: Vector2f::new(50., 50.) }, ~world::list::Nil)
+    let world = world::World {
+        entities: ~world::list::Cons(
+            world::entity::Entity { position: Vector2f::new(200., 200.) },
+            ~world::list::Cons(
+                world::entity::Entity { position: Vector2f::new(50., 50.) },
+                ~world::list::Nil
+            )
+        )
     };
 
     let mut frame_timer = Clock::new();
@@ -39,28 +44,8 @@ fn main () -> () {
             }
         }
 
-        /*if keyboard::is_key_pressed(keyboard::Escape) {
-            window.close();
-        }
-        if keyboard::is_key_pressed(keyboard::Left) {
-            rectangle.move(&Vector2f::new(-200. * dt, 0.));
-        } 
-        if keyboard::is_key_pressed(keyboard::Right) {
-            rectangle.move(&Vector2f::new(200. * dt, 0.));
-        } 
-        if keyboard::is_key_pressed(keyboard::Up) {
-            rectangle.move(&Vector2f::new(0., -200. * dt));
-        }
-        if keyboard::is_key_pressed(keyboard::Down) {
-            rectangle.move(&Vector2f::new(0., 200. * dt));
-        }
-*/
         window.clear(&Color::new_RGB(0, 200, 200));
-        match world.entities
-        {
-            ~world::list::Cons(x, _) => { world::entity::draw(&mut window, &x) },
-            _ => {}
-        }
+        world::draw(&mut window, world.entities);
         window.display()
     }
 }
