@@ -11,10 +11,10 @@ pub struct World {
 
 pub fn draw(window: &mut RenderWindow, entity: &list::List<entity::Entity>) {
 	match entity {        
-        &list::Cons(x, ~ref next) => {
-        	entity::draw(window, &x);
-        	draw(window, next);
-        },
-        _ => {}
-    }
+		&list::Cons(x, ~ref next) => {
+			entity::draw(window, &x);
+			draw(window, next);
+		},
+		_ => {}
+	}
 }

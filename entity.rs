@@ -9,13 +9,13 @@ pub struct Entity {
 
 pub fn draw(window: &mut RenderWindow, entity: &Entity) {
 	let mut rectangle = match RectangleShape::new() {
-        Some(rectangle) => rectangle,
-        None() => fail!("Error, cannot create rectangle.")
-    };
+		Some(rectangle) => rectangle,
+		None() => fail!("Error, cannot create rectangle.")
+	};
 
 	rectangle.set_size(&Vector2f::new(50., 50.));
-    rectangle.set_position(&entity.position);
-    window.draw(&rectangle);
+	rectangle.set_position(&entity.position);
+	window.draw(&rectangle);
 }
 
 pub fn update(entity: &Entity) -> Entity {
