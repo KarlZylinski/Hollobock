@@ -1,9 +1,8 @@
 extern mod rsfml;
 
 use rsfml::graphics::{RenderWindow};
-
-pub mod entity;
-pub mod list;
+use super::list;
+use super::entity;
 
 pub struct World {
 	entities: ~list::List<entity::Entity>

@@ -5,8 +5,11 @@ use rsfml::system::{Clock, Vector2f};
 use rsfml::window::{ContextSettings, VideoMode, event, Close, keyboard };
 use rsfml::graphics::{RenderWindow, RectangleShape, Color};
 
+use entity::{Entity};
+
 mod world;
 mod entity;
+mod list;
 
 #[start]
 fn start(argc: int, argv: **u8) -> int {
@@ -21,11 +24,11 @@ fn main () -> () {
 	};
 
 	let world = world::World {
-		entities: ~world::list::Cons(
-			world::entity::Entity { position: Vector2f::new(200., 200.) },
-			~world::list::Cons(
-				world::entity::Entity { position: Vector2f::new(50., 50.) },
-				~world::list::Nil
+		entities: ~list::Cons(
+			Entity { position: Vector2f::new(200., 200.) },
+			~list::Cons(
+				Entity { position: Vector2f::new(50., 50.) },
+				~list::Nil
 			)
 		)
 	};
