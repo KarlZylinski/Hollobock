@@ -1,17 +1,24 @@
-extern mod rsfml;
-
 use rsfml::graphics::{RenderWindow};
-use super::list;
-use super::entity;
+use list;
+use entity;
 
 pub struct World {
-	entities: ~list::List<entity::Entity>
+	entities: list::List<~entity::Entity>
 }
 
-pub fn draw(window: &mut RenderWindow, entity: &list::List<entity::Entity>) {
-	match entity {        
-		&list::Cons(x, ~ref next) => {
-			entity::draw(window, &x);
+pub fn update(dt: f32, entities: &list::List<~entity::Entity>, new_entities: list::List<~entity::Entity>) -> list::List<~entity::Entity> {
+	match entities {        
+		&list::Cons(ref x, ~ref next) => {
+			return update(dt, next, list::prepend(new_entities, x.update(dt)));
+		},
+		_ => { return new_entities; }
+	}
+}
+
+pub fn draw(window: &mut RenderWindow, entities: &list::List<~entity::Entity>) {
+	match entities {        
+		&list::Cons(ref x, ~ref next) => {
+			x.draw(window);
 			draw(window, next);
 		},
 		_ => {}
