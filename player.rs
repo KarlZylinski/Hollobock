@@ -8,24 +8,30 @@ pub struct Player {
 	position: Vector2f
 }
 
-impl Entity for Player {
-	fn update(&self, dt: f32) -> ~Entity {
-		let mut new_player = Player { position: self.position };
-
+fn input_vector() -> Vector2f {
+	return Vector2f::new(
 		if keyboard::is_key_pressed(keyboard::Left) {
-			new_player.position.x -= 200. * dt;
-		} 
-		if keyboard::is_key_pressed(keyboard::Right) {
-			new_player.position.x += 200. * dt;
-		}
+			-1.
+		} else if keyboard::is_key_pressed(keyboard::Right) {
+			1.
+		} else {
+			0.
+		},
 		if keyboard::is_key_pressed(keyboard::Up) {
-			new_player.position.y -= 200. * dt;
+			-1.
+		} else if keyboard::is_key_pressed(keyboard::Down) {
+			1.
+		} else {
+			0.
 		}
-		if keyboard::is_key_pressed(keyboard::Down) {
-			new_player.position.y += 200. * dt;
-		}
+	);
+}
 
-		return ~new_player as ~Entity;
+impl Entity for Player {
+	
+
+	fn update(&self, dt: f32) -> ~Entity {
+		return ~Player { position: self.position + input_vector() * 200.0f32 * dt } as ~Entity;
 	}
 
 	fn draw(&self, window: &mut RenderWindow) {
