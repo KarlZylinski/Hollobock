@@ -1,8 +1,9 @@
 use rsfml::system::{Vector2f};
 use rsfml::graphics::{RenderWindow, RectangleShape};
 use rsfml::window::{keyboard};
+use list;
 
-use entity::{Entity};
+use entity::{Entity, UpdateResult};
 
 pub struct Player {
 	position: Vector2f
@@ -28,10 +29,13 @@ fn input_vector() -> Vector2f {
 }
 
 impl Entity for Player {
-	
+	fn update(&self, dt: f32) -> UpdateResult {
+		let new_entities = list::Cons(
+			~Player { position: self.position + input_vector() * 200.0f32 * dt } as ~Entity,
+			~list::Nil
+		);
 
-	fn update(&self, dt: f32) -> ~Entity {
-		return ~Player { position: self.position + input_vector() * 200.0f32 * dt } as ~Entity;
+		return UpdateResult { new_entities: new_entities };
 	}
 
 	fn draw(&self, window: &mut RenderWindow) {
