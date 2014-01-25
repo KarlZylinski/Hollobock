@@ -1,54 +1,27 @@
 use rsfml::graphics::{RenderWindow};
-use list;
-use list::{List, Cons};
-use entity;
+use entity::{Entity};
 use input::{Input};
+use std::vec;
 
 pub struct World {
-	entities: List<~entity::Entity>
+	entities: ~[~Entity]
 }
 
-pub fn update(dt: f32, entities: &List<~entity::Entity>, input: &Input) -> List<~entity::Entity> {
-	let mut entity_list = Some(entities);
-	let mut new_entities = list::Nil;
-	
-	loop {
-		match entity_list {
-			Some(entity) => {
-				match(entity) {
-					&Cons(ref x, ~ref next) => {
-						let update_result = x.update(dt, input);
-						match(update_result.new_entities) {
-							list::Nil => {},
-							_ => new_entities = list::concat(new_entities, update_result.new_entities)
-						}
-						entity_list = Some(next);				
-					},
-					_ => entity_list = None
-				}
-			},
-			None => break
+impl World {		
+	pub fn update(&self, dt: f32, input: &Input) -> World {
+		let mut new_entities: ~[~Entity] = ~[];
+		
+		for entity in self.entities.iter() {
+			let update_result = entity.update(dt, input);
+			new_entities = vec::append(new_entities, update_result.new_entities);
 		}
+
+		return World { entities: new_entities };
 	}
 
-	return new_entities;
-}
-
-pub fn draw(window: &mut RenderWindow, entities: &List<~entity::Entity>) {
-	let mut entity_list = Some(entities);
-
-	loop {
-		match entity_list {
-			Some(entity) => {
-				match(entity) {
-					&Cons(ref x, ~ref next) => {
-						x.draw(window);
-						entity_list = Some(next);
-					},
-					_ => entity_list = None
-				}
-			},
-			None => break
+	pub fn draw(&self, window: &mut RenderWindow) {
+		for entity in self.entities.iter() {
+			entity.draw(window);
 		}
 	}
 }

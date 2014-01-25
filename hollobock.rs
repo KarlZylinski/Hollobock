@@ -34,12 +34,9 @@ fn main() {
     };
 
 	let mut frame_timer = Clock::new();
-    let mut world = Some(~world::World {
-        entities: list::Cons(
-            ~player as ~entity::Entity,
-            ~list::Nil
-        )
-    });
+    let mut world = world::World {
+    	entities: ~[~player as ~Entity]
+    };
 
     let mut input = Input::init(window.get_mouse_position());
 
@@ -66,13 +63,8 @@ fn main() {
 
 		window.clear(&Color::new_RGB(0, 200, 200));
 
-        match world {
-            Some(w) => {
-                world = Some(~world::World { entities : world::update(dt, &w.entities, &input) } );
-                world::draw(&mut window, &w.entities);
-            }
-            None => fail!("No world!")
-        }
+		world = world.update(dt, &input);
+		world.draw(&mut window);
 		
 		window.display()
 	}

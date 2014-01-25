@@ -4,7 +4,6 @@ use rsfml::system::{Vector2f, Vector2i};
 use rsfml::graphics::{RenderWindow, RectangleShape};
 use rsfml::window::{keyboard, mouse};
 
-use list;
 use entity::{Entity, UpdateResult};
 use input::{Input};
 
@@ -22,12 +21,7 @@ impl Entity for Bullet {
 			velocity: self.velocity
 		} as ~Entity;
 
-		let new_entities = list::Cons(
-			new_bullet,
-			~list::Nil
-		);
-
-		return UpdateResult { new_entities: new_entities };
+		return UpdateResult { new_entities: ~[new_bullet] };
 	}
 
 	fn draw(&self, window: &mut RenderWindow) {
@@ -43,6 +37,14 @@ impl Entity for Bullet {
 		rectangle.set_origin(&origin);
 		rectangle.set_position(&self.position);
 		window.draw(&rectangle);
+	}
+
+	fn clone(&self) -> ~Entity {
+		return ~Bullet {
+			position: self.position.clone(),
+			direction: self.direction.clone(),
+			velocity: self.velocity
+		} as ~Entity;
 	}
 }
 
@@ -116,24 +118,17 @@ impl Entity for Player {
 			weapon_cooldown: weapon_cooldown,
 		} as ~Entity;
 
-		let new_entities = if weapon_fired {
-			list::Cons(
-				new_player,
-				~list::Cons(
-					~Bullet {
-						position: new_position,
-						direction: normalize(look_direction),
-						velocity: 400.
-					} as ~Entity,
-					~list::Nil
-				)
-			)
-		} else  {
-			list::Cons(
-				new_player,
-				~list::Nil
-			)
-		};
+		let mut new_entities = ~[new_player];
+
+		if weapon_fired {
+			new_entities.push(
+				~Bullet {
+					position: new_position,
+					direction: normalize(look_direction),
+					velocity: 400.
+				} as ~Entity
+			);
+		}
 
 		return UpdateResult { new_entities: new_entities };
 	}
@@ -152,5 +147,13 @@ impl Entity for Player {
 		rectangle.set_rotation(self.rotation.to_degrees());
 		rectangle.set_position(&self.position);
 		window.draw(&rectangle);
+	}
+
+	fn clone(&self) -> ~Entity {
+		return ~Player {
+			position: self.position.clone(),
+			rotation: self.rotation,
+			weapon_cooldown: self.weapon_cooldown
+		} as ~Entity;
 	}
 }
