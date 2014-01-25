@@ -68,7 +68,7 @@ fn main() {
 
         match world {
             Some(w) => {
-                world = Some(~world::World { entities : world::update(dt, &w.entities, list::Nil, &input) } );
+                world = Some(~world::World { entities : world::update(dt, &w.entities, &input) } );
                 world::draw(&mut window, &w.entities);
             }
             None => fail!("No world!")

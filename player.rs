@@ -77,7 +77,7 @@ fn get_input(input: &Input) -> PlayerInput {
 			}
 		),
 		mouse_position: input.mouse_position,
-		mouse_1: input.mouse_button_pressed(mouse::MouseLeft),
+		mouse_1: input.mouse_button_held(mouse::MouseLeft),
 	};
 }
 
