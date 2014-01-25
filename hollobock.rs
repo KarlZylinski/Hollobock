@@ -25,7 +25,11 @@ fn main() {
 		None => fail!("Cannot create a new Render Window.")
 	};
 
-    let player = Player { position: Vector2f::new(200., 200.) };
+    let player = Player {
+    	position: Vector2f::new(200., 200.),
+    	rotation: 0.,
+    	weapon_cooldown: 0.
+    };
 
 	let mut frame_timer = Clock::new();
     let mut world = Some(~world::World {
@@ -51,7 +55,7 @@ fn main() {
 
         match world {
             Some(w) => {
-                world = Some(~world::World { entities : world::update(dt, &w.entities, list::Nil) } );
+                world = Some(~world::World { entities : world::update(dt, &w.entities, list::Nil, &window) } );
                 world::draw(&mut window, &w.entities);
             }
             None => ()
