@@ -1,5 +1,5 @@
 use rsfml::window::{keyboard, mouse};
-use rsfml::system::{Vector2i};
+use rsfml::system::Vector2i;
 use std::vec;
 
 pub struct Input {

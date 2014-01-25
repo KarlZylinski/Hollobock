@@ -5,48 +5,10 @@ use rsfml::graphics::{RenderWindow, RectangleShape};
 use rsfml::window::{keyboard, mouse};
 
 use entity::{Entity, UpdateResult};
-use input::{Input};
-
-pub struct Bullet {
-	position: Vector2f,
-	direction: Vector2f,
-	velocity: f32
-}
-
-impl Entity for Bullet {
-	fn update(&self, dt: f32, _input: &Input) -> UpdateResult {
-		let new_bullet = ~Bullet {
-			position: self.position + self.direction * self.velocity * dt,
-			direction: self.direction,
-			velocity: self.velocity
-		} as ~Entity;
-
-		return UpdateResult { new_entities: ~[new_bullet] };
-	}
-
-	fn draw(&self, window: &mut RenderWindow) {
-		let mut rectangle = match RectangleShape::new() {
-			Some(rectangle) => rectangle,
-			None() => fail!("Error, cannot create rectangle.")
-		};
-
-		let size = Vector2f::new(10., 10.);
-		let origin = size * 0.5f32;
-
-		rectangle.set_size(&size);
-		rectangle.set_origin(&origin);
-		rectangle.set_position(&self.position);
-		window.draw(&rectangle);
-	}
-
-	fn clone(&self) -> ~Entity {
-		return ~Bullet {
-			position: self.position.clone(),
-			direction: self.direction.clone(),
-			velocity: self.velocity
-		} as ~Entity;
-	}
-}
+use input::Input;
+use world::World;
+use player_bullet::PlayerBullet;
+use vector;
 
 pub struct Player {
 	position: Vector2f,
@@ -94,17 +56,8 @@ fn process_weapon_input(old_cooldown: f32, dt: f32, mouse_1_down: bool) -> (f32,
 	return (cooldown, false);
 }
 
-fn normalize(vec: Vector2f) -> Vector2f {
-	let length = num::sqrt((vec.x * vec.x) + (vec.y * vec.y));
-	if length != 0. {
-		return Vector2f::new(vec.x / length, vec.y / length);
-	} else {
-		return vec;
-	}
-}
-
 impl Entity for Player {
-	fn update(&self, dt: f32, input: &Input) -> UpdateResult {
+	fn update(&self, dt: f32, _world: &World, input: &Input) -> UpdateResult {
 		let input = get_input(input);
 		let new_position = self.position + input.direction * 200.0f32 * dt;
 		let look_direction = Vector2f::new(input.mouse_position.x as f32 - new_position.x, input.mouse_position.y as f32 - new_position.y);
@@ -122,9 +75,9 @@ impl Entity for Player {
 
 		if weapon_fired {
 			new_entities.push(
-				~Bullet {
+				~PlayerBullet {
 					position: new_position,
-					direction: normalize(look_direction),
+					direction: vector::normalize(look_direction),
 					velocity: 400.
 				} as ~Entity
 			);

@@ -5,15 +5,17 @@ use rsfml::system::{Clock, Vector2f, Vector2i};
 use rsfml::window::{ContextSettings, VideoMode, event, Close };
 use rsfml::graphics::{RenderWindow, Color};
 
-use entity::{Entity};
-use player::{Player};
-use input::{Input};
+use entity::Entity;
+use player::Player;
+use input::Input;
 
 pub mod world;
 pub mod list;
 pub mod entity;
 pub mod player;
 pub mod input;
+pub mod player_bullet;
+pub mod vector;
 
 #[start]
 fn start(argc: int, argv: **u8) -> int {

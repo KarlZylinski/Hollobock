@@ -1,6 +1,6 @@
-use rsfml::graphics::{RenderWindow};
-use entity::{Entity};
-use input::{Input};
+use rsfml::graphics::RenderWindow;
+use entity::Entity;
+use input::Input;
 use std::vec;
 
 pub struct World {
@@ -12,7 +12,7 @@ impl World {
 		let mut new_entities: ~[~Entity] = ~[];
 		
 		for entity in self.entities.iter() {
-			let update_result = entity.update(dt, input);
+			let update_result = entity.update(dt, self, input);
 			new_entities = vec::append(new_entities, update_result.new_entities);
 		}
 

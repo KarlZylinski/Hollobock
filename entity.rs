@@ -1,8 +1,9 @@
-use rsfml::graphics::{RenderWindow};
-use input::{Input};
+use rsfml::graphics::RenderWindow;
+use input::Input;
+use world::World;
 
 pub trait Entity {
-	fn update(&self, dt: f32, input: &Input) -> UpdateResult;
+	fn update(&self, dt: f32, world: &World, input: &Input) -> UpdateResult;
 	fn draw(&self, window: &mut RenderWindow);
 	fn clone(&self) -> ~Entity;
 }
