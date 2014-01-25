@@ -1,19 +1,20 @@
 use rsfml::graphics::{RenderWindow};
 use list;
+use list::{List, Cons};
 use entity;
+use input::{Input};
 
 pub struct World {
-	entities: list::List<~entity::Entity>
+	entities: List<~entity::Entity>
 }
 
-
-pub fn update(dt: f32, entities: &list::List<~entity::Entity>, new_entities: list::List<~entity::Entity>, window: &RenderWindow) -> list::List<~entity::Entity> {
+pub fn update(dt: f32, entities: &List<~entity::Entity>, new_entities: List<~entity::Entity>, input: &Input) -> List<~entity::Entity> {
 	match entities {        
-		&list::Cons(ref x, ~ref next) => {
-			let update_result = x.update(dt, window);
+		&Cons(ref x, ~ref next) => {
+			let update_result = x.update(dt, input);
 			match(update_result.new_entities) {
-				list::Nil => return update(dt, next, new_entities, window),
-				_ => return update(dt, next, list::concat(new_entities, update_result.new_entities), window)
+				list::Nil => return update(dt, next, new_entities, input),
+				_ => return update(dt, next, list::concat(new_entities, update_result.new_entities), input)
 			}
 			
 		},
@@ -21,9 +22,9 @@ pub fn update(dt: f32, entities: &list::List<~entity::Entity>, new_entities: lis
 	}
 }
 
-pub fn draw(window: &mut RenderWindow, entities: &list::List<~entity::Entity>) {
+pub fn draw(window: &mut RenderWindow, entities: &List<~entity::Entity>) {
 	match entities {        
-		&list::Cons(ref x, ~ref next) => {
+		&Cons(ref x, ~ref next) => {
 			x.draw(window);
 			draw(window, next);
 		},

@@ -1,17 +1,19 @@
 extern mod native;
 extern mod rsfml;
 
-use rsfml::system::{Clock, Vector2f};
+use rsfml::system::{Clock, Vector2f, Vector2i};
 use rsfml::window::{ContextSettings, VideoMode, event, Close };
 use rsfml::graphics::{RenderWindow, Color};
 
 use entity::{Entity};
 use player::{Player};
+use input::{Input};
 
 pub mod world;
 pub mod list;
 pub mod entity;
 pub mod player;
+pub mod input;
 
 #[start]
 fn start(argc: int, argv: **u8) -> int {
@@ -39,13 +41,24 @@ fn main() {
         )
     });
 
+    let mut input = Input::init(window.get_mouse_position());
+
 	while window.is_open() {
 		let dt = frame_timer.get_elapsed_time().as_seconds();
 		frame_timer.restart();
 
+		input = Input::init_from_previous_frame(&input);
+
 		loop {
-			match window.poll_event() {
+			let event = window.poll_event();
+
+			match event {
 				event::Closed => window.close(),
+				event::KeyPressed { code, .. } => input.set_key_pressed(code),
+				event::KeyReleased { code, .. } => input.set_key_released(code),
+				event::MouseMoved { x, y } => input.mouse_position = Vector2i::new(x as i32, y as i32),
+				event::MouseButtonPressed { button, .. } => input.set_mouse_button_pressed(button),
+				event::MouseButtonReleased { button, .. } => input.set_mouse_button_released(button),
 				event::NoEvent => break,
 				_ => {}
 			}
@@ -55,10 +68,10 @@ fn main() {
 
         match world {
             Some(w) => {
-                world = Some(~world::World { entities : world::update(dt, &w.entities, list::Nil, &window) } );
+                world = Some(~world::World { entities : world::update(dt, &w.entities, list::Nil, &input) } );
                 world::draw(&mut window, &w.entities);
             }
-            None => ()
+            None => fail!("No world!")
         }
 		
 		window.display()

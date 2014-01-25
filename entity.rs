@@ -1,8 +1,9 @@
 use rsfml::graphics::{RenderWindow};
 use list;
+use input::{Input};
 
 pub trait Entity {
-	fn update(&self, dt: f32, window: &RenderWindow) -> UpdateResult;
+	fn update(&self, dt: f32, input: &Input) -> UpdateResult;
 	fn draw(&self, window: &mut RenderWindow);
 }
 

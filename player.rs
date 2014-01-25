@@ -6,6 +6,7 @@ use rsfml::window::{keyboard, mouse};
 
 use list;
 use entity::{Entity, UpdateResult};
+use input::{Input};
 
 pub struct Bullet {
 	position: Vector2f,
@@ -14,7 +15,7 @@ pub struct Bullet {
 }
 
 impl Entity for Bullet {
-	fn update(&self, dt: f32, window: &RenderWindow) -> UpdateResult {
+	fn update(&self, dt: f32, _input: &Input) -> UpdateResult {
 		let new_bullet = ~Bullet {
 			position: self.position + self.direction * self.velocity * dt,
 			direction: self.direction,
@@ -51,32 +52,32 @@ pub struct Player {
 	weapon_cooldown: f32
 }
 
-struct Input {
+struct PlayerInput {
 	direction: Vector2f,
 	mouse_position: Vector2i,
 	mouse_1: bool
 }
 
-fn get_input(window: &RenderWindow) -> Input {
-	return Input{
+fn get_input(input: &Input) -> PlayerInput {
+	return PlayerInput {
 		direction: Vector2f::new(
-			if keyboard::is_key_pressed(keyboard::A) {
+			if input.key_held(keyboard::A) {
 				-1.
-			} else if keyboard::is_key_pressed(keyboard::S) {
+			} else if input.key_held(keyboard::S) {
 				1.
 			} else {
 				0.
 			},
-			if keyboard::is_key_pressed(keyboard::W) {
+			if input.key_held(keyboard::W) {
 				-1.
-			} else if keyboard::is_key_pressed(keyboard::R) {
+			} else if input.key_held(keyboard::R) {
 				1.
 			} else {
 				0.
 			}
 		),
-		mouse_position: window.get_mouse_position(),
-		mouse_1: mouse::is_button_pressed(mouse::MouseLeft),
+		mouse_position: input.mouse_position,
+		mouse_1: input.mouse_button_pressed(mouse::MouseLeft),
 	};
 }
 
@@ -101,8 +102,8 @@ fn normalize(vec: Vector2f) -> Vector2f {
 }
 
 impl Entity for Player {
-	fn update(&self, dt: f32, window: &RenderWindow) -> UpdateResult {
-		let input = get_input(window);
+	fn update(&self, dt: f32, input: &Input) -> UpdateResult {
+		let input = get_input(input);
 		let new_position = self.position + input.direction * 200.0f32 * dt;
 		let look_direction = Vector2f::new(input.mouse_position.x as f32 - new_position.x, input.mouse_position.y as f32 - new_position.y);
 		let new_rotation = f32::atan2(look_direction.y, look_direction.x);
