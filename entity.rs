@@ -9,7 +9,6 @@ use std::unstable::intrinsics::TypeId;
 pub trait Entity: Any {
 	fn update(&self, dt: f32, world: &World, input: &Input) -> UpdateResult;
 	fn draw(&self, window: &mut RenderWindow);
-	fn is_player(&self) -> bool;
     fn rect(&self) -> RectangleShape;
 	fn clone(&self) -> ~Entity;
 }

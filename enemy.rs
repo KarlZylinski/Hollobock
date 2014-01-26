@@ -45,19 +45,14 @@ impl Entity for Enemy {
 		};
 
 		let direction = vector::normalize(player.position - self.position);
-		
-		let new_position = self.position + direction * 100.0f32 * dt;
-		let new_rotation = f32::atan2(direction.y, direction.x);
-
-		let new_enemy = ~Enemy {
-			position: new_position,
-			rotation: new_rotation
-		} as ~Entity;
 
 		let new_entities = if(intersecting_with_bullet(self, world)) {
 			~[]
 		} else {
-			~[new_enemy]
+			~[~Enemy {
+				position: self.position + direction * 100.0f32 * dt,
+				rotation: f32::atan2(direction.y, direction.x)
+			} as ~Entity]
 		};
 
 		return UpdateResult { new_entities: new_entities };
@@ -89,9 +84,5 @@ impl Entity for Enemy {
 			position: self.position.clone(),
 			rotation: self.rotation
 		} as ~Entity;
-	}
-
-	fn is_player(&self) -> bool {
-		return false;
 	}
 }

@@ -49,8 +49,4 @@ impl Entity for PlayerBullet {
 			velocity: self.velocity
 		} as ~Entity;
 	}
-
-	fn is_player(&self) -> bool {
-		return false;
-	}
 }

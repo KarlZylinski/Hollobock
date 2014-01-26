@@ -114,8 +114,4 @@ impl Entity for Player {
 			weapon_cooldown: self.weapon_cooldown
 		} as ~Entity;
 	}
-
-	fn is_player(&self) -> bool {
-		return true;
-	}
 }
