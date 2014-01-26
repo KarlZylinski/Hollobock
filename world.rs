@@ -16,7 +16,9 @@ impl World {
 			new_entities = vec::append(new_entities, update_result.new_entities);
 		}
 
-		return World { entities: new_entities };
+		return World {
+			entities: new_entities
+		};
 	}
 
 	pub fn draw(&self, window: &mut RenderWindow) {

@@ -86,20 +86,25 @@ impl Entity for Player {
 		return UpdateResult { new_entities: new_entities };
 	}
 
-	fn draw(&self, window: &mut RenderWindow) {
+    fn rect(&self) -> RectangleShape {
+		let size = Vector2f::new(50., 50.);
+		let origin = size * 0.5f32;
+
 		let mut rectangle = match RectangleShape::new() {
 			Some(rectangle) => rectangle,
 			None() => fail!("Error, cannot create rectangle.")
 		};
 
-		let size = Vector2f::new(50., 50.);
-		let origin = size * 0.5f32;
-
 		rectangle.set_size(&size);
 		rectangle.set_origin(&origin);
 		rectangle.set_rotation(self.rotation.to_degrees());
 		rectangle.set_position(&self.position);
-		window.draw(&rectangle);
+
+		return rectangle;
+    }
+
+	fn draw(&self, window: &mut RenderWindow) {
+		window.draw(&self.rect());
 	}
 
 	fn clone(&self) -> ~Entity {
@@ -108,5 +113,9 @@ impl Entity for Player {
 			rotation: self.rotation,
 			weapon_cooldown: self.weapon_cooldown
 		} as ~Entity;
+	}
+
+	fn is_player(&self) -> bool {
+		return true;
 	}
 }

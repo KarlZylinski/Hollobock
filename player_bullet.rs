@@ -22,7 +22,7 @@ impl Entity for PlayerBullet {
 		return UpdateResult { new_entities: ~[new_bullet] };
 	}
 
-	fn draw(&self, window: &mut RenderWindow) {
+	fn rect(&self) -> RectangleShape {
 		let mut rectangle = match RectangleShape::new() {
 			Some(rectangle) => rectangle,
 			None() => fail!("Error, cannot create rectangle.")
@@ -34,7 +34,12 @@ impl Entity for PlayerBullet {
 		rectangle.set_size(&size);
 		rectangle.set_origin(&origin);
 		rectangle.set_position(&self.position);
-		window.draw(&rectangle);
+
+		return rectangle;
+	}
+
+	fn draw(&self, window: &mut RenderWindow) {
+		window.draw(&self.rect());
 	}
 
 	fn clone(&self) -> ~Entity {
@@ -43,5 +48,9 @@ impl Entity for PlayerBullet {
 			direction: self.direction.clone(),
 			velocity: self.velocity
 		} as ~Entity;
+	}
+
+	fn is_player(&self) -> bool {
+		return false;
 	}
 }

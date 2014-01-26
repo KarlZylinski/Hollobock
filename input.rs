@@ -3,14 +3,14 @@ use rsfml::system::Vector2i;
 use std::vec;
 
 pub struct Input {
-	keys_pressed: ~[bool],
-	keys_released: ~[bool],
-	keys_held: ~[bool],
+	priv keys_pressed: ~[bool],
+	priv keys_released: ~[bool],
+	priv keys_held: ~[bool],
 	mouse_position: Vector2i,
-	mouse_position_previous_frame: Vector2i,
-	mouse_buttons_pressed: ~[bool],
-	mouse_buttons_released: ~[bool],
-	mouse_buttons_held: ~[bool],
+	priv mouse_position_previous_frame: Vector2i,
+	priv mouse_buttons_pressed: ~[bool],
+	priv mouse_buttons_released: ~[bool],
+	priv mouse_buttons_held: ~[bool],
 }
 
 impl Input {

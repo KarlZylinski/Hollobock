@@ -8,6 +8,7 @@ use rsfml::graphics::{RenderWindow, Color};
 use entity::Entity;
 use player::Player;
 use input::Input;
+use enemy::Enemy;
 
 pub mod world;
 pub mod list;
@@ -16,6 +17,7 @@ pub mod player;
 pub mod input;
 pub mod player_bullet;
 pub mod vector;
+pub mod enemy;
 
 #[start]
 fn start(argc: int, argv: **u8) -> int {
@@ -35,9 +37,17 @@ fn main() {
     	weapon_cooldown: 0.
     };
 
+    let enemy = Enemy {
+    	position: Vector2f::new(500., 500.),
+    	rotation: 0.
+    };
+
 	let mut frame_timer = Clock::new();
     let mut world = world::World {
-    	entities: ~[~player as ~Entity]
+    	entities: ~[
+    		~player as ~Entity,
+    		~enemy as ~Entity
+    	]
     };
 
     let mut input = Input::init(window.get_mouse_position());
