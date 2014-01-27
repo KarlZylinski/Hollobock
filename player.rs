@@ -4,7 +4,7 @@ use rsfml::system::{Vector2f, Vector2i};
 use rsfml::graphics::{RenderWindow, RectangleShape};
 use rsfml::window::{keyboard, mouse};
 
-use entity::{Entity, UpdateResult};
+use entity::{Entity, EntityUpdateResult};
 use input::Input;
 use world::World;
 use player_bullet::PlayerBullet;
@@ -57,7 +57,7 @@ fn process_weapon_input(old_cooldown: f32, dt: f32, mouse_1_down: bool) -> (f32,
 }
 
 impl Entity for Player {
-	fn update(&self, dt: f32, _world: &World, input: &Input) -> UpdateResult {
+	fn update(&self, dt: f32, _world: &World, input: &Input) -> EntityUpdateResult {
 		let input = get_input(input);
 		let new_position = self.position + input.direction * 200.0f32 * dt;
 		let look_direction = Vector2f::new(input.mouse_position.x as f32 - new_position.x, input.mouse_position.y as f32 - new_position.y);
@@ -83,7 +83,7 @@ impl Entity for Player {
 			);
 		}
 
-		return UpdateResult { new_entities: new_entities };
+		return EntityUpdateResult { new_entities: new_entities };
 	}
 
     fn rect(&self) -> RectangleShape {

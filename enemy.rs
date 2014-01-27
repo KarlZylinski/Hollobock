@@ -3,7 +3,7 @@ use std::f32;
 use rsfml::system::Vector2f;
 use rsfml::graphics::{RenderWindow, RectangleShape, FloatRect};
 
-use entity::{Entity, UpdateResult};
+use entity::{Entity, EntityUpdateResult};
 use input::Input;
 use world::World;
 use player::Player;
@@ -33,7 +33,7 @@ fn intersecting_with_bullet(enemy: &Enemy, world: &World) -> bool {
 }
 
 impl Entity for Enemy {
-	fn update(&self, dt: f32, world: &World, _input: &Input) -> UpdateResult {
+	fn update(&self, dt: f32, world: &World, _input: &Input) -> EntityUpdateResult {
 		let player_entity = match world.entities.iter().find(|&e| (*e).is::<Player>()) {
 			Some(player) => player.as_ref::<Player>(),
 			None => fail!("No player found in world.")
@@ -55,7 +55,7 @@ impl Entity for Enemy {
 			} as ~Entity]
 		};
 
-		return UpdateResult { new_entities: new_entities };
+		return EntityUpdateResult { new_entities: new_entities };
 	}
 
 	fn rect(&self) -> RectangleShape {

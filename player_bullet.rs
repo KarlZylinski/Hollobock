@@ -1,7 +1,7 @@
 use rsfml::system::{Vector2f};
 use rsfml::graphics::{RenderWindow, RectangleShape};
 
-use entity::{Entity, UpdateResult};
+use entity::{Entity, EntityUpdateResult};
 use input::Input;
 use world::World;
 
@@ -12,14 +12,14 @@ pub struct PlayerBullet {
 }
 
 impl Entity for PlayerBullet {
-	fn update(&self, dt: f32, _world: &World, _input: &Input) -> UpdateResult {
+	fn update(&self, dt: f32, _world: &World, _input: &Input) -> EntityUpdateResult {
 		let new_bullet = ~PlayerBullet {
 			position: self.position + self.direction * self.velocity * dt,
 			direction: self.direction,
 			velocity: self.velocity
 		} as ~Entity;
 
-		return UpdateResult { new_entities: ~[new_bullet] };
+		return EntityUpdateResult { new_entities: ~[new_bullet] };
 	}
 
 	fn rect(&self) -> RectangleShape {

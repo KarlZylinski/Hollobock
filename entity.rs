@@ -7,7 +7,7 @@ use std::cast::transmute;
 use std::unstable::intrinsics::TypeId;
 
 pub trait Entity: Any {
-	fn update(&self, dt: f32, world: &World, input: &Input) -> UpdateResult;
+	fn update(&self, dt: f32, world: &World, input: &Input) -> EntityUpdateResult;
 	fn draw(&self, window: &mut RenderWindow);
     fn rect(&self) -> RectangleShape;
 	fn clone(&self) -> ~Entity;
@@ -42,7 +42,7 @@ impl<'a> AnyRefExt<'a> for &'a Entity {
     }
 }
 
-pub struct UpdateResult {
+pub struct EntityUpdateResult {
 	new_entities: ~[~Entity]
 	// TODO: Add events here.
 }

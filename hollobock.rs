@@ -1,23 +1,26 @@
 extern mod native;
 extern mod rsfml;
 
-use rsfml::system::{Clock, Vector2f, Vector2i};
+use rsfml::system::{Clock, Vector2i};
 use rsfml::window::{ContextSettings, VideoMode, event, Close };
 use rsfml::graphics::{RenderWindow, Color};
 
 use entity::Entity;
-use player::Player;
 use input::Input;
-use enemy::Enemy;
+use layer::Layer;
+use game_layer::GameLayer;
+use std::vec;
 
-pub mod world;
-pub mod list;
 pub mod entity;
 pub mod player;
+pub mod world;
+pub mod list;
 pub mod input;
 pub mod player_bullet;
 pub mod vector;
 pub mod enemy;
+pub mod layer;
+pub mod game_layer;
 
 #[start]
 fn start(argc: int, argv: **u8) -> int {
@@ -31,26 +34,9 @@ fn main() {
 		None => fail!("Cannot create a new Render Window.")
 	};
 
-    let player = Player {
-    	position: Vector2f::new(200., 200.),
-    	rotation: 0.,
-    	weapon_cooldown: 0.
-    };
-
-    let enemy = Enemy {
-    	position: Vector2f::new(500., 500.),
-    	rotation: 0.
-    };
-
 	let mut frame_timer = Clock::new();
-    let mut world = world::World {
-    	entities: ~[
-    		~player as ~Entity,
-    		~enemy as ~Entity
-    	]
-    };
-
     let mut input = Input::init(window.get_mouse_position());
+    let mut layers = ~[~GameLayer::new() as ~Layer];
 
 	while window.is_open() {
 		let dt = frame_timer.get_elapsed_time().as_seconds();
@@ -75,9 +61,16 @@ fn main() {
 
 		window.clear(&Color::new_RGB(0, 200, 200));
 
-		world = world.update(dt, &input);
-		world.draw(&mut window);
+		let mut new_layers: ~[~Layer] = ~[];
 		
+		for layer in layers.iter() {
+			let update_result = layer.update(dt, &input);
+			new_layers = vec::append(new_layers, update_result.new_layers);
+			layer.draw(&mut window);
+		}
+		
+		layers = new_layers;
+
 		window.display()
 	}
 }
