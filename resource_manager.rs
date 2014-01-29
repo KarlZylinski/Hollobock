@@ -1,8 +1,9 @@
 use rsfml::graphics::{RenderWindow, RectangleShape, Texture};
-use std::gc::Gc;
+use std::rc::Rc;
+use std::cell::RefCell;
 
 pub struct ResourceManager {
-	textures: ~[Gc<Texture>]
+	textures: ~[Rc<Texture>]
 }
 
 impl ResourceManager {
@@ -12,12 +13,12 @@ impl ResourceManager {
 		}
 	}
 
-    pub fn load_texture(&mut self, filename: &str) -> Gc<Texture> {
+    pub fn load_texture(&mut self, filename: &str) -> Rc<RefCell<Texture>> {
     	let new_texture = match Texture::new_from_file(filename) {
     		Some(new_texture) => new_texture,
     		None => fail!("Could not load texture")
     	};
 
-    	return Gc::new(new_texture);
+    	return Rc::new(RefCell::new(new_texture));
     }
 }

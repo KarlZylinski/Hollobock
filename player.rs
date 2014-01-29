@@ -13,7 +13,7 @@ use vector;
 pub struct Player {
 	position: Vector2f,
 	rotation: f32,
-	sprite: Sprite<'static>,
+	sprite: Sprite,
 	weapon_cooldown: f32
 }
 
@@ -88,7 +88,9 @@ impl Entity for Player {
 		let new_player = ~Player {
 			position: new_position,
 			rotation: new_rotation,
-			sprite: match self.sprite.clone() { Some(sprite) => sprite, None => fail!("Could not copy sprite") },
+			sprite: match self.sprite.clone() {
+				Some(sprite) => sprite, None => fail!("Could not copy sprite")
+			},
 			weapon_cooldown: weapon_cooldown,
 		} as ~Entity;
 
@@ -103,7 +105,7 @@ impl Entity for Player {
 				} as ~Entity
 			);
 		}
-
+		
 		return EntityUpdateResult { new_entities: new_entities };
 	}
 

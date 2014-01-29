@@ -19,7 +19,10 @@ impl GameLayer {
 		let player = Player {
 	    	position: Vector2f::new(200., 200.),
 	    	rotation: 0.,
-	    	sprite: match Sprite::new_with_texture(player_tex.borrow()) { Some(sprite) => sprite, None => fail!("Failed to create sprite!") },
+	    	sprite: match Sprite::new_with_texture(player_tex) {
+	    		Some(sprite) => sprite,
+	    		None => fail!("Failed to create sprite!")
+	    	},
 	    	weapon_cooldown: 0.
 	    };
 
