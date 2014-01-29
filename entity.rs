@@ -1,7 +1,6 @@
 use rsfml::graphics::RenderWindow;
 use input::Input;
 use world::World;
-use rsfml::graphics::RectangleShape;
 
 use std::cast::transmute;
 use std::unstable::intrinsics::TypeId;
@@ -9,7 +8,6 @@ use std::unstable::intrinsics::TypeId;
 pub trait Entity: Any {
 	fn update(&self, dt: f32, world: &World, input: &Input) -> EntityUpdateResult;
 	fn draw(&self, window: &mut RenderWindow);
-    fn rect(&self) -> RectangleShape;
 	fn clone(&self) -> ~Entity;
 }
 

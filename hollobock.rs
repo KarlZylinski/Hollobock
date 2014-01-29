@@ -3,13 +3,15 @@ extern mod rsfml;
 
 use rsfml::system::{Clock, Vector2i};
 use rsfml::window::{ContextSettings, VideoMode, event, Close };
-use rsfml::graphics::{RenderWindow, Color};
+use rsfml::graphics::{RenderWindow, Color, Texture, Sprite};
 
 use entity::Entity;
 use input::Input;
 use layer::Layer;
 use game_layer::GameLayer;
+use gui_layer::GuiLayer;
 use std::vec;
+use resource_manager::ResourceManager;
 
 pub mod entity;
 pub mod player;
@@ -21,6 +23,9 @@ pub mod vector;
 pub mod enemy;
 pub mod layer;
 pub mod game_layer;
+pub mod gui_layer;
+pub mod enemy_spawner;
+pub mod resource_manager;
 
 #[start]
 fn start(argc: int, argv: **u8) -> int {
@@ -36,7 +41,12 @@ fn main() {
 
 	let mut frame_timer = Clock::new();
     let mut input = Input::init(window.get_mouse_position());
-    let mut layers = ~[~GameLayer::new() as ~Layer];
+    let mut resource_manager = ResourceManager::new();
+
+    let mut layers = ~[
+    	~GameLayer::new(&mut resource_manager) as ~Layer,
+    	~GuiLayer::new() as ~Layer
+    ];
 
 	while window.is_open() {
 		let dt = frame_timer.get_elapsed_time().as_seconds();

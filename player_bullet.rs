@@ -11,6 +11,24 @@ pub struct PlayerBullet {
 	velocity: f32
 }
 
+impl PlayerBullet {
+	pub fn rect(&self) -> RectangleShape {
+		let mut rectangle = match RectangleShape::new() {
+			Some(rectangle) => rectangle,
+			None() => fail!("Error, cannot create rectangle.")
+		};
+
+		let size = Vector2f::new(10., 10.);
+		let origin = size * 0.5f32;
+		
+		rectangle.set_size(&size);
+		rectangle.set_origin(&origin);
+		rectangle.set_position(&self.position);
+
+		return rectangle;
+	}
+}
+
 impl Entity for PlayerBullet {
 	fn update(&self, dt: f32, _world: &World, _input: &Input) -> EntityUpdateResult {
 		let new_bullet = ~PlayerBullet {
@@ -20,22 +38,6 @@ impl Entity for PlayerBullet {
 		} as ~Entity;
 
 		return EntityUpdateResult { new_entities: ~[new_bullet] };
-	}
-
-	fn rect(&self) -> RectangleShape {
-		let mut rectangle = match RectangleShape::new() {
-			Some(rectangle) => rectangle,
-			None() => fail!("Error, cannot create rectangle.")
-		};
-
-		let size = Vector2f::new(10., 10.);
-		let origin = size * 0.5f32;
-
-		rectangle.set_size(&size);
-		rectangle.set_origin(&origin);
-		rectangle.set_position(&self.position);
-
-		return rectangle;
 	}
 
 	fn draw(&self, window: &mut RenderWindow) {

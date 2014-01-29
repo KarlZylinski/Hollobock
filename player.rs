@@ -1,7 +1,7 @@
 use std::{num, f32};
 
 use rsfml::system::{Vector2f, Vector2i};
-use rsfml::graphics::{RenderWindow, RectangleShape};
+use rsfml::graphics::{RenderWindow, RectangleShape, Sprite};
 use rsfml::window::{keyboard, mouse};
 
 use entity::{Entity, EntityUpdateResult};
@@ -13,6 +13,7 @@ use vector;
 pub struct Player {
 	position: Vector2f,
 	rotation: f32,
+	sprite: Sprite<'static>,
 	weapon_cooldown: f32
 }
 
@@ -56,6 +57,25 @@ fn process_weapon_input(old_cooldown: f32, dt: f32, mouse_1_down: bool) -> (f32,
 	return (cooldown, false);
 }
 
+impl Player {
+    fn rect(&self) -> RectangleShape {
+		let size = Vector2f::new(50., 50.);
+		let origin = size * 0.5f32;
+
+		let mut rectangle = match RectangleShape::new() {
+			Some(rectangle) => rectangle,
+			None() => fail!("Error, cannot create rectangle.")
+		};
+
+		rectangle.set_size(&size);
+		rectangle.set_origin(&origin);
+		rectangle.set_rotation(self.rotation.to_degrees());
+		rectangle.set_position(&self.position);
+
+		return rectangle;
+    }
+}
+
 impl Entity for Player {
 	fn update(&self, dt: f32, _world: &World, input: &Input) -> EntityUpdateResult {
 		let input = get_input(input);
@@ -68,6 +88,7 @@ impl Entity for Player {
 		let new_player = ~Player {
 			position: new_position,
 			rotation: new_rotation,
+			sprite: match self.sprite.clone() { Some(sprite) => sprite, None => fail!("Could not copy sprite") },
 			weapon_cooldown: weapon_cooldown,
 		} as ~Entity;
 
@@ -86,23 +107,6 @@ impl Entity for Player {
 		return EntityUpdateResult { new_entities: new_entities };
 	}
 
-    fn rect(&self) -> RectangleShape {
-		let size = Vector2f::new(50., 50.);
-		let origin = size * 0.5f32;
-
-		let mut rectangle = match RectangleShape::new() {
-			Some(rectangle) => rectangle,
-			None() => fail!("Error, cannot create rectangle.")
-		};
-
-		rectangle.set_size(&size);
-		rectangle.set_origin(&origin);
-		rectangle.set_rotation(self.rotation.to_degrees());
-		rectangle.set_position(&self.position);
-
-		return rectangle;
-    }
-
 	fn draw(&self, window: &mut RenderWindow) {
 		window.draw(&self.rect());
 	}
@@ -111,6 +115,7 @@ impl Entity for Player {
 		return ~Player {
 			position: self.position.clone(),
 			rotation: self.rotation,
+			sprite: match self.sprite.clone() { Some(sprite) => sprite, None => fail!("Could not copy sprite") },
 			weapon_cooldown: self.weapon_cooldown
 		} as ~Entity;
 	}

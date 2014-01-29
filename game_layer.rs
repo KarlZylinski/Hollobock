@@ -1,34 +1,35 @@
 use layer::{Layer, LayerUpdateResult};
 use rsfml::system::Vector2f;
-use rsfml::graphics::RenderWindow;
+use rsfml::graphics::{Sprite, RenderWindow, Sprite};
 use world::World;
 use player::Player;
 use entity::Entity;
-use enemy::Enemy;
 use input::Input;
+use enemy_spawner::EnemySpawner;
+use resource_manager::ResourceManager;
 
 pub struct GameLayer {
 	world: World
 }
 
 impl GameLayer {	
-	pub fn new() -> GameLayer {
+	pub fn new(resource_manager: &mut ResourceManager) -> GameLayer {
+	    let player_tex = resource_manager.load_texture("player.png");
+
 		let player = Player {
 	    	position: Vector2f::new(200., 200.),
 	    	rotation: 0.,
+	    	sprite: match Sprite::new_with_texture(player_tex.borrow()) { Some(sprite) => sprite, None => fail!("Failed to create sprite!") },
 	    	weapon_cooldown: 0.
 	    };
 
-	    let enemy = Enemy {
-	    	position: Vector2f::new(500., 500.),
-	    	rotation: 0.
-	    };
+	    let enemy_spawner = EnemySpawner::new();
 
 		GameLayer {
 			world: World {
 				entities: ~[
 					~player as ~Entity,
-					~enemy as ~Entity
+					~enemy_spawner as ~Entity
 				]
 			}
 		}

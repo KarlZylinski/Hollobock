@@ -1,7 +1,7 @@
 use std::f32;
 
 use rsfml::system::Vector2f;
-use rsfml::graphics::{RenderWindow, RectangleShape, FloatRect};
+use rsfml::graphics::{RenderWindow, RectangleShape, FloatRect, Color};
 
 use entity::{Entity, EntityUpdateResult};
 use input::Input;
@@ -20,8 +20,13 @@ fn intersecting_with_bullet(enemy: &Enemy, world: &World) -> bool {
 	let mut bullets = world.entities.iter().filter(|&e| (*e).is::<PlayerBullet>());
 
 	for bullet in bullets {
+		let bullet_entity = match bullet.as_ref::<PlayerBullet>() {
+			Some(bullet_entity) => bullet_entity,
+			None => fail!("Could not convert to player.")
+		};
+
 		if FloatRect::intersects(
-			&bullet.rect().get_global_bounds(),
+			&bullet_entity.rect().get_global_bounds(),
 			&enemy.rect().get_global_bounds(),
 			&FloatRect::new(0.0,0.0,0.0,0.0)){
 			
@@ -30,6 +35,26 @@ fn intersecting_with_bullet(enemy: &Enemy, world: &World) -> bool {
 	}
 
 	return false;
+}
+
+impl Enemy {
+	fn rect(&self) -> RectangleShape {
+		let mut rectangle = match RectangleShape::new() {
+			Some(rectangle) => rectangle,
+			None() => fail!("Error, cannot create rectangle.")
+		};
+
+		let size = Vector2f::new(10., 10.);
+		let origin = size * 0.5f32;
+
+		rectangle.set_fill_color(&Color::red());
+		rectangle.set_size(&size);
+		rectangle.set_origin(&origin);
+		rectangle.set_rotation(self.rotation.to_degrees());
+		rectangle.set_position(&self.position);
+
+		return rectangle;
+	}
 }
 
 impl Entity for Enemy {
@@ -56,23 +81,6 @@ impl Entity for Enemy {
 		};
 
 		return EntityUpdateResult { new_entities: new_entities };
-	}
-
-	fn rect(&self) -> RectangleShape {
-		let mut rectangle = match RectangleShape::new() {
-			Some(rectangle) => rectangle,
-			None() => fail!("Error, cannot create rectangle.")
-		};
-
-		let size = Vector2f::new(10., 10.);
-		let origin = size * 0.5f32;
-
-		rectangle.set_size(&size);
-		rectangle.set_origin(&origin);
-		rectangle.set_rotation(self.rotation.to_degrees());
-		rectangle.set_position(&self.position);
-
-		return rectangle;
 	}
 
 	fn draw(&self, window: &mut RenderWindow) {		
