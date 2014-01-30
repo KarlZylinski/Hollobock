@@ -1,20 +1,20 @@
 use layer::{Layer, LayerUpdateResult};
 use rsfml::system::Vector2f;
-use rsfml::graphics::{Sprite, RenderWindow, Sprite};
+use rsfml::graphics::{RenderWindow, Sprite};
 use world::World;
 use player::Player;
 use entity::Entity;
 use input::Input;
 use enemy_spawner::EnemySpawner;
-use resource_manager::ResourceManager;
+use resource_store::ResourceStore;
 
 pub struct GameLayer {
 	world: World
 }
 
 impl GameLayer {	
-	pub fn new(resource_manager: &mut ResourceManager) -> GameLayer {
-	    let player_tex = resource_manager.load_texture("player.png");
+	pub fn new(resource_store: &mut ResourceStore) -> GameLayer {
+	    let player_tex = resource_store.load_texture(~"player.png");
 
 		let player = Player {
 	    	position: Vector2f::new(200., 200.),

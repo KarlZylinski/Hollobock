@@ -32,7 +32,7 @@ fn rand() -> f32 {
 
 impl Entity for EnemySpawner {
 	fn update(&self, dt: f32, _world: &World, _input: &Input) -> EntityUpdateResult {
-		let new_entities = if(self.time_since_spawn > 1.) {
+		let new_entities = if self.time_since_spawn > 1. {
 			~[
 				~Enemy {
 					position: Vector2f::new(800.0f32 * rand(), 600.0f32 * rand()),

@@ -1,7 +1,7 @@
 use std::f32;
 
 use rsfml::system::Vector2f;
-use rsfml::graphics::{RenderWindow, RectangleShape, FloatRect, Color};
+use rsfml::graphics::{RenderWindow, RectangleShape, FloatRect};
 
 use entity::{Entity, EntityUpdateResult};
 use input::Input;
@@ -47,7 +47,6 @@ impl Enemy {
 		let size = Vector2f::new(10., 10.);
 		let origin = size * 0.5f32;
 
-		//rectangle.set_fill_color(&Color::red());
 		rectangle.set_size(&size);
 		rectangle.set_origin(&origin);
 		rectangle.set_rotation(self.rotation.to_degrees());
@@ -71,7 +70,7 @@ impl Entity for Enemy {
 
 		let direction = vector::normalize(player.position - self.position);
 
-		let new_entities = if(intersecting_with_bullet(self, world)) {
+		let new_entities = if intersecting_with_bullet(self, world) {
 			~[]
 		} else {
 			~[~Enemy {

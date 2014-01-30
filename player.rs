@@ -1,7 +1,7 @@
 use std::{num, f32};
 
 use rsfml::system::{Vector2f, Vector2i};
-use rsfml::graphics::{RenderWindow, RectangleShape, Sprite};
+use rsfml::graphics::{RenderWindow, Sprite};
 use rsfml::window::{keyboard, mouse};
 
 use entity::{Entity, EntityUpdateResult};
