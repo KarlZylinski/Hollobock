@@ -4,12 +4,12 @@ use input::Input;
 use std::vec;
 
 pub struct World {
-	entities: ~[~Entity]
+	entities: ~[~Entity:]
 }
 
 impl World {		
 	pub fn update(&self, dt: f32, input: &Input) -> World {
-		let mut new_entities: ~[~Entity] = ~[];
+		let mut new_entities: ~[~Entity:] = ~[];
 		
 		for entity in self.entities.iter() {
 			let update_result = entity.update(dt, self, input);

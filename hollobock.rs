@@ -44,7 +44,7 @@ fn main() {
     let mut resource_manager = ResourceManager::new();
 
     let mut layers = ~[
-    	~GameLayer::new(&mut resource_manager) as ~Layer,
+    	~GameLayer::new(&mut resource_manager) as ~Layer:,
     	~GuiLayer::new() as ~Layer
     ];
 
@@ -71,7 +71,7 @@ fn main() {
 
 		window.clear(&Color::new_RGB(0, 200, 200));
 
-		let mut new_layers: ~[~Layer] = ~[];
+		let mut new_layers: ~[~Layer:] = ~[];
 		
 		for layer in layers.iter() {
 			let update_result = layer.update(dt, &input);

@@ -57,25 +57,6 @@ fn process_weapon_input(old_cooldown: f32, dt: f32, mouse_1_down: bool) -> (f32,
 	return (cooldown, false);
 }
 
-impl Player {
-    fn rect(&self) -> RectangleShape {
-		let size = Vector2f::new(50., 50.);
-		let origin = size * 0.5f32;
-
-		let mut rectangle = match RectangleShape::new() {
-			Some(rectangle) => rectangle,
-			None() => fail!("Error, cannot create rectangle.")
-		};
-
-		rectangle.set_size(&size);
-		rectangle.set_origin(&origin);
-		rectangle.set_rotation(self.rotation.to_degrees());
-		rectangle.set_position(&self.position);
-
-		return rectangle;
-    }
-}
-
 impl Entity for Player {
 	fn update(&self, dt: f32, _world: &World, input: &Input) -> EntityUpdateResult {
 		let input = get_input(input);
@@ -85,14 +66,23 @@ impl Entity for Player {
 
 		let (weapon_cooldown, weapon_fired) = process_weapon_input(self.weapon_cooldown, dt, input.mouse_1);
 
+		let mut new_sprite = match self.sprite.clone() {
+			Some(sprite) => sprite,
+			None => fail!("Could not copy sprite")
+		};
+
+		new_sprite.set_position(&new_position);
+		new_sprite.set_rotation(new_rotation.to_degrees());
+
+		let sprite_center = Vector2f::new(new_sprite.get_local_bounds().width * 0.5, new_sprite.get_local_bounds().height * 0.5);
+		new_sprite.set_origin(&sprite_center);
+
 		let new_player = ~Player {
 			position: new_position,
 			rotation: new_rotation,
-			sprite: match self.sprite.clone() {
-				Some(sprite) => sprite, None => fail!("Could not copy sprite")
-			},
+			sprite: new_sprite,
 			weapon_cooldown: weapon_cooldown,
-		} as ~Entity;
+		} as ~Entity:;
 
 		let mut new_entities = ~[new_player];
 
@@ -102,7 +92,7 @@ impl Entity for Player {
 					position: new_position,
 					direction: vector::normalize(look_direction),
 					velocity: 400.
-				} as ~Entity
+				} as ~Entity:
 			);
 		}
 		
@@ -110,15 +100,15 @@ impl Entity for Player {
 	}
 
 	fn draw(&self, window: &mut RenderWindow) {
-		window.draw(&self.rect());
+		window.draw(&self.sprite);
 	}
 
-	fn clone(&self) -> ~Entity {
+	fn clone(&self) -> ~Entity: {
 		return ~Player {
 			position: self.position.clone(),
 			rotation: self.rotation,
 			sprite: match self.sprite.clone() { Some(sprite) => sprite, None => fail!("Could not copy sprite") },
 			weapon_cooldown: self.weapon_cooldown
-		} as ~Entity;
+		} as ~Entity:;
 	}
 }

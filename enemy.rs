@@ -47,7 +47,7 @@ impl Enemy {
 		let size = Vector2f::new(10., 10.);
 		let origin = size * 0.5f32;
 
-		rectangle.set_fill_color(&Color::red());
+		//rectangle.set_fill_color(&Color::red());
 		rectangle.set_size(&size);
 		rectangle.set_origin(&origin);
 		rectangle.set_rotation(self.rotation.to_degrees());

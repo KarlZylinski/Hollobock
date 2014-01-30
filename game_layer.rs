@@ -31,7 +31,7 @@ impl GameLayer {
 		GameLayer {
 			world: World {
 				entities: ~[
-					~player as ~Entity,
+					~player as ~Entity:,
 					~enemy_spawner as ~Entity
 				]
 			}
@@ -48,7 +48,7 @@ impl Layer for GameLayer {
 		};
 
 		return LayerUpdateResult {
-			new_layers: ~[ new_game_layer as ~Layer ]
+			new_layers: ~[ new_game_layer as ~Layer: ]
 		};
 	}
 
@@ -56,9 +56,9 @@ impl Layer for GameLayer {
 		self.world.draw(window);
 	}
 
-	fn clone(&self) -> ~Layer {
+	fn clone(&self) -> ~Layer: {
 		~GameLayer {
 			world: World { entities: self.world.entities.clone() }
-		} as ~Layer
+		} as ~Layer:
 	}
 }
