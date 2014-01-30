@@ -1,9 +1,9 @@
 use rsfml::system::{Vector2f};
 use rsfml::graphics::{RenderWindow, RectangleShape};
 
-use entity::{Entity, EntityUpdateResult};
 use input::Input;
-use world::World;
+use entity::world::World;
+use entity::{Entity, EntityUpdateResult};
 
 pub struct PlayerBullet {
 	position: Vector2f,

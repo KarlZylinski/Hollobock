@@ -1,12 +1,12 @@
 use layer::{Layer, LayerUpdateResult};
 use rsfml::system::Vector2f;
 use rsfml::graphics::{RenderWindow, Sprite};
-use world::World;
-use player::Player;
-use entity::Entity;
 use input::Input;
-use enemy_spawner::EnemySpawner;
 use resource_store::ResourceStore;
+use entity::world::World;
+use entity::Entity;
+use entity::player::Player;
+use entity::enemy_spawner::EnemySpawner;
 
 pub struct GameLayer {
 	world: World

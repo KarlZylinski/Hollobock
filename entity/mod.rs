@@ -1,9 +1,15 @@
 use rsfml::graphics::RenderWindow;
 use input::Input;
-use world::World;
 
 use std::cast::transmute;
 use std::unstable::intrinsics::TypeId;
+use entity::world::World;
+
+pub mod player;
+pub mod player_bullet;
+pub mod enemy;
+pub mod enemy_spawner;
+pub mod world;
 
 pub trait Entity: Any {
 	fn update(&self, dt: f32, world: &World, input: &Input) -> EntityUpdateResult;

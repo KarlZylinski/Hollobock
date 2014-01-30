@@ -1,12 +1,12 @@
 use rsfml::system::Vector2f;
 use rsfml::graphics::RenderWindow;
 
-use entity::{Entity, EntityUpdateResult};
 use input::Input;
-use world::World;
-use enemy::Enemy;
 use std::rand;
 use std::rand::Rng;
+use entity::world::World;
+use entity::enemy::Enemy;
+use entity::{Entity, EntityUpdateResult};
 
 pub struct EnemySpawner {
 	time_since_spawn: f32

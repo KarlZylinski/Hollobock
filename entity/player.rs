@@ -4,11 +4,11 @@ use rsfml::system::{Vector2f, Vector2i};
 use rsfml::graphics::{RenderWindow, Sprite};
 use rsfml::window::{keyboard, mouse};
 
-use entity::{Entity, EntityUpdateResult};
 use input::Input;
-use world::World;
-use player_bullet::PlayerBullet;
-use vector;
+use math;
+use entity::{Entity, EntityUpdateResult};
+use entity::world::World;
+use entity::player_bullet::PlayerBullet;
 
 pub struct Player {
 	position: Vector2f,
@@ -90,7 +90,7 @@ impl Entity for Player {
 			new_entities.push(
 				~PlayerBullet {
 					position: new_position,
-					direction: vector::normalize(look_direction),
+					direction: math::normalize(look_direction),
 					velocity: 400.
 				} as ~Entity:
 			);

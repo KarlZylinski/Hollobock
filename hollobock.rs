@@ -5,27 +5,18 @@ use rsfml::system::{Clock, Vector2i};
 use rsfml::window::{ContextSettings, VideoMode, event, Close };
 use rsfml::graphics::{RenderWindow, Color};
 
-use entity::Entity;
 use input::Input;
 use layer::Layer;
-use game_layer::GameLayer;
-use gui_layer::GuiLayer;
+use layer::game_layer::GameLayer;
+use layer::gui_layer::GuiLayer;
 use std::vec;
 use resource_store::ResourceStore;
 
-pub mod entity;
-pub mod player;
-pub mod world;
-pub mod list;
 pub mod input;
-pub mod player_bullet;
-pub mod vector;
-pub mod enemy;
+pub mod math;
 pub mod layer;
-pub mod game_layer;
-pub mod gui_layer;
-pub mod enemy_spawner;
 pub mod resource_store;
+pub mod entity;
 
 #[start]
 fn start(argc: int, argv: **u8) -> int {

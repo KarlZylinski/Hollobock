@@ -3,13 +3,13 @@ use std::f32;
 use rsfml::system::Vector2f;
 use rsfml::graphics::{RenderWindow, RectangleShape, FloatRect};
 
-use entity::{Entity, EntityUpdateResult};
 use input::Input;
-use world::World;
-use player::Player;
-use player_bullet::PlayerBullet;
-use vector;
+use math;
 use std::iter::Iterator;
+use entity::{Entity, EntityUpdateResult};
+use entity::world::World;
+use entity::player::Player;
+use entity::player_bullet::PlayerBullet;
 
 pub struct Enemy {
 	position: Vector2f,
@@ -68,7 +68,7 @@ impl Entity for Enemy {
 			None => fail!("Could not convert to player.")
 		};
 
-		let direction = vector::normalize(player.position - self.position);
+		let direction = math::normalize(player.position - self.position);
 
 		let new_entities = if intersecting_with_bullet(self, world) {
 			~[]
