@@ -70,7 +70,7 @@ impl Entity for Player {
 		let new_player = ~Player {
 			position: new_position,
 			rotation: new_rotation,
-			renderer: self.renderer.as_ref().map_or(None, |r| { r.update(&new_position, new_rotation) }),
+			renderer: self.renderer.as_ref().map_or(None, |r| r.update(&new_position, new_rotation)),
 			weapon_cooldown: weapon_cooldown,
 		} as ~Entity:;
 
@@ -90,14 +90,14 @@ impl Entity for Player {
 	}
 
 	fn draw(&self, window: &mut RenderWindow) {
-		self.renderer.as_ref().map(|r| { r.draw(window) } );
+		self.renderer.as_ref().map(|r| r.draw(window));
 	}
 
 	fn clone(&self) -> ~Entity: {
 		return ~Player {
 			position: self.position.clone(),
 			rotation: self.rotation,
-			renderer: self.renderer.as_ref().map_or(None, |r| -> Option<SpriteRenderer> { r.clone() }),
+			renderer: self.renderer.as_ref().map_or(None, |r| r.clone()),
 			weapon_cooldown: self.weapon_cooldown
 		} as ~Entity:;
 	}

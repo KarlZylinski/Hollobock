@@ -19,20 +19,20 @@ impl GameLayer {
 		let player = Player {
 	    	position: Vector2f::new(200., 200.),
 	    	rotation: 0.,
-	    	renderer: resource_store.load_texture(~"player.png").map_or(None,|t| -> Option<SpriteRenderer> {
-	    		Sprite::new_with_texture(t).map(|s| -> SpriteRenderer {
+	    	renderer: resource_store.load_texture(~"player.png").map_or(None, |t| 
+	    		Sprite::new_with_texture(t).map(|s|
 	    			SpriteRenderer::new(s)
-	    		})
-	    	}),
+	    		)
+	    	),
 	    	weapon_cooldown: 0.
 	    };
 
 	    let enemy_spawner = EnemySpawner::new(
-	    	resource_store.load_texture(~"enemy.png").map_or(None,|t| -> Option<SpriteRenderer> {
-	    		Sprite::new_with_texture(t).map(|s| -> SpriteRenderer {
+	    	resource_store.load_texture(~"enemy.png").map_or(None, |t|
+	    		Sprite::new_with_texture(t).map(|s|
 	    			SpriteRenderer::new(s)
-	    		})
-	    	})
+	    		)
+	    	)
 		);
 
 		GameLayer {

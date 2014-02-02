@@ -40,18 +40,18 @@ impl Entity for EnemySpawner {
 				~Enemy {
 					position: Vector2f::new(800.0f32 * rand(), 600.0f32 * rand()),
 	    			rotation: 0.,
-	    			renderer: self.renderer.as_ref().map_or(None, |r| -> Option<SpriteRenderer> { r.clone() })
+	    			renderer: self.renderer.as_ref().map_or(None, |r| r.clone())
 				} as ~Entity:,
 				~EnemySpawner {
 					time_since_spawn: dt,
-					renderer: self.renderer.as_ref().map_or(None, |r| -> Option<SpriteRenderer> { r.clone() }),
+					renderer: self.renderer.as_ref().map_or(None, |r| r.clone()),
 				} as ~Entity:
 			]
 		} else {
 			~[
 				~EnemySpawner {
 					time_since_spawn: self.time_since_spawn + dt,
-					renderer: self.renderer.as_ref().map_or(None, |r| -> Option<SpriteRenderer> { r.clone() }),
+					renderer: self.renderer.as_ref().map_or(None, |r| r.clone()),
 				} as ~Entity:
 			]
 		};
@@ -66,7 +66,7 @@ impl Entity for EnemySpawner {
 	fn clone(&self) -> ~Entity: {
 		return ~EnemySpawner {
 			time_since_spawn: self.time_since_spawn,
-			renderer: self.renderer.as_ref().map_or(None, |r| -> Option<SpriteRenderer> { r.clone() }),
+			renderer: self.renderer.as_ref().map_or(None, |r| r.clone()),
 		} as ~Entity:;
 	}
 }

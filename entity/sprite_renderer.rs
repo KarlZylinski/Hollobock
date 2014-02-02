@@ -13,7 +13,7 @@ impl SpriteRenderer {
 	}
 
 	pub fn update(&self, position: &Vector2f, rotation: f32) -> Option<SpriteRenderer> {
-		self.sprite.clone().map(|mut new_sprite: Sprite| -> SpriteRenderer {
+		self.sprite.clone().map(|mut new_sprite: Sprite| {
 				new_sprite.set_position(position);
 				new_sprite.set_rotation(rotation);
 
@@ -32,10 +32,10 @@ impl SpriteRenderer {
 	}
 
 	pub fn clone(&self) -> Option<SpriteRenderer> {
-		self.sprite.clone().map(|new_sprite| -> SpriteRenderer {
+		self.sprite.clone().map(|new_sprite| 
 			SpriteRenderer {
 				sprite: new_sprite
 			}
-		})
+		)
 	}
 }

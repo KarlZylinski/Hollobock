@@ -31,7 +31,7 @@ fn intersecting_with_bullet(enemy: &Enemy, world: &World) -> bool {
 
 		if FloatRect::intersects(
 			&bullet_entity.rect().get_global_bounds(),
-			&enemy.renderer.as_ref().map_or(empty_rect, |r| -> FloatRect { r.sprite.get_global_bounds() }),
+			&enemy.renderer.as_ref().map_or(empty_rect, |r| r.sprite.get_global_bounds()),
 			&empty_rect){
 			
 			return true;
@@ -63,7 +63,7 @@ impl Entity for Enemy {
 			~[~Enemy {
 				position: new_position,
 				rotation: new_rotation,
-				renderer: self.renderer.as_ref().map_or(None, |r| { r.update(&new_position, new_rotation) }),
+				renderer: self.renderer.as_ref().map_or(None, |r| r.update(&new_position, new_rotation)),
 			} as ~Entity:]
 		};
 
@@ -71,14 +71,14 @@ impl Entity for Enemy {
 	}
 
 	fn draw(&self, window: &mut RenderWindow) {
-		self.renderer.as_ref().map(|r| { r.draw(window) } );
+		self.renderer.as_ref().map(|r| r.draw(window));
 	}
 
 	fn clone(&self) -> ~Entity: {
 		return ~Enemy {
 			position: self.position.clone(),
 			rotation: self.rotation,
-			renderer: self.renderer.as_ref().map_or(None, |r| -> Option<SpriteRenderer> { r.clone() }),
+			renderer: self.renderer.as_ref().map_or(None, |r| r.clone()),
 		} as ~Entity:;
 	}
 }
