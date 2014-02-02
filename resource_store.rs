@@ -4,15 +4,15 @@ use std::cell::RefCell;
 use std::hashmap::HashMap;
 
 pub struct ResourceStore {
-	textures: HashMap<~str, Option<Rc<RefCell<Texture>>>>
+    textures: HashMap<~str, Option<Rc<RefCell<Texture>>>>
 }
 
 impl ResourceStore {
-	pub fn new() -> ResourceStore {
-		ResourceStore {
-			textures: HashMap::new()
-		}
-	}
+    pub fn new() -> ResourceStore {
+        ResourceStore {
+            textures: HashMap::new()
+        }
+    }
 
     pub fn load_texture(&mut self, filename: ~str) -> Option<Rc<RefCell<Texture>>> {
         self.textures.find_or_insert_with(filename, |filename_to_load_from|

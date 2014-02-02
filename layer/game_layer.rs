@@ -10,62 +10,62 @@ use entity::enemy_spawner::EnemySpawner;
 use entity::sprite_renderer::SpriteRenderer;
 
 pub struct GameLayer {
-	world: World
+    world: World
 }
 
-impl GameLayer {	
-	pub fn new(resource_store: &mut ResourceStore) -> GameLayer {
+impl GameLayer {    
+    pub fn new(resource_store: &mut ResourceStore) -> GameLayer {
 
-		let player = Player {
-	    	position: Vector2f::new(200., 200.),
-	    	rotation: 0.,
-	    	renderer: resource_store.load_texture(~"player.png").map_or(None, |t| 
-	    		Sprite::new_with_texture(t).map(|s|
-	    			SpriteRenderer::new(s)
-	    		)
-	    	),
-	    	weapon_cooldown: 0.
-	    };
+        let player = Player {
+            position: Vector2f::new(200., 200.),
+            rotation: 0.,
+            renderer: resource_store.load_texture(~"player.png").map_or(None, |t| 
+                Sprite::new_with_texture(t).map(|s|
+                    SpriteRenderer::new(s)
+                )
+            ),
+            weapon_cooldown: 0.
+        };
 
-	    let enemy_spawner = EnemySpawner::new(
-	    	resource_store.load_texture(~"enemy.png").map_or(None, |t|
-	    		Sprite::new_with_texture(t).map(|s|
-	    			SpriteRenderer::new(s)
-	    		)
-	    	)
-		);
+        let enemy_spawner = EnemySpawner::new(
+            resource_store.load_texture(~"enemy.png").map_or(None, |t|
+                Sprite::new_with_texture(t).map(|s|
+                    SpriteRenderer::new(s)
+                )
+            )
+        );
 
-		GameLayer {
-			world: World {
-				entities: ~[
-					~player as ~Entity:,
-					~enemy_spawner as ~Entity:
-				]
-			}
-		}
-	}
+        GameLayer {
+            world: World {
+                entities: ~[
+                    ~player as ~Entity:,
+                    ~enemy_spawner as ~Entity:
+                ]
+            }
+        }
+    }
 }
 
 impl Layer for GameLayer {
-	fn update(&self, dt: f32, input: &Input) -> LayerUpdateResult {
-		let new_world = self.world.update(dt, input);
-		
-		let new_game_layer = ~GameLayer {
-			world: new_world
-		};
+    fn update(&self, dt: f32, input: &Input) -> LayerUpdateResult {
+        let new_world = self.world.update(dt, input);
+        
+        let new_game_layer = ~GameLayer {
+            world: new_world
+        };
 
-		return LayerUpdateResult {
-			new_layers: ~[ new_game_layer as ~Layer: ]
-		};
-	}
+        return LayerUpdateResult {
+            new_layers: ~[ new_game_layer as ~Layer: ]
+        };
+    }
 
-	fn draw(&self, window: &mut RenderWindow) {		
-		self.world.draw(window);
-	}
+    fn draw(&self, window: &mut RenderWindow) {     
+        self.world.draw(window);
+    }
 
-	fn clone(&self) -> ~Layer: {
-		~GameLayer {
-			world: World { entities: self.world.entities.clone() }
-		} as ~Layer:
-	}
+    fn clone(&self) -> ~Layer: {
+        ~GameLayer {
+            world: World { entities: self.world.entities.clone() }
+        } as ~Layer:
+    }
 }

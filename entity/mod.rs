@@ -13,15 +13,15 @@ pub mod world;
 pub mod sprite_renderer;
 
 pub trait Entity: Any {
-	fn update(&self, dt: f32, world: &World, input: &Input) -> EntityUpdateResult;
-	fn draw(&self, window: &mut RenderWindow);
-	fn clone(&self) -> ~Entity:;
+    fn update(&self, dt: f32, world: &World, input: &Input) -> EntityUpdateResult;
+    fn draw(&self, window: &mut RenderWindow);
+    fn clone(&self) -> ~Entity:;
 }
 
 impl Clone for ~Entity: {
-	fn clone(&self) -> ~Entity: {
-		return self.clone();
-	}
+    fn clone(&self) -> ~Entity: {
+        return self.clone();
+    }
 }
 
 impl<'a> AnyRefExt<'a> for &'a Entity {
@@ -48,6 +48,6 @@ impl<'a> AnyRefExt<'a> for &'a Entity {
 }
 
 pub struct EntityUpdateResult {
-	new_entities: ~[~Entity:]
-	// TODO: Add events here.
+    new_entities: ~[~Entity:]
+    // TODO: Add events here.
 }

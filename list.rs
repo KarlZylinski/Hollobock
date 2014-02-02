@@ -8,18 +8,18 @@ pub fn prepend<T>(xs: List<T>, value: T) -> List<T> {
 }
 
 pub fn add_range<T>(dest: List<T>, range: List<T>) -> List<T> {
-	let mut current = range;
-	let mut new_list = dest;
+    let mut current = range;
+    let mut new_list = dest;
 
-	loop {
-		match current {
-			Cons(x, ~next) => {
-				new_list = prepend(new_list, x);
-				current = next;
-			},
-			_ => break
-		}
-	}
+    loop {
+        match current {
+            Cons(x, ~next) => {
+                new_list = prepend(new_list, x);
+                current = next;
+            },
+            _ => break
+        }
+    }
 
-	new_list
+    new_list
 }
