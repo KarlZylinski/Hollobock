@@ -10,6 +10,7 @@ pub mod player_bullet;
 pub mod enemy;
 pub mod enemy_spawner;
 pub mod world;
+pub mod sprite_renderer;
 
 pub trait Entity: Any {
 	fn update(&self, dt: f32, world: &World, input: &Input) -> EntityUpdateResult;

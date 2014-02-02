@@ -1,7 +1,7 @@
 use std::{num, f32};
 
 use rsfml::system::{Vector2f, Vector2i};
-use rsfml::graphics::{RenderWindow, Sprite};
+use rsfml::graphics::{RenderWindow};
 use rsfml::window::{keyboard, mouse};
 
 use input::Input;
@@ -9,11 +9,12 @@ use math;
 use entity::{Entity, EntityUpdateResult};
 use entity::world::World;
 use entity::player_bullet::PlayerBullet;
+use entity::sprite_renderer::SpriteRenderer;
 
 pub struct Player {
 	position: Vector2f,
 	rotation: f32,
-	sprite: Sprite,
+	renderer: Option<SpriteRenderer>,
 	weapon_cooldown: f32
 }
 
@@ -62,25 +63,15 @@ impl Entity for Player {
 		let input = get_input(input);
 		let new_position = self.position + input.direction * 200.0f32 * dt;
 		let look_direction = Vector2f::new(input.mouse_position.x as f32 - new_position.x, input.mouse_position.y as f32 - new_position.y);
-		let new_rotation = f32::atan2(look_direction.y, look_direction.x);
+		let new_rotation = f32::atan2(look_direction.y, look_direction.x).to_degrees();
 
 		let (weapon_cooldown, weapon_fired) = process_weapon_input(self.weapon_cooldown, dt, input.mouse_1);
 
-		let mut new_sprite = match self.sprite.clone() {
-			Some(sprite) => sprite,
-			None => fail!("Could not copy sprite")
-		};
-
-		new_sprite.set_position(&new_position);
-		new_sprite.set_rotation(new_rotation.to_degrees());
-
-		let sprite_center = Vector2f::new(new_sprite.get_local_bounds().width * 0.5, new_sprite.get_local_bounds().height * 0.5);
-		new_sprite.set_origin(&sprite_center);
 
 		let new_player = ~Player {
 			position: new_position,
 			rotation: new_rotation,
-			sprite: new_sprite,
+			renderer: self.renderer.as_ref().map_or(None, |r| { r.update(&new_position, new_rotation) }),
 			weapon_cooldown: weapon_cooldown,
 		} as ~Entity:;
 
@@ -100,14 +91,14 @@ impl Entity for Player {
 	}
 
 	fn draw(&self, window: &mut RenderWindow) {
-		window.draw(&self.sprite);
+		self.renderer.as_ref().map(|r| { r.draw(window) } );
 	}
 
 	fn clone(&self) -> ~Entity: {
 		return ~Player {
 			position: self.position.clone(),
 			rotation: self.rotation,
-			sprite: match self.sprite.clone() { Some(sprite) => sprite, None => fail!("Could not copy sprite") },
+			renderer: self.renderer.as_ref().map_or(None, |r| -> Option<SpriteRenderer> { r.clone() }),
 			weapon_cooldown: self.weapon_cooldown
 		} as ~Entity:;
 	}

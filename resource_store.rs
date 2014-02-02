@@ -4,7 +4,7 @@ use std::cell::RefCell;
 use std::hashmap::HashMap;
 
 pub struct ResourceStore {
-	textures: HashMap<~str, Rc<RefCell<Texture>>>
+	textures: HashMap<~str, Option<Rc<RefCell<Texture>>>>
 }
 
 impl ResourceStore {
@@ -14,17 +14,12 @@ impl ResourceStore {
 		}
 	}
 
-    pub fn load_texture(&mut self, filename: ~str) -> Rc<RefCell<Texture>> {
-        return match self.textures.find_copy(&filename) {
-            Some(texture) => texture,
-            None => {
-                let new_texture = match Texture::new_from_file(filename) {
-                    Some(new_texture) => new_texture,
-                    None => fail!("Could not load texture.")
-                };
-
-                Rc::new(RefCell::new(new_texture))
+    pub fn load_texture(&mut self, filename: ~str) -> Option<Rc<RefCell<Texture>>> {
+        self.textures.find_or_insert_with(filename, |filename_to_load_from| -> Option<Rc<RefCell<Texture>>> {
+                Texture::new_from_file(*filename_to_load_from).map(|new_texture| -> Rc<RefCell<Texture>> {
+                     Rc::new(RefCell::new(new_texture))
+                })
             }
-        }    	
+        ).take()
     }
 }

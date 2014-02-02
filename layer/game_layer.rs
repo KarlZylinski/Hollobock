@@ -7,6 +7,7 @@ use entity::world::World;
 use entity::Entity;
 use entity::player::Player;
 use entity::enemy_spawner::EnemySpawner;
+use entity::sprite_renderer::SpriteRenderer;
 
 pub struct GameLayer {
 	world: World
@@ -19,10 +20,11 @@ impl GameLayer {
 		let player = Player {
 	    	position: Vector2f::new(200., 200.),
 	    	rotation: 0.,
-	    	sprite: match Sprite::new_with_texture(player_tex) {
-	    		Some(sprite) => sprite,
-	    		None => fail!("Failed to create sprite!")
-	    	},
+	    	renderer: player_tex.map_or(None,|t| -> Option<SpriteRenderer> {
+	    		Sprite::new_with_texture(t).map(|s| -> SpriteRenderer {
+	    			SpriteRenderer::new(s)
+	    		})
+	    	}),
 	    	weapon_cooldown: 0.
 	    };
 
