@@ -15,12 +15,11 @@ pub struct GameLayer {
 
 impl GameLayer {	
 	pub fn new(resource_store: &mut ResourceStore) -> GameLayer {
-	    let player_tex = resource_store.load_texture(~"player.png");
 
 		let player = Player {
 	    	position: Vector2f::new(200., 200.),
 	    	rotation: 0.,
-	    	renderer: player_tex.map_or(None,|t| -> Option<SpriteRenderer> {
+	    	renderer: resource_store.load_texture(~"player.png").map_or(None,|t| -> Option<SpriteRenderer> {
 	    		Sprite::new_with_texture(t).map(|s| -> SpriteRenderer {
 	    			SpriteRenderer::new(s)
 	    		})
@@ -28,13 +27,19 @@ impl GameLayer {
 	    	weapon_cooldown: 0.
 	    };
 
-	    let enemy_spawner = EnemySpawner::new();
+	    let enemy_spawner = EnemySpawner::new(
+	    	resource_store.load_texture(~"enemy.png").map_or(None,|t| -> Option<SpriteRenderer> {
+	    		Sprite::new_with_texture(t).map(|s| -> SpriteRenderer {
+	    			SpriteRenderer::new(s)
+	    		})
+	    	})
+		);
 
 		GameLayer {
 			world: World {
 				entities: ~[
 					~player as ~Entity:,
-					~enemy_spawner as ~Entity
+					~enemy_spawner as ~Entity:
 				]
 			}
 		}

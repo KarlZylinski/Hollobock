@@ -1,7 +1,7 @@
 use std::f32;
 
 use rsfml::system::Vector2f;
-use rsfml::graphics::{RenderWindow, RectangleShape, FloatRect};
+use rsfml::graphics::{RenderWindow, FloatRect};
 
 use input::Input;
 use math;
@@ -10,10 +10,12 @@ use entity::{Entity, EntityUpdateResult};
 use entity::world::World;
 use entity::player::Player;
 use entity::player_bullet::PlayerBullet;
+use entity::sprite_renderer::SpriteRenderer;
 
 pub struct Enemy {
 	position: Vector2f,
-	rotation: f32
+	rotation: f32,
+	renderer: Option<SpriteRenderer>
 }
 
 fn intersecting_with_bullet(enemy: &Enemy, world: &World) -> bool {
@@ -25,35 +27,18 @@ fn intersecting_with_bullet(enemy: &Enemy, world: &World) -> bool {
 			None => fail!("Could not convert to player.")
 		};
 
+		let empty_rect = FloatRect::new(0.0,0.0,0.0,0.0);
+
 		if FloatRect::intersects(
 			&bullet_entity.rect().get_global_bounds(),
-			&enemy.rect().get_global_bounds(),
-			&FloatRect::new(0.0,0.0,0.0,0.0)){
+			&enemy.renderer.as_ref().map_or(empty_rect, |r| -> FloatRect { r.sprite.get_global_bounds() }),
+			&empty_rect){
 			
 			return true;
 		}
 	}
 
 	return false;
-}
-
-impl Enemy {
-	fn rect(&self) -> RectangleShape {
-		let mut rectangle = match RectangleShape::new() {
-			Some(rectangle) => rectangle,
-			None() => fail!("Error, cannot create rectangle.")
-		};
-
-		let size = Vector2f::new(10., 10.);
-		let origin = size * 0.5f32;
-
-		rectangle.set_size(&size);
-		rectangle.set_origin(&origin);
-		rectangle.set_rotation(self.rotation.to_degrees());
-		rectangle.set_position(&self.position);
-
-		return rectangle;
-	}
 }
 
 impl Entity for Enemy {
@@ -69,27 +54,31 @@ impl Entity for Enemy {
 		};
 
 		let direction = math::normalize(player.position - self.position);
+		let new_position = self.position + direction * 100.0f32 * dt;
+		let new_rotation = f32::atan2(direction.y, direction.x).to_degrees();
 
 		let new_entities = if intersecting_with_bullet(self, world) {
 			~[]
 		} else {
 			~[~Enemy {
-				position: self.position + direction * 100.0f32 * dt,
-				rotation: f32::atan2(direction.y, direction.x)
-			} as ~Entity]
+				position: new_position,
+				rotation: new_rotation,
+				renderer: self.renderer.as_ref().map_or(None, |r| { r.update(&new_position, new_rotation) }),
+			} as ~Entity:]
 		};
 
 		return EntityUpdateResult { new_entities: new_entities };
 	}
 
-	fn draw(&self, window: &mut RenderWindow) {		
-		window.draw(&self.rect());
+	fn draw(&self, window: &mut RenderWindow) {
+		self.renderer.as_ref().map(|r| { r.draw(window) } );
 	}
 
-	fn clone(&self) -> ~Entity {
+	fn clone(&self) -> ~Entity: {
 		return ~Enemy {
 			position: self.position.clone(),
-			rotation: self.rotation
-		} as ~Entity;
+			rotation: self.rotation,
+			renderer: self.renderer.as_ref().map_or(None, |r| -> Option<SpriteRenderer> { r.clone() }),
+		} as ~Entity:;
 	}
 }

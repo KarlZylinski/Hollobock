@@ -67,7 +67,6 @@ impl Entity for Player {
 
 		let (weapon_cooldown, weapon_fired) = process_weapon_input(self.weapon_cooldown, dt, input.mouse_1);
 
-
 		let new_player = ~Player {
 			position: new_position,
 			rotation: new_rotation,
