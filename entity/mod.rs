@@ -1,4 +1,5 @@
 use rsfml::graphics::RenderWindow;
+use rsfml::system::Vector2f;
 use input::Input;
 
 use std::cast::transmute;
@@ -10,11 +11,14 @@ pub mod player_bullet;
 pub mod enemy;
 pub mod enemy_spawner;
 pub mod world;
+pub mod renderer;
 pub mod sprite_renderer;
 
 pub trait Entity: Any {
     fn update(&self, dt: f32, world: &World, input: &Input) -> EntityUpdateResult;
     fn draw(&self, window: &mut RenderWindow);
+    fn position(&self) -> Vector2f;
+    fn is_player(&self) -> bool;
     fn clone(&self) -> ~Entity:;
 }
 
@@ -49,5 +53,4 @@ impl<'a> AnyRefExt<'a> for &'a Entity {
 
 pub struct EntityUpdateResult {
     new_entities: ~[~Entity:]
-    // TODO: Add events here.
 }

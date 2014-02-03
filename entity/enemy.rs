@@ -10,12 +10,13 @@ use entity::{Entity, EntityUpdateResult};
 use entity::world::World;
 use entity::player::Player;
 use entity::player_bullet::PlayerBullet;
+use entity::renderer::Renderer;
 use entity::sprite_renderer::SpriteRenderer;
 
 pub struct Enemy {
     position: Vector2f,
     rotation: f32,
-    renderer: Option<SpriteRenderer>
+    renderer: Option<~Renderer:>
 }
 
 fn intersecting_with_bullet(enemy: &Enemy, world: &World) -> bool {
@@ -31,7 +32,7 @@ fn intersecting_with_bullet(enemy: &Enemy, world: &World) -> bool {
 
         if FloatRect::intersects(
             &bullet_entity.rect().get_global_bounds(),
-            &enemy.renderer.as_ref().map_or(empty_rect, |r| r.sprite.get_global_bounds()),
+            &enemy.renderer.as_ref().map_or(empty_rect, |r| r.bounds()),
             &empty_rect){
             
             return true;
@@ -43,17 +44,12 @@ fn intersecting_with_bullet(enemy: &Enemy, world: &World) -> bool {
 
 impl Entity for Enemy {
     fn update(&self, dt: f32, world: &World, _input: &Input) -> EntityUpdateResult {
-        let player_entity = match world.entities.iter().find(|&e| (*e).is::<Player>()) {
-            Some(player) => player.as_ref::<Player>(),
+        let player_entity = match world.entities.iter().find(|&e| e.is_player()) {
+            Some(player) => player,
             None => fail!("No player found in world.")
         };
 
-        let player = match player_entity {
-            Some(player_ref) => player_ref,
-            None => fail!("Could not convert to player.")
-        };
-
-        let direction = math::normalize(player.position - self.position);
+        let direction = math::normalize(player_entity.position() - self.position);
         let new_position = self.position + direction * 100.0f32 * dt;
         let new_rotation = f32::atan2(direction.y, direction.x).to_degrees();
 
@@ -67,18 +63,30 @@ impl Entity for Enemy {
             } as ~Entity:]
         };
 
-        return EntityUpdateResult { new_entities: new_entities };
+        EntityUpdateResult {
+            new_entities: new_entities
+        }
+    }
+    
+    fn position(&self) -> Vector2f
+    {
+        self.position
     }
 
+    fn is_player(&self) -> bool
+    {
+        false
+    }
+    
     fn draw(&self, window: &mut RenderWindow) {
         self.renderer.as_ref().map(|r| r.draw(window));
     }
 
     fn clone(&self) -> ~Entity: {
-        return ~Enemy {
+        ~Enemy {
             position: self.position.clone(),
             rotation: self.rotation,
             renderer: self.renderer.as_ref().map_or(None, |r| r.clone()),
-        } as ~Entity:;
+        } as ~Entity:
     }
 }

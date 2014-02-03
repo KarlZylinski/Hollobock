@@ -7,15 +7,16 @@ use std::rand::Rng;
 use entity::world::World;
 use entity::enemy::Enemy;
 use entity::{Entity, EntityUpdateResult};
+use entity::renderer::Renderer;
 use entity::sprite_renderer::SpriteRenderer;
 
 pub struct EnemySpawner {
     time_since_spawn: f32,
-    renderer: Option<SpriteRenderer>
+    renderer: Option<~Renderer:>
 }
 
 impl EnemySpawner {
-    pub fn new(renderer: Option<SpriteRenderer>) -> EnemySpawner {
+    pub fn new(renderer: Option<~Renderer:>) -> EnemySpawner {
         EnemySpawner {
             time_since_spawn: 0.,
             renderer: renderer
@@ -61,6 +62,16 @@ impl Entity for EnemySpawner {
 
 
     fn draw(&self, _window: &mut RenderWindow) {        
+    }
+    
+    fn position(&self) -> Vector2f
+    {
+        Vector2f::new(0., 0.)
+    }
+
+    fn is_player(&self) -> bool
+    {
+        false
     }
 
     fn clone(&self) -> ~Entity: {

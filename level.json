@@ -1,0 +1,18 @@
+{
+    "entities": [ {
+            "type": "player",
+            "renderer": {
+                "type": "sprite_renderer",
+                "texture": "player.png"
+            },
+            "position": [400, 400]
+        },
+        {
+            "type": "enemy_spawner",
+            "renderer": {
+                "type": "sprite_renderer",
+                "texture": "enemy.png"
+            }
+        }
+    ]
+}

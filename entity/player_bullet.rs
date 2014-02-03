@@ -44,6 +44,16 @@ impl Entity for PlayerBullet {
         window.draw(&self.rect());
     }
 
+    fn position(&self) -> Vector2f
+    {
+        self.position
+    }
+
+    fn is_player(&self) -> bool
+    {
+        false
+    }
+    
     fn clone(&self) -> ~Entity {
         return ~PlayerBullet {
             position: self.position.clone(),

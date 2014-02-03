@@ -1,5 +1,6 @@
 extern mod native;
 extern mod rsfml;
+extern mod extra;
 
 use rsfml::system::{Clock, Vector2i};
 use rsfml::window::{ContextSettings, VideoMode, event, Close };

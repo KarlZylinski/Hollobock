@@ -9,12 +9,12 @@ use math;
 use entity::{Entity, EntityUpdateResult};
 use entity::world::World;
 use entity::player_bullet::PlayerBullet;
-use entity::sprite_renderer::SpriteRenderer;
+use entity::renderer::Renderer;
 
 pub struct Player {
     position: Vector2f,
     rotation: f32,
-    renderer: Option<SpriteRenderer>,
+    renderer: Option<~Renderer:>,
     weapon_cooldown: f32
 }
 
@@ -58,6 +58,17 @@ fn process_weapon_input(old_cooldown: f32, dt: f32, mouse_1_down: bool) -> (f32,
     return (cooldown, false);
 }
 
+impl Player {
+    pub fn new(position: Vector2f, renderer: Option<~Renderer:>) -> Player {
+        Player {
+            position: position,
+            rotation: 0.,
+            renderer: renderer,
+            weapon_cooldown: 0.
+        }
+    }
+}
+
 impl Entity for Player {
     fn update(&self, dt: f32, _world: &World, input: &Input) -> EntityUpdateResult {
         let input = get_input(input);
@@ -87,6 +98,16 @@ impl Entity for Player {
         }
         
         return EntityUpdateResult { new_entities: new_entities };
+    }
+
+    fn position(&self) -> Vector2f
+    {
+        self.position
+    }
+
+    fn is_player(&self) -> bool
+    {
+        true
     }
 
     fn draw(&self, window: &mut RenderWindow) {

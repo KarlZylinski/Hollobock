@@ -8,6 +8,7 @@ use entity::Entity;
 use entity::player::Player;
 use entity::enemy_spawner::EnemySpawner;
 use entity::sprite_renderer::SpriteRenderer;
+use entity::renderer::Renderer;
 
 pub struct GameLayer {
     world: World
@@ -21,7 +22,7 @@ impl GameLayer {
             rotation: 0.,
             renderer: resource_store.load_texture(~"player.png").map_or(None, |t| 
                 Sprite::new_with_texture(t).map(|s|
-                    SpriteRenderer::new(s)
+                    ~SpriteRenderer::new(s) as ~Renderer:
                 )
             ),
             weapon_cooldown: 0.
@@ -30,7 +31,7 @@ impl GameLayer {
         let enemy_spawner = EnemySpawner::new(
             resource_store.load_texture(~"enemy.png").map_or(None, |t|
                 Sprite::new_with_texture(t).map(|s|
-                    SpriteRenderer::new(s)
+                    ~SpriteRenderer::new(s) as ~Renderer:
                 )
             )
         );
