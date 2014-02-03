@@ -8,7 +8,6 @@ use entity::world::World;
 use entity::enemy::Enemy;
 use entity::{Entity, EntityUpdateResult};
 use entity::renderer::Renderer;
-use entity::sprite_renderer::SpriteRenderer;
 
 pub struct EnemySpawner {
     time_since_spawn: f32,

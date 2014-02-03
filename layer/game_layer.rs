@@ -1,13 +1,9 @@
 use layer::{Layer, LayerUpdateResult};
-use rsfml::system::Vector2f;
-use rsfml::graphics::{RenderWindow, Sprite};
+use rsfml::graphics::RenderWindow;
 use input::Input;
 use resource_store::ResourceStore;
 use entity::world::World;
 use entity::Entity;
-use entity::player::Player;
-use entity::enemy_spawner::EnemySpawner;
-use entity::sprite_renderer::SpriteRenderer;
 use entity::renderer::Renderer;
 
 pub struct GameLayer {
@@ -16,32 +12,9 @@ pub struct GameLayer {
 
 impl GameLayer {    
     pub fn new(resource_store: &mut ResourceStore) -> GameLayer {
-
-        let player = Player {
-            position: Vector2f::new(200., 200.),
-            rotation: 0.,
-            renderer: resource_store.load_texture(~"player.png").map_or(None, |t| 
-                Sprite::new_with_texture(t).map(|s|
-                    ~SpriteRenderer::new(s) as ~Renderer:
-                )
-            ),
-            weapon_cooldown: 0.
-        };
-
-        let enemy_spawner = EnemySpawner::new(
-            resource_store.load_texture(~"enemy.png").map_or(None, |t|
-                Sprite::new_with_texture(t).map(|s|
-                    ~SpriteRenderer::new(s) as ~Renderer:
-                )
-            )
-        );
-
         GameLayer {
             world: World {
-                entities: ~[
-                    ~player as ~Entity:,
-                    ~enemy_spawner as ~Entity:
-                ]
+                entities: resource_store.load_level(~"level.json")
             }
         }
     }

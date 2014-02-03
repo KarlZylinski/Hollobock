@@ -8,10 +8,8 @@ use math;
 use std::iter::Iterator;
 use entity::{Entity, EntityUpdateResult};
 use entity::world::World;
-use entity::player::Player;
 use entity::player_bullet::PlayerBullet;
 use entity::renderer::Renderer;
-use entity::sprite_renderer::SpriteRenderer;
 
 pub struct Enemy {
     position: Vector2f,
@@ -40,6 +38,16 @@ fn intersecting_with_bullet(enemy: &Enemy, world: &World) -> bool {
     }
 
     return false;
+}
+
+impl Enemy {
+    pub fn new(position: Vector2f, renderer: Option<~Renderer:>) -> Enemy {
+        Enemy {
+            position: position,
+            rotation: 0.,
+            renderer: renderer
+        }
+    }
 }
 
 impl Entity for Enemy {
