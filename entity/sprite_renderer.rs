@@ -1,5 +1,6 @@
 use rsfml::system::{Vector2f};
-use rsfml::graphics::{RenderWindow, Sprite, FloatRect};
+use rsfml::graphics::{RenderWindow, FloatRect};
+use rsfml::graphics::rc::Sprite;
 
 use entity::renderer::Renderer;
 

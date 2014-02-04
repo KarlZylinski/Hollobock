@@ -8,7 +8,7 @@ use extra::json;
 use extra::json::{Json, List, Object, String};
 
 use rsfml::graphics::Texture;
-use rsfml::graphics::Sprite;
+use rsfml::graphics::rc::Sprite;
 use rsfml::system::Vector2f;
 
 use entity::renderer::Renderer;
