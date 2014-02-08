@@ -5,22 +5,15 @@ use input::Input;
 use std::rand;
 use std::rand::Rng;
 use entity::world::World;
-use entity::enemy::Enemy;
+use entity::Enemy;
+use entity::enemy::EnemyStruct;
+use entity::EnemySpawner;
 use entity::{Entity, EntityUpdateResult};
 use entity::renderer::Renderer;
 
-pub struct EnemySpawner {
+pub struct EnemySpawnerStruct {
     time_since_spawn: f32,
     renderer: Option<~Renderer:>
-}
-
-impl EnemySpawner {
-    pub fn new(renderer: Option<~Renderer:>) -> EnemySpawner {
-        EnemySpawner {
-            time_since_spawn: 0.,
-            renderer: renderer
-        }
-    }
 }
 
 fn rand() -> f32 {
@@ -33,26 +26,33 @@ fn rand() -> f32 {
     return 0.;
 }
 
-impl Entity for EnemySpawner {
-    fn update(&self, dt: f32, _world: &World, _input: &Input) -> EntityUpdateResult {
+impl EnemySpawnerStruct {
+    pub fn new(renderer: Option<~Renderer:>) -> EnemySpawnerStruct {
+        EnemySpawnerStruct {
+            time_since_spawn: 0.,
+            renderer: renderer
+        }
+    }
+
+    pub fn update(&self, dt: f32, _world: &World, _input: &Input) -> EntityUpdateResult {
         let new_entities = if self.time_since_spawn > 1. {
             ~[
-                ~Enemy {
+                Enemy(EnemyStruct {
                     position: Vector2f::new(800.0f32 * rand(), 600.0f32 * rand()),
                     rotation: 0.,
                     renderer: self.renderer.as_ref().map_or(None, |r| r.clone())
-                } as ~Entity:,
-                ~EnemySpawner {
+                }),
+                EnemySpawner(EnemySpawnerStruct {
                     time_since_spawn: dt,
                     renderer: self.renderer.as_ref().map_or(None, |r| r.clone()),
-                } as ~Entity:
+                })
             ]
         } else {
             ~[
-                ~EnemySpawner {
+                EnemySpawner(EnemySpawnerStruct {
                     time_since_spawn: self.time_since_spawn + dt,
                     renderer: self.renderer.as_ref().map_or(None, |r| r.clone()),
-                } as ~Entity:
+                })
             ]
         };
 
@@ -60,23 +60,18 @@ impl Entity for EnemySpawner {
     }
 
 
-    fn draw(&self, _window: &mut RenderWindow) {        
+    pub fn draw(&self, _window: &mut RenderWindow) {        
     }
     
-    fn position(&self) -> Vector2f
+    pub fn position(&self) -> Vector2f
     {
         Vector2f::new(0., 0.)
     }
-
-    fn is_player(&self) -> bool
-    {
-        false
-    }
-
-    fn clone(&self) -> ~Entity: {
-        return ~EnemySpawner {
+    
+    pub fn clone(&self) -> Entity {
+        return EnemySpawner(EnemySpawnerStruct {
             time_since_spawn: self.time_since_spawn,
             renderer: self.renderer.as_ref().map_or(None, |r| r.clone()),
-        } as ~Entity:;
+        });
     }
 }

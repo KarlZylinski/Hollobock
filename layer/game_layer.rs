@@ -3,7 +3,6 @@ use rsfml::graphics::RenderWindow;
 use input::Input;
 use resource_store::ResourceStore;
 use entity::world::World;
-use entity::Entity;
 use entity::renderer::Renderer;
 
 pub struct GameLayer {

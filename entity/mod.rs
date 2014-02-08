@@ -1,9 +1,6 @@
 use rsfml::graphics::RenderWindow;
 use rsfml::system::Vector2f;
 use input::Input;
-
-use std::cast::transmute;
-use std::unstable::intrinsics::TypeId;
 use entity::world::World;
 
 pub mod player;
@@ -14,43 +11,57 @@ pub mod world;
 pub mod renderer;
 pub mod sprite_renderer;
 
-pub trait Entity: Any {
-    fn update(&self, dt: f32, world: &World, input: &Input) -> EntityUpdateResult;
-    fn draw(&self, window: &mut RenderWindow);
-    fn position(&self) -> Vector2f;
-    fn is_player(&self) -> bool;
-    fn clone(&self) -> ~Entity:;
+pub enum Entity {
+    Player(player::PlayerStruct),
+    Enemy(enemy::EnemyStruct),
+    EnemySpawner(enemy_spawner::EnemySpawnerStruct),
+    PlayerBullet(player_bullet::PlayerBulletStruct)
 }
 
-impl Clone for ~Entity: {
-    fn clone(&self) -> ~Entity: {
+impl Clone for Entity {
+    fn clone(&self) -> Entity {
         return self.clone();
     }
 }
 
-impl<'a> AnyRefExt<'a> for &'a Entity {
-    #[inline]
-    fn is<T: 'static>(self) -> bool {
-        // Get TypeId of the type this function is instantiated with
-        let t = TypeId::of::<T>();
-
-        // Get TypeId of the type in the trait object
-        let boxed = self.get_type_id();
-
-        // Compare both TypeIds on equality
-        t == boxed
+impl Entity {
+    fn update(&self, dt: f32, world: &World, input: &Input) -> EntityUpdateResult {
+        match self {
+            &Player(ref e) => e.update(dt, world, input),
+            &Enemy(ref e) => e.update(dt, world, input),
+            &EnemySpawner(ref e) => e.update(dt, world, input),
+            &PlayerBullet(ref e) => e.update(dt, world, input)
+        }
     }
 
-    #[inline]
-    fn as_ref<T: 'static>(self) -> Option<&'a T> {
-        if self.is::<T>() {
-            Some(unsafe { transmute(self.as_void_ptr()) })
-        } else {
-            None
+    fn draw(&self, window: &mut RenderWindow) {
+        match self {
+            &Player(ref e) => e.draw(window),
+            &Enemy(ref e) => e.draw(window),
+            &EnemySpawner(ref e) => e.draw(window),
+            &PlayerBullet(ref e) => e.draw(window)
+        }
+    }
+
+    fn position(&self) -> Vector2f {
+        match self {
+            &Player(ref e) => e.position(),
+            &Enemy(ref e) => e.position(),
+            &EnemySpawner(ref e) => e.position(),
+            &PlayerBullet(ref e) => e.position()
+        }
+    }
+
+    fn clone(&self) -> Entity {
+        match self {
+            &Player(ref e) => e.clone(),
+            &Enemy(ref e) => e.clone(),
+            &EnemySpawner(ref e) => e.clone(),
+            &PlayerBullet(ref e) => e.clone()
         }
     }
 }
 
 pub struct EntityUpdateResult {
-    new_entities: ~[~Entity:]
+    new_entities: ~[Entity]
 }

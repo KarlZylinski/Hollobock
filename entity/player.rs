@@ -7,11 +7,13 @@ use rsfml::window::{keyboard, mouse};
 use input::Input;
 use math;
 use entity::{Entity, EntityUpdateResult};
+use entity::Player;
+use entity::PlayerBullet;
 use entity::world::World;
-use entity::player_bullet::PlayerBullet;
+use entity::player_bullet::PlayerBulletStruct;
 use entity::renderer::Renderer;
 
-pub struct Player {
+pub struct PlayerStruct {
     position: Vector2f,
     rotation: f32,
     renderer: Option<~Renderer:>,
@@ -58,19 +60,17 @@ fn process_weapon_input(old_cooldown: f32, dt: f32, mouse_1_down: bool) -> (f32,
     return (cooldown, false);
 }
 
-impl Player {
-    pub fn new(position: Vector2f, renderer: Option<~Renderer:>) -> Player {
-        Player {
+impl PlayerStruct {
+    pub fn new(position: Vector2f, renderer: Option<~Renderer:>) -> PlayerStruct {
+        PlayerStruct {
             position: position,
             rotation: 0.,
             renderer: renderer,
             weapon_cooldown: 0.
         }
     }
-}
 
-impl Entity for Player {
-    fn update(&self, dt: f32, _world: &World, input: &Input) -> EntityUpdateResult {
+    pub fn update(&self, dt: f32, _world: &World, input: &Input) -> EntityUpdateResult {
         let input = get_input(input);
         let new_position = self.position + input.direction * 200.0f32 * dt;
         let look_direction = Vector2f::new(input.mouse_position.x as f32 - new_position.x, input.mouse_position.y as f32 - new_position.y);
@@ -78,48 +78,48 @@ impl Entity for Player {
 
         let (weapon_cooldown, weapon_fired) = process_weapon_input(self.weapon_cooldown, dt, input.mouse_1);
 
-        let new_player = ~Player {
+        let new_player = PlayerStruct {
             position: new_position,
             rotation: new_rotation,
             renderer: self.renderer.as_ref().map_or(None, |r| r.update(&new_position, new_rotation)),
             weapon_cooldown: weapon_cooldown,
-        } as ~Entity:;
+        };
 
-        let mut new_entities = ~[new_player];
+        let mut new_entities = ~[Player(new_player)];
 
         if weapon_fired {
             new_entities.push(
-                ~PlayerBullet {
+                PlayerBullet(PlayerBulletStruct {
                     position: new_position,
                     direction: math::normalize(look_direction),
                     velocity: 400.
-                } as ~Entity:
+                })
             );
         }
         
         return EntityUpdateResult { new_entities: new_entities };
     }
 
-    fn position(&self) -> Vector2f
+    pub fn position(&self) -> Vector2f
     {
         self.position
     }
 
-    fn is_player(&self) -> bool
+    pub fn is_player(&self) -> bool
     {
         true
     }
 
-    fn draw(&self, window: &mut RenderWindow) {
+    pub fn draw(&self, window: &mut RenderWindow) {
         self.renderer.as_ref().map(|r| r.draw(window));
     }
 
-    fn clone(&self) -> ~Entity: {
-        return ~Player {
+    pub fn clone(&self) -> Entity {
+        return Player(PlayerStruct {
             position: self.position.clone(),
             rotation: self.rotation,
             renderer: self.renderer.as_ref().map_or(None, |r| r.clone()),
             weapon_cooldown: self.weapon_cooldown
-        } as ~Entity:;
+        });
     }
 }

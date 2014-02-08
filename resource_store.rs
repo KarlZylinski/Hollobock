@@ -14,8 +14,10 @@ use rsfml::system::Vector2f;
 use entity::renderer::Renderer;
 use entity::sprite_renderer::SpriteRenderer;
 use entity::Entity;
-use entity::player::Player;
-use entity::enemy_spawner::EnemySpawner;
+use entity::Player;
+use entity::player::PlayerStruct;
+use entity::EnemySpawner;
+use entity::enemy_spawner::EnemySpawnerStruct;
 
 pub struct ResourceStore {
     textures: HashMap<~str, Option<Rc<RefCell<Texture>>>>
@@ -28,8 +30,12 @@ impl ResourceStore {
         }
     }
 
-    pub fn load_level(&mut self, filename: ~str) -> ~[~Entity:] {
-        let level_json_str = File::open(&Path::new(filename)).read_to_str();
+    pub fn load_level(&mut self, filename: ~str) -> ~[Entity] {
+        let level_json_str = match File::open(&Path::new(filename)).read_to_str() {
+            Ok(file_as_str) => file_as_str,
+            Err(_) => fail!("Faild to load level.")
+        };
+
         let level_json = match json::from_str(level_json_str) {
             Ok(json) => json,
             Err(_) => fail!("Failed to load level.")
@@ -49,14 +55,14 @@ impl ResourceStore {
         ).take()
     }
 
-    fn load_entities(&mut self, o: json::Object) -> ~[~Entity:] {
+    fn load_entities(&mut self, o: json::Object) -> ~[Entity] {
         let no_entities: json::List = ~[];
         let entities_json = o.find(&~"entities").map_or(&no_entities, |e| match e {
             &json::List(ref l) => l,
             _ => &no_entities
         });
 
-        let mut new_entities: ~[~Entity:] = ~[];
+        let mut new_entities: ~[Entity] = ~[];
 
         for entity_json in entities_json.iter() {
             let entity_obj = match entity_json { &json::Object(ref o) => Some(o), _ => None };
@@ -70,7 +76,7 @@ impl ResourceStore {
         new_entities
     }
 
-    fn load_entity(&mut self, object: &~json::Object) -> Option<~Entity:> {
+    fn load_entity(&mut self, object: &~json::Object) -> Option<Entity> {
         let entity_type = object.find(&~"type").as_ref().map_or(None, |&t| match t { &json::String(ref s) => Some(s), _ => None } );
         let renderer = object.find(&~"renderer").map_or(None, |r| self.load_renderer(r));
 
@@ -78,11 +84,11 @@ impl ResourceStore {
             Some(et) => {
                 if et == &~"player" {
                     return match object.find(&~"position").map_or(None, |p| ResourceStore::load_vector2f(p)) {
-                        Some(v) => Some(~Player::new(v, renderer) as ~Entity:),
+                        Some(v) => Some(Player(PlayerStruct::new(v, renderer))),
                         None => None
                     };
                 } else if et == &~"enemy_spawner" {
-                    return Some(~EnemySpawner::new(renderer) as ~Entity:);
+                    return Some(EnemySpawner(EnemySpawnerStruct::new(renderer)));
                 }
 
                 None
