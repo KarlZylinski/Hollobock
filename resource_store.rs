@@ -84,11 +84,11 @@ impl ResourceStore {
             Some(et) => {
                 if et == &~"player" {
                     return match object.find(&~"position").map_or(None, |p| ResourceStore::load_vector2f(p)) {
-                        Some(v) => Some(Player(PlayerStruct::new(v, renderer))),
+                        Some(v) => Some(Player(~PlayerStruct::new(v, renderer))),
                         None => None
                     };
                 } else if et == &~"enemy_spawner" {
-                    return Some(EnemySpawner(EnemySpawnerStruct::new(renderer)));
+                    return Some(EnemySpawner(~EnemySpawnerStruct::new(renderer)));
                 }
 
                 None

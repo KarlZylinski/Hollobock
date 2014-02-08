@@ -10,6 +10,7 @@ use entity::{Entity, Player, EntityUpdateResult};
 use entity::world::World;
 use entity::PlayerBullet;
 use entity::Enemy;
+use entity::EntityTrait;
 use entity::renderer::Renderer;
 
 pub struct EnemyStruct {
@@ -49,8 +50,10 @@ impl EnemyStruct {
             renderer: renderer
         }
     }
+}
 
-    pub fn update(&self, dt: f32, world: &World, _input: &Input) -> EntityUpdateResult {
+impl EntityTrait for EnemyStruct {   
+    fn update(&self, dt: f32, world: &World, _input: &Input) -> EntityUpdateResult {
         let player_option = world.entities.iter().find(|e| {
             match *e {
                 &Player(_) => true,
@@ -70,7 +73,7 @@ impl EnemyStruct {
         let new_entities = if intersecting_with_bullet(self, world) {
             ~[]
         } else {
-            ~[Enemy(EnemyStruct {
+            ~[Enemy(~EnemyStruct {
                 position: new_position,
                 rotation: new_rotation,
                 renderer: self.renderer.as_ref().map_or(None, |r| r.update(&new_position, new_rotation)),
@@ -82,17 +85,17 @@ impl EnemyStruct {
         }
     }
     
-    pub fn position(&self) -> Vector2f
+    fn position(&self) -> Vector2f
     {
         self.position
     }
     
-    pub fn draw(&self, window: &mut RenderWindow) {
+    fn draw(&self, window: &mut RenderWindow) {
         self.renderer.as_ref().map(|r| r.draw(window));
     }
 
-    pub fn clone(&self) -> Entity {
-        Enemy(EnemyStruct {
+    fn clone(&self) -> Entity {
+        Enemy(~EnemyStruct {
             position: self.position.clone(),
             rotation: self.rotation,
             renderer: self.renderer.as_ref().map_or(None, |r| r.clone()),

@@ -11,11 +11,18 @@ pub mod world;
 pub mod renderer;
 pub mod sprite_renderer;
 
+pub trait EntityTrait {
+    fn update(&self, dt: f32, world: &World, input: &Input) -> EntityUpdateResult;
+    fn draw(&self, window: &mut RenderWindow);
+    fn position(&self) -> Vector2f;
+    fn clone(&self) -> Entity;
+}
+
 pub enum Entity {
-    Player(player::PlayerStruct),
-    Enemy(enemy::EnemyStruct),
-    EnemySpawner(enemy_spawner::EnemySpawnerStruct),
-    PlayerBullet(player_bullet::PlayerBulletStruct)
+    Player(~player::PlayerStruct),
+    Enemy(~enemy::EnemyStruct),
+    EnemySpawner(~enemy_spawner::EnemySpawnerStruct),
+    PlayerBullet(~player_bullet::PlayerBulletStruct)
 }
 
 impl Clone for Entity {
@@ -25,40 +32,29 @@ impl Clone for Entity {
 }
 
 impl Entity {
-    fn update(&self, dt: f32, world: &World, input: &Input) -> EntityUpdateResult {
+    fn do_as_entity_trait<U>(&self, function: |v: &EntityTrait:| -> U) -> U {
         match self {
-            &Player(ref e) => e.update(dt, world, input),
-            &Enemy(ref e) => e.update(dt, world, input),
-            &EnemySpawner(ref e) => e.update(dt, world, input),
-            &PlayerBullet(ref e) => e.update(dt, world, input)
+            &Player(~ref e) => function(e as &EntityTrait:),
+            &Enemy(~ref e) => function(e as &EntityTrait:),
+            &EnemySpawner(~ref e) => function(e as &EntityTrait:),
+            &PlayerBullet(~ref e) => function(e as &EntityTrait:)
         }
     }
 
-    fn draw(&self, window: &mut RenderWindow) {
-        match self {
-            &Player(ref e) => e.draw(window),
-            &Enemy(ref e) => e.draw(window),
-            &EnemySpawner(ref e) => e.draw(window),
-            &PlayerBullet(ref e) => e.draw(window)
-        }
+    pub fn update(&self, dt: f32, world: &World, input: &Input) -> EntityUpdateResult {
+        self.do_as_entity_trait(|et| et.update(dt, world, input))
     }
 
-    fn position(&self) -> Vector2f {
-        match self {
-            &Player(ref e) => e.position(),
-            &Enemy(ref e) => e.position(),
-            &EnemySpawner(ref e) => e.position(),
-            &PlayerBullet(ref e) => e.position()
-        }
+    pub fn draw(&self, window: &mut RenderWindow) {
+        self.do_as_entity_trait(|et| et.draw(window));
     }
 
-    fn clone(&self) -> Entity {
-        match self {
-            &Player(ref e) => e.clone(),
-            &Enemy(ref e) => e.clone(),
-            &EnemySpawner(ref e) => e.clone(),
-            &PlayerBullet(ref e) => e.clone()
-        }
+    pub fn position(&self) -> Vector2f {
+        self.do_as_entity_trait(|et| et.position())
+    }
+
+    pub fn clone(&self) -> Entity {
+        self.do_as_entity_trait(|et| et.clone())
     }
 }
 

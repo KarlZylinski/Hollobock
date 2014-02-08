@@ -12,6 +12,7 @@ use entity::PlayerBullet;
 use entity::world::World;
 use entity::player_bullet::PlayerBulletStruct;
 use entity::renderer::Renderer;
+use entity::EntityTrait;
 
 pub struct PlayerStruct {
     position: Vector2f,
@@ -69,8 +70,10 @@ impl PlayerStruct {
             weapon_cooldown: 0.
         }
     }
+}
 
-    pub fn update(&self, dt: f32, _world: &World, input: &Input) -> EntityUpdateResult {
+impl EntityTrait for PlayerStruct {
+    fn update(&self, dt: f32, _world: &World, input: &Input) -> EntityUpdateResult {
         let input = get_input(input);
         let new_position = self.position + input.direction * 200.0f32 * dt;
         let look_direction = Vector2f::new(input.mouse_position.x as f32 - new_position.x, input.mouse_position.y as f32 - new_position.y);
@@ -85,11 +88,11 @@ impl PlayerStruct {
             weapon_cooldown: weapon_cooldown,
         };
 
-        let mut new_entities = ~[Player(new_player)];
+        let mut new_entities = ~[Player(~new_player)];
 
         if weapon_fired {
             new_entities.push(
-                PlayerBullet(PlayerBulletStruct {
+                PlayerBullet(~PlayerBulletStruct {
                     position: new_position,
                     direction: math::normalize(look_direction),
                     velocity: 400.
@@ -100,22 +103,17 @@ impl PlayerStruct {
         return EntityUpdateResult { new_entities: new_entities };
     }
 
-    pub fn position(&self) -> Vector2f
+    fn position(&self) -> Vector2f
     {
         self.position
     }
 
-    pub fn is_player(&self) -> bool
-    {
-        true
-    }
-
-    pub fn draw(&self, window: &mut RenderWindow) {
+    fn draw(&self, window: &mut RenderWindow) {
         self.renderer.as_ref().map(|r| r.draw(window));
     }
 
-    pub fn clone(&self) -> Entity {
-        return Player(PlayerStruct {
+    fn clone(&self) -> Entity {
+        return Player(~PlayerStruct {
             position: self.position.clone(),
             rotation: self.rotation,
             renderer: self.renderer.as_ref().map_or(None, |r| r.clone()),
