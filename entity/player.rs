@@ -92,11 +92,12 @@ impl EntityTrait for PlayerStruct {
 
         if weapon_fired {
             new_entities.push(
-                PlayerBullet(~PlayerBulletStruct {
-                    position: new_position,
-                    direction: math::normalize(look_direction),
-                    velocity: 400.
-                })
+                PlayerBullet(~PlayerBulletStruct::new(
+                    &new_position,
+                    &math::normalize(look_direction),
+                    400.0,
+                    1
+                ))
             );
         }
         

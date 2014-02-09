@@ -16,7 +16,8 @@ use entity::renderer::Renderer;
 pub struct EnemyStruct {
     position: Vector2f,
     rotation: f32,
-    renderer: Option<~Renderer:>
+    renderer: Option<~Renderer:>,
+    health: int
 }
 
 fn intersecting_with_bullet(enemy: &EnemyStruct, world: &World) -> bool {
@@ -43,11 +44,12 @@ fn intersecting_with_bullet(enemy: &EnemyStruct, world: &World) -> bool {
 }
 
 impl EnemyStruct {
-    pub fn new(position: Vector2f, renderer: Option<~Renderer:>) -> EnemyStruct {
+    pub fn new(position: &Vector2f, rotation: f32, renderer: Option<~Renderer:>, health: int) -> EnemyStruct {
         EnemyStruct {
-            position: position,
-            rotation: 0.,
-            renderer: renderer
+            position: position.clone(),
+            rotation: rotation,
+            renderer: renderer,
+            health: health
         }
     }
 }
@@ -70,14 +72,23 @@ impl EntityTrait for EnemyStruct {
         let new_position = self.position + direction * 100.0f32 * dt;
         let new_rotation = f32::atan2(direction.y, direction.x).to_degrees();
 
-        let new_entities = if intersecting_with_bullet(self, world) {
-            ~[]
+        let intersecting_with_bullet = intersecting_with_bullet(self, world);
+
+        let new_health = if intersecting_with_bullet {
+            self.health - 1
         } else {
-            ~[Enemy(~EnemyStruct {
-                position: new_position,
-                rotation: new_rotation,
-                renderer: self.renderer.as_ref().map_or(None, |r| r.update(&new_position, new_rotation)),
-            })]
+            self.health
+        };
+
+        let new_entities = if new_health > 0 {
+            ~[Enemy(~EnemyStruct::new(
+                &new_position,
+                new_rotation,
+                self.renderer.as_ref().map_or(None, |r| r.update(&new_position, new_rotation)),
+                new_health
+            ))]
+        } else {
+            ~[]
         };
 
         EntityUpdateResult {
@@ -99,6 +110,7 @@ impl EntityTrait for EnemyStruct {
             position: self.position.clone(),
             rotation: self.rotation,
             renderer: self.renderer.as_ref().map_or(None, |r| r.clone()),
+            health: self.health
         })
     }
 }

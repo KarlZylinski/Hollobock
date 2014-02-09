@@ -1,16 +1,49 @@
 use rsfml::system::{Vector2f};
-use rsfml::graphics::{RenderWindow, RectangleShape};
+use rsfml::graphics::{RenderWindow, RectangleShape, FloatRect};
 
 use input::Input;
 use entity::world::World;
 use entity::PlayerBullet;
-use entity::{Entity, EntityUpdateResult};
+use entity::{Entity, Enemy, EntityUpdateResult};
 use entity::EntityTrait;
 
 pub struct PlayerBulletStruct {
     position: Vector2f,
     direction: Vector2f,
-    velocity: f32
+    velocity: f32,
+    health: int
+}
+
+fn intersecting_with_enemy(bullet: &PlayerBulletStruct, world: &World) -> bool {
+    let mut enemies = world.entities.iter().filter_map(|e|
+        match *e {
+            Enemy(ref enemy) => Some(enemy),
+            _ => None
+        }
+    );
+
+    for enemy in enemies {
+        let empty_rect = FloatRect::new(0.0,0.0,0.0,0.0);
+
+        if FloatRect::intersects(
+            &bullet.rect().get_global_bounds(),
+            &enemy.renderer.as_ref().map_or(empty_rect, |r| r.bounds()),
+            &empty_rect){
+            
+            return true;
+        }
+    }
+
+    return false;
+}
+
+fn inside_world(bullet: &PlayerBulletStruct, world: &World) -> bool {
+    let empty_rect = FloatRect::new(0.0,0.0,0.0,0.0);
+
+    return FloatRect::intersects(
+        &bullet.rect().get_global_bounds(),
+        &world.bounds,
+        &empty_rect);
 }
 
 impl PlayerBulletStruct {
@@ -29,17 +62,40 @@ impl PlayerBulletStruct {
 
         return rectangle;
     }
+
+    pub fn new(position: &Vector2f, direction: &Vector2f, velocity: f32, health: int) -> PlayerBulletStruct {
+        PlayerBulletStruct {
+            position: position.clone(),
+            direction: direction.clone(),
+            velocity: velocity,
+            health: health
+        }
+    }
 }
 
 impl EntityTrait for PlayerBulletStruct {
-    fn update(&self, dt: f32, _world: &World, _input: &Input) -> EntityUpdateResult {
-        let new_bullet = PlayerBulletStruct {
-            position: self.position + self.direction * self.velocity * dt,
-            direction: self.direction,
-            velocity: self.velocity
+    fn update(&self, dt: f32, world: &World, _input: &Input) -> EntityUpdateResult {
+        let intersecting_with_enemy = intersecting_with_enemy(self, world);
+        let inside_world = inside_world(self, world);
+
+        let new_health = if intersecting_with_enemy || !inside_world {
+            self.health - 1
+        } else {
+            self.health
         };
 
-        return EntityUpdateResult { new_entities: ~[PlayerBullet(~new_bullet)] };
+        let new_entities = if new_health > 0 {
+            ~[PlayerBullet(~PlayerBulletStruct::new(
+                &(self.position + self.direction * self.velocity * dt),
+                &self.direction, 
+                self.velocity,
+                new_health
+            ))]
+        } else {
+            ~[]
+        };
+
+        return EntityUpdateResult { new_entities: new_entities };
     }
 
     fn draw(&self, window: &mut RenderWindow) {
@@ -55,7 +111,8 @@ impl EntityTrait for PlayerBulletStruct {
         return PlayerBullet(~PlayerBulletStruct {
             position: self.position.clone(),
             direction: self.direction.clone(),
-            velocity: self.velocity
+            velocity: self.velocity,
+            health: self.health
         });
     }
 }

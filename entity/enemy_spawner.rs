@@ -40,11 +40,12 @@ impl EntityTrait for EnemySpawnerStruct {
     fn update(&self, dt: f32, _world: &World, _input: &Input) -> EntityUpdateResult {
         let new_entities = if self.time_since_spawn > 1. {
             ~[
-                Enemy(~EnemyStruct {
-                    position: Vector2f::new(800.0f32 * rand(), 600.0f32 * rand()),
-                    rotation: 0.,
-                    renderer: self.renderer.as_ref().map_or(None, |r| r.clone())
-                }),
+                Enemy(~EnemyStruct::new(
+                    &Vector2f::new(800.0f32 * rand(), 600.0f32 * rand()),
+                    0.,
+                    self.renderer.as_ref().map_or(None, |r| r.clone()),
+                    3
+                )),
                 EnemySpawner(~EnemySpawnerStruct {
                     time_since_spawn: dt,
                     renderer: self.renderer.as_ref().map_or(None, |r| r.clone()),
