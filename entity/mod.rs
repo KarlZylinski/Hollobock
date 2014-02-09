@@ -32,29 +32,29 @@ impl Clone for Entity {
 }
 
 impl Entity {
-    fn do_as_entity_trait<U>(&self, function: |v: &EntityTrait:| -> U) -> U {
+    fn as_entity_trait<'r>(&'r self) -> &'r EntityTrait: {
         match self {
-            &Player(~ref e) => function(e as &EntityTrait:),
-            &Enemy(~ref e) => function(e as &EntityTrait:),
-            &EnemySpawner(~ref e) => function(e as &EntityTrait:),
-            &PlayerBullet(~ref e) => function(e as &EntityTrait:)
+            &Player(~ref e) => e as &EntityTrait:,
+            &Enemy(~ref e) => e as &EntityTrait:,
+            &EnemySpawner(~ref e) => e as &EntityTrait:,
+            &PlayerBullet(~ref e) => e as &EntityTrait:
         }
     }
 
     pub fn update(&self, dt: f32, world: &World, input: &Input) -> EntityUpdateResult {
-        self.do_as_entity_trait(|et| et.update(dt, world, input))
+        self.as_entity_trait().update(dt, world, input)
     }
 
     pub fn draw(&self, window: &mut RenderWindow) {
-        self.do_as_entity_trait(|et| et.draw(window));
+        self.as_entity_trait().draw(window);
     }
 
     pub fn position(&self) -> Vector2f {
-        self.do_as_entity_trait(|et| et.position())
+        self.as_entity_trait().position()
     }
 
     pub fn clone(&self) -> Entity {
-        self.do_as_entity_trait(|et| et.clone())
+        self.as_entity_trait().clone()
     }
 }
 
