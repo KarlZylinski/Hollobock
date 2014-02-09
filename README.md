@@ -13,4 +13,6 @@ Tech and other cool stuff
 
 I am creating this game using the Rust programming language: https://github.com/mozilla/rust. The main purpose for making this game is learning Rust.
 
+I try adopt some functional thinking when doing this. For example, the updating of entities is free of side effects. The entities in the game always return a new self and cannot directly poke other entities in the world.
+
 I create this game using the Rust SFML bindings, which lets me use the SFML multimedia library in Rust. https://github.com/JeremyLetang/rust-sfml
