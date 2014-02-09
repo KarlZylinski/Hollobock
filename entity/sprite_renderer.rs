@@ -17,7 +17,7 @@ impl SpriteRenderer {
 }
 
 impl Renderer for SpriteRenderer {
-     fn update(&self, position: &Vector2f, rotation: f32) -> Option<~Renderer:> {
+     fn update(&self, position: &Vector2f, rotation: f32, _dt: f32) -> Option<~Renderer:> {
         self.sprite.clone().map(|mut new_sprite: Sprite| {
             new_sprite.set_position(position);
             new_sprite.set_rotation(rotation);

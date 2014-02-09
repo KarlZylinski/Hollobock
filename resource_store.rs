@@ -5,7 +5,7 @@ use std::vec;
 use std::io::File;
 
 use extra::json;
-use extra::json::{Json, List, Object, String};
+use extra::json::{Json, List, Object, String, Number};
 
 use rsfml::graphics::Texture;
 use rsfml::graphics::rc::Sprite;
@@ -13,6 +13,7 @@ use rsfml::system::Vector2f;
 
 use entity::renderer::Renderer;
 use entity::sprite_renderer::SpriteRenderer;
+use entity::animated_renderer::AnimatedRenderer;
 use entity::Entity;
 use entity::Player;
 use entity::player::PlayerStruct;
@@ -110,6 +111,17 @@ impl ResourceStore {
                             Sprite::new_with_texture(t).map(|s|
                                 ~SpriteRenderer::new(s) as ~Renderer:
                             )
+                        );
+                    } else if t == &~"animated_renderer" {
+                        let texture = o.find(&~"texture").as_ref().map_or(None, |&t| match t { &String(ref t) => self.load_texture(t.clone()), _ => None });
+                        let frames = o.find(&~"frames").as_ref().map_or(1, |&n| match n { &Number(ref n) => n.clone() as i32, _ => 1 });
+                        let frame_time = o.find(&~"time_per_frame").as_ref().map_or(0.1, |&n| match n { &Number(ref n) => n.clone() as f32, _ => 0.1 });
+
+                        return texture.map_or(None, |t|
+                            match AnimatedRenderer::new(t, frames, frame_time) {
+                                Some(ar) => Some(~ar as ~Renderer:),
+                                None => None
+                            }
                         );
                     }
 

@@ -2,8 +2,10 @@
     "entities": [ {
             "type": "player",
             "renderer": {
-                "type": "sprite_renderer",
-                "texture": "player.png"
+                "type": "animated_renderer",
+                "texture": "walk_cycle_placeholder.png",
+                "frames": 8,
+                "time_per_frame": 0.1
             },
             "position": [400, 400]
         },

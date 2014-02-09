@@ -84,7 +84,7 @@ impl EntityTrait for PlayerStruct {
         let new_player = PlayerStruct {
             position: new_position,
             rotation: new_rotation,
-            renderer: self.renderer.as_ref().map_or(None, |r| r.update(&new_position, new_rotation)),
+            renderer: self.renderer.as_ref().map_or(None, |r| r.update(&new_position, new_rotation, dt)),
             weapon_cooldown: weapon_cooldown,
         };
 

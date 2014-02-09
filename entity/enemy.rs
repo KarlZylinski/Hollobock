@@ -84,7 +84,7 @@ impl EntityTrait for EnemyStruct {
             ~[Enemy(~EnemyStruct::new(
                 &new_position,
                 new_rotation,
-                self.renderer.as_ref().map_or(None, |r| r.update(&new_position, new_rotation)),
+                self.renderer.as_ref().map_or(None, |r| r.update(&new_position, new_rotation, dt)),
                 new_health
             ))]
         } else {
