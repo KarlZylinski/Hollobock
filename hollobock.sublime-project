@@ -2,7 +2,8 @@
 	"build_systems":
 	[
 		{
-			"cmd": "C:\\MinGW\\msys\\1.0\\msys.bat /c \"rustc -Llib/ hollobock.rs -o bin/hollobock.exe\"",
+			"cmd": "c.bat",
+    		"working_dir": "D:\\Projects\\hollobock",
 			"name": "Rust (Hollobock)"
 		}
 	],
