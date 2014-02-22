@@ -1,4 +1,4 @@
-use std::{num, f32};
+use std::{cmp, f32};
 
 use rsfml::system::{Vector2f, Vector2i};
 use rsfml::graphics::{RenderWindow};
@@ -52,7 +52,7 @@ fn get_input(input: &Input) -> PlayerInput {
 
 fn process_weapon_input(old_cooldown: f32, dt: f32, mouse_1_down: bool) -> (f32, bool)
 {
-    let cooldown = num::max(0., old_cooldown - dt);
+    let cooldown = cmp::max(0., old_cooldown - dt);
 
     if mouse_1_down && cooldown == 0. {
         return (0.1, true);

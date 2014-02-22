@@ -1,6 +1,6 @@
-extern mod native;
-extern mod rsfml;
-extern mod extra;
+extern crate native;
+extern crate rsfml;
+extern crate extra;
 
 use rsfml::system::{Clock, Vector2i};
 use rsfml::window::{ContextSettings, VideoMode, event, Close };

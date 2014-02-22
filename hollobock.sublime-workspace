@@ -1,0 +1,639 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"Ene",
+				"EnemyStruct"
+			],
+			[
+				"Spri",
+				"SpriteRenderer"
+			],
+			[
+				"render",
+				"renderer_texture"
+			],
+			[
+				"enti",
+				"entity_obj"
+			],
+			[
+				"ent",
+				"Entity"
+			],
+			[
+				"Wea",
+				"WeaponUpdateResult"
+			],
+			[
+				"Rende",
+				"SpriteRenderer"
+			],
+			[
+				"Spi",
+				"SpriteRenderer"
+			],
+			[
+				"new",
+				"new_sprite"
+			],
+			[
+				"SPrit",
+				"SpriteRenderer"
+			],
+			[
+				"new_p",
+				"new_position"
+			],
+			[
+				"spr",
+				"sprite_renderer"
+			],
+			[
+				"Sprite",
+				"SpriteRenderer"
+			],
+			[
+				"Sp",
+				"SpriteRenderer"
+			],
+			[
+				"Entity",
+				"EntityUpdateResult"
+			],
+			[
+				"upda",
+				"update_component"
+			],
+			[
+				"play",
+				"player_bullets"
+			],
+			[
+				"inter",
+				"intersecting_with_bullet"
+			],
+			[
+				"rect",
+				"rectangle"
+			],
+			[
+				"new_",
+				"new_entities"
+			],
+			[
+				"mous",
+				"mouse_position_previous_frame"
+			],
+			[
+				"mouse",
+				"mouse_position"
+			],
+			[
+				"mos",
+				"mouse_position"
+			],
+			[
+				"key",
+				"keyboard"
+			],
+			[
+				"loo",
+				"look_direction"
+			],
+			[
+				"w",
+				"weapon_fired"
+			],
+			[
+				"co",
+				"weapon_cooldown"
+			],
+			[
+				"update",
+				"update_result"
+			],
+			[
+				"u",
+				"Updateable"
+			],
+			[
+				"en",
+				"entity"
+			],
+			[
+				"entit",
+				"entities"
+			],
+			[
+				"fa",
+				"frame_timer"
+			],
+			[
+				"cn",
+				"count"
+			],
+			[
+				"model",
+				"model_view_projection_matrix"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "/D/Projects/hollobock/entity/mod.rs",
+			"settings":
+			{
+				"buffer_size": 1601,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/D/Projects/hollobock/entity/enemy.rs",
+			"settings":
+			{
+				"buffer_size": 3090,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/D/Projects/hollobock/entity/enemy_spawner.rs",
+			"settings":
+			{
+				"buffer_size": 2145,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/D/Projects/hollobock/entity/player.rs",
+			"settings":
+			{
+				"buffer_size": 3502,
+				"line_ending": "Windows"
+			}
+		}
+	],
+	"build_system": "Rust (Hollobock)",
+	"command_palette":
+	{
+		"height": 196.0,
+		"selected_items":
+		[
+			[
+				"Package Control: INst",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 400.0
+	},
+	"console":
+	{
+		"height": 311.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = '7183a2d3e96f11eeadd761d777e62404e330c659d4bb41d3bdf022e94cab3cd0'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/C/MinGW/msys/1.0/bin/rustc",
+		"/D/Projects/hollobock/entity/enemy_spawner.rs",
+		"/D/Projects/hollobock/entity/enemy.rs",
+		"/D/Projects/hollobock/entity/world.rs",
+		"/D/Projects/hollobock/layer/game_layer.rs",
+		"/D/Projects/hollobock/entity/player.rs",
+		"/D/Projects/hollobock/entity/player_bullet.rs",
+		"/D/Projects/hollobock/input.rs",
+		"/D/Projects/hollobock/math.rs",
+		"/D/Projects/hollobock/hollobock.rs",
+		"/D/Projects/hollobock/entity/renderer.rs",
+		"/D/Projects/hollobock/entity/sprite_renderer.rs",
+		"/D/Projects/hollobock/resource_store.rs",
+		"/D/Projects/hollobock/s.bat",
+		"/D/Projects/hollobock/README.md",
+		"/D/Projects/hollobock/entity/mod.rs",
+		"/D/Projects/Hollobock/bin/level.json",
+		"/D/Projects/Hollobock/entity/renderer.rs",
+		"/D/Projects/Hollobock/level.json",
+		"/D/Projects/hollobock/entity/weapon/mod.rs",
+		"/D/Projects/hollobock/entity/weapon/pistol.rs",
+		"/D/Projects/hollobock/entity/weapon.rs",
+		"/D/Projects/Hollobock/entity/pistol.rs",
+		"/C/Users/Karl/AppData/Roaming/Sublime Text 3/Packages/User/Preferences.sublime-settings",
+		"/D/Projects/hollobock/hollobock.sublime-project",
+		"/D/Projects/Hollobock/layer/gui_layer.rs",
+		"/D/Projects/hollobock/.gitattributes",
+		"/D/Projects/hollobock/lib/librsfml-fe88034a-0.2.rlib",
+		"/D/Projects/hollobock/layer/gui_layer.rs",
+		"/D/Projects/hollobock/list.rs",
+		"/D/Projects/hollobock/layer/mod.rs",
+		"/D/Projects/Hollobock/entity/sprite_renderer.rs",
+		"/D/Projects/Hollobock/entity/player_input_component.rs",
+		"/D/Projects/Hollobock/entity/player_update_component.rs",
+		"/D/Projects/Hollobock/entity/mod.rs",
+		"/D/Projects/hollobock/world.rs",
+		"/D/Projects/Hollobock/layer/mod.rs",
+		"/D/Projects/hollobock/game_layer.rs",
+		"/D/Projects/Hollobock/entity/entity.rs",
+		"/D/Projects/hollobock/entity/entity.rs",
+		"/D/Projects/hollobock/entity.rs",
+		"/D/Projects/hollobock/game/game_layer.rs",
+		"/D/Projects/Hollobock/game_layer/mod.rs",
+		"/D/Projects/hollobock/enemy_spawner.rs",
+		"/D/Projects/hollobock/game_layer/game_layer.rs",
+		"/D/Projects/hollobock/game_layer/enemy.rs",
+		"/D/Projects/hollobock/player.rs",
+		"/D/Projects/hollobock/enemy.rs",
+		"/D/Projects/hollobock/layer.rs",
+		"/D/Projects/hollobock/player_bullet.rs",
+		"/D/Projects/hollobock/resource_manager.rs",
+		"/D/Dokument/GitHub/rust-sfml/stuff",
+		"/D/Dokument/GitHub/rust-sfml/kebab",
+		"/D/Projects/Hollobock/layer.rs",
+		"/D/Projects/Hollobock/input.rs",
+		"/D/Projects/Hollobock/game_layer.rs",
+		"/D/Projects/Hollobock/vector.rs",
+		"/D/Dokument/Även havet har en botten.txt",
+		"/D/Desktop/smör - Kopia.txt",
+		"/D/Projects/Hollobock/enemy.rs",
+		"/D/Projects/Hollobock/player_button.rs",
+		"/D/Projects/Hollobock/s.bat",
+		"/D/Projects/Hollobock/c.bat",
+		"/D/Projects/Hollobock/hollobock.sublime-project",
+		"/C/Users/Karl/AppData/Roaming/Sublime Text 3/Installed Packages/Rust.sublime-package",
+		"/C/Users/Karl/AppData/Roaming/Sublime Text 3/Packages/User/Rust.sublime-settings",
+		"/C/Users/Karl/AppData/Roaming/Sublime Text 3/Packages/User/Package Control.cache/ad7758d143e99a76034aad71ae2a1f3b.info",
+		"/D/Dokument/GitHub/karlzylinski.github.io/index.html",
+		"/D/Dokument/GitHub/karlzylinski.github.io/style.css",
+		"/D/Nedladdat/rustsfml/src/examples/pong/main.rs",
+		"/D/Projects/hollobock/rustm.rs",
+		"/E/Documents/Music/Confidant/smör.txt",
+		"/D/Projects/hollobock/rustw.rs",
+		"/D/Projects/rust_tutorial/loop.rs",
+		"/D/Projects/KjellKod/application_windows/shading_fs.glsl",
+		"/D/Projects/KjellKod/application_windows/shading_vs.glsl",
+		"/D/Projects/KjellKod/application_windows/geometry_fs.glsl",
+		"/D/Projects/KjellKod/application_windows/geometry_vs.glsl",
+		"/D/Desktop/The program shall translate a roman number (_3000)",
+		"/D/Projects/KjellKod/application_windows/br_office_p1.material",
+		"/D/Projects/KjellKod/application_windows/br_office_p2.material",
+		"/D/Desktop/br_office_p2.obj",
+		"/D/Projects/KjellKod/application_windows/br_office_posters.obj",
+		"/D/Desktop/br_office_p1.obj",
+		"/D/Desktop/br_office_p1_tri.obj",
+		"/D/Projects/KjellKod/application_windows/phong_daylight.material",
+		"/D/Projects/KjellKod/application_windows/fullscreen_pass_vs.glsl",
+		"/D/Desktop/SKIT/skit",
+		"/D/Projects/KjellKod/application_windows/fullscreen_pass_fs.glsl",
+		"/D/Projects/KjellKod/application_windows/render_config",
+		"/D/Projects/KjellKod/application_windows/fullscreen_pass (1).glsl",
+		"/D/Projects/KjellKod/application_windows/test_vs.glsl",
+		"/D/Projects/KjellKod/application_windows/test_fs.glsl",
+		"/D/Projects/zylinski.se/app/controllers/admin/projects_controller.rb",
+		"/D/Projects/zylinski.se/app/controllers/admin/admin_controller.rb",
+		"/D/Projects/zylinski.se/config/database.yml",
+		"/E/Projects/OpenGL/SkelletalAnimation/vertex.glsl"
+	],
+	"find":
+	{
+		"height": 34.0
+	},
+	"find_in_files":
+	{
+		"height": 90.0,
+		"where_history":
+		[
+			"D:\\Projects\\Hollobock,*.rs",
+			"",
+			"EntityUpdateResult"
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"Enemy ",
+			"is_pla",
+			"is_p",
+			"use rsfml::graphics::",
+			"\\t",
+			"\\s{4}",
+			"\" {4}\"",
+			"\\t",
+			"vector::normalize",
+			"use vector",
+			"vector",
+			"enemy_spawner",
+			"Entity",
+			"resource_manager",
+			"ResourceManager",
+			"UpdateResult",
+			"o "
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": true,
+		"replace_history":
+		[
+			"    ",
+			"\\s{4}",
+			" {4}",
+			"math::normalize",
+			"resource_store",
+			"ResourceStore",
+			"EntityUpdateResult",
+			""
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "/D/Projects/hollobock/entity/mod.rs",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1601,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1290,
+								1290
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Rust/Rust.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "/D/Projects/hollobock/entity/enemy.rs",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3090,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Rust/Rust.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 270.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "/D/Projects/hollobock/entity/enemy_spawner.rs",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2145,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Rust/Rust.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				}
+			]
+		},
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 3,
+					"file": "/D/Projects/hollobock/entity/player.rs",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3502,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"history_list_is_closing": true,
+							"syntax": "Packages/Rust/Rust.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 774.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 23.0
+	},
+	"input":
+	{
+		"height": 31.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			],
+			[
+				1,
+				0,
+				2,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			0.5,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 265.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"project": "hollobock.sublime-project",
+	"replace":
+	{
+		"height": 62.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+			[
+				"enemy",
+				"entity\\enemy.rs"
+			],
+			[
+				"mod.rs",
+				"entity\\mod.rs"
+			],
+			[
+				"player_b",
+				"entity\\player_bullet.rs"
+			],
+			[
+				"player",
+				"entity\\player.rs"
+			],
+			[
+				"en",
+				"entity\\enemy.rs"
+			],
+			[
+				"worl",
+				"entity\\world.rs"
+			],
+			[
+				"game",
+				"layer\\game_layer.rs"
+			],
+			[
+				"store.rs",
+				"resource_store.rs"
+			],
+			[
+				"",
+				"entity\\sprite_renderer.rs"
+			],
+			[
+				"holl",
+				"hollobock.rs"
+			],
+			[
+				"spriter",
+				"entity\\sprite_renderer.rs"
+			],
+			[
+				"renderer",
+				"entity\\renderer.rs"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 219.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

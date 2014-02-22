@@ -1,0 +1,16 @@
+{
+	"build_systems":
+	[
+		{
+			"cmd": "C:\\MinGW\\msys\\1.0\\msys.bat /c \"rustc -Llib/ hollobock.rs -o bin/hollobock.exe\"",
+			"name": "Rust (Hollobock)"
+		}
+	],
+	"folders":
+	[
+		{
+			"follow_symlinks": true,
+			"path": "D:\\Projects\\hollobock"
+		}
+	]
+}
