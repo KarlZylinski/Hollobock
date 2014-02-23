@@ -37,7 +37,7 @@ fn main() {
 
     let mut layers = ~[
         ~GameLayer::new(&mut resource_store) as ~Layer:,
-        ~GuiLayer::new() as ~Layer
+        ~GuiLayer::new(&mut resource_store) as ~Layer:
     ];
 
     while window.is_open() {
