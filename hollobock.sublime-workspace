@@ -4,8 +4,8 @@
 		"selected_items":
 		[
 			[
-				"hea",
-				"health_bar_texture"
+				"world",
+				"world_update_result"
 			],
 			[
 				"Ene",
@@ -148,98 +148,76 @@
 	"buffers":
 	[
 		{
-			"file": "/D/Projects/hollobock/entity/mod.rs",
+			"file": "hollobock.rs",
 			"settings":
 			{
-				"buffer_size": 1601,
+				"buffer_size": 2719,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "/D/Projects/hollobock/hollobock.rs",
+			"file": "gui/mod.rs",
 			"settings":
 			{
-				"buffer_size": 2381,
+				"buffer_size": 12,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "/D/Projects/hollobock/entity/player.rs",
+			"contents": "Searching 3388 files for \"T: \" (case sensitive)\n\nD:\\Repositories\\GitHub\\rust\\src\\libcollections\\dlist.rs:\n  413  }\n  414  \n  415: impl<T: Ord> DList<T> {\n  416      /// Insert `elt` sorted in ascending order\n  417      ///\n  ...\n  585  \n  586  impl<A> FromIterator<A> for DList<A> {\n  587:     fn from_iterator<T: Iterator<A>>(iterator: &mut T) -> DList<A> {\n  588          let mut ret = DList::new();\n  589          ret.extend(iterator);\n  ...\n  593  \n  594  impl<A> Extendable<A> for DList<A> {\n  595:     fn extend<T: Iterator<A>>(&mut self, iterator: &mut T) {\n  596          for elt in *iterator { self.push_back(elt); }\n  597      }\n  ...\n  633  impl<\n  634      S: Encoder,\n  635:     T: Encodable<S>\n  636  > Encodable<S> for DList<T> {\n  637      fn encode(&self, s: &mut S) {\n  ...\n  742  \n  743      #[cfg(test)]\n  744:     fn list_from<T: Clone>(v: &[T]) -> DList<T> {\n  745          v.iter().map(|x| (*x).clone()).collect()\n  746      }\n\nD:\\Repositories\\GitHub\\rust\\src\\libcollections\\priority_queue.rs:\n  193  }\n  194  \n  195: impl<T: Ord> FromIterator<T> for PriorityQueue<T> {\n  196      fn from_iterator<Iter: Iterator<T>>(iter: &mut Iter) -> PriorityQueue<T> {\n  197          let mut q = PriorityQueue::new();\n  ...\n  202  }\n  203  \n  204: impl<T: Ord> Extendable<T> for PriorityQueue<T> {\n  205      fn extend<Iter: Iterator<T>>(&mut self, iter: &mut Iter) {\n  206          let (lower, _) = iter.size_hint();\n\nD:\\Repositories\\GitHub\\rust\\src\\libcollections\\ringbuf.rs:\n  389  \n  390  impl<A> FromIterator<A> for RingBuf<A> {\n  391:     fn from_iterator<T: Iterator<A>>(iterator: &mut T) -> RingBuf<A> {\n  392          let (lower, _) = iterator.size_hint();\n  393          let mut deq = RingBuf::with_capacity(lower);\n  ...\n  398  \n  399  impl<A> Extendable<A> for RingBuf<A> {\n  400:     fn extend<T: Iterator<A>>(&mut self, iterator: &mut T) {\n  401          for elt in *iterator {\n  402              self.push_back(elt);\n  ...\n  407  impl<\n  408      S: Encoder,\n  409:     T: Encodable<S>\n  410  > Encodable<S> for RingBuf<T> {\n  411      fn encode(&self, s: &mut S) {\n\nD:\\Repositories\\GitHub\\rust\\src\\libcollections\\treemap.rs:\n  557  }\n  558  \n  559: impl<T: Eq + TotalOrd> Eq for TreeSet<T> {\n  560      #[inline]\n  561      fn eq(&self, other: &TreeSet<T>) -> bool { self.map == other.map }\n  ...\n  564  }\n  565  \n  566: impl<T: Ord + TotalOrd> Ord for TreeSet<T> {\n  567      #[inline]\n  568      fn lt(&self, other: &TreeSet<T>) -> bool { self.map < other.map }\n  ...\n  575  }\n  576  \n  577: impl<T: TotalOrd> Container for TreeSet<T> {\n  578      /// Return the number of elements in the set\n  579      #[inline]\n  ...\n  585  }\n  586  \n  587: impl<T: TotalOrd> Mutable for TreeSet<T> {\n  588      /// Clear the set, removing all values.\n  589      #[inline]\n  ...\n  591  }\n  592  \n  593: impl<T: TotalOrd> Set<T> for TreeSet<T> {\n  594      /// Return true if the set contains a value\n  595      #[inline]\n  ...\n  636  }\n  637  \n  638: impl<T: TotalOrd> MutableSet<T> for TreeSet<T> {\n  639      /// Add a value to the set. Return true if the value was not already\n  640      /// present in the set.\n  ...\n  648  }\n  649  \n  650: impl<T: TotalOrd> TreeSet<T> {\n  651      /// Create an empty TreeSet\n  652      #[inline]\n  ...\n  739  \n  740  /// Compare `x` and `y`, but return `short` if x is None and `long` if y is None\n  741: fn cmp_opt<T: TotalOrd>(x: Option<&T>, y: Option<&T>,\n  742                          short: Ordering, long: Ordering) -> Ordering {\n  743      match (x, y) {\n  ...\n  748  }\n  749  \n  750: impl<'a, T: TotalOrd> Iterator<&'a T> for DifferenceItems<'a, T> {\n  751      fn next(&mut self) -> Option<&'a T> {\n  752          loop {\n  ...\n  760  }\n  761  \n  762: impl<'a, T: TotalOrd> Iterator<&'a T> for SymDifferenceItems<'a, T> {\n  763      fn next(&mut self) -> Option<&'a T> {\n  764          loop {\n  ...\n  772  }\n  773  \n  774: impl<'a, T: TotalOrd> Iterator<&'a T> for IntersectionItems<'a, T> {\n  775      fn next(&mut self) -> Option<&'a T> {\n  776          loop {\n  ...\n  790  }\n  791  \n  792: impl<'a, T: TotalOrd> Iterator<&'a T> for UnionItems<'a, T> {\n  793      fn next(&mut self) -> Option<&'a T> {\n  794          loop {\n  ...\n  974  \n  975  impl<K: TotalOrd, V> FromIterator<(K, V)> for TreeMap<K, V> {\n  976:     fn from_iterator<T: Iterator<(K, V)>>(iter: &mut T) -> TreeMap<K, V> {\n  977          let mut map = TreeMap::new();\n  978          map.extend(iter);\n  ...\n  983  impl<K: TotalOrd, V> Extendable<(K, V)> for TreeMap<K, V> {\n  984      #[inline]\n  985:     fn extend<T: Iterator<(K, V)>>(&mut self, iter: &mut T) {\n  986          for (k, v) in *iter {\n  987              self.insert(k, v);\n  ...\n  990  }\n  991  \n  992: impl<T: TotalOrd> FromIterator<T> for TreeSet<T> {\n  993      fn from_iterator<Iter: Iterator<T>>(iter: &mut Iter) -> TreeSet<T> {\n  994          let mut set = TreeSet::new();\n  ...\n  998  }\n  999  \n 1000: impl<T: TotalOrd> Extendable<T> for TreeSet<T> {\n 1001      #[inline]\n 1002      fn extend<Iter: Iterator<T>>(&mut self, iter: &mut Iter) {\n ....\n 1044  impl<\n 1045      S: Encoder,\n 1046:     T: Encodable<S> + Eq + TotalOrd\n 1047  > Encodable<S> for TreeSet<T> {\n 1048      fn encode(&self, s: &mut S) {\n ....\n 1059  impl<\n 1060      D: Decoder,\n 1061:     T: Decodable<D> + Eq + TotalOrd\n 1062  > Decodable<D> for TreeSet<T> {\n 1063      fn decode(d: &mut D) -> TreeSet<T> {\n\nD:\\Repositories\\GitHub\\rust\\src\\libextra\\json.rs:\n  728  }\n  729  \n  730: impl<T: Iterator<char>> Parser<T> {\n  731      /// Decode a json value from an Iterator<char>\n  732      pub fn new(rdr: T) -> Parser<T> {\n  ...\n  742  }\n  743  \n  744: impl<T: Iterator<char>> Parser<T> {\n  745      pub fn parse(&mut self) -> Result<Json, Error> {\n  746          match self.parse_value() {\n  ...\n 2240          B(~str)\n 2241      }\n 2242:     fn check_err<T: Decodable<Decoder>>(to_parse: &'static str, expected_error: &str) {\n 2243          use std::task;\n 2244          let res = task::try(proc() {\n\nD:\\Repositories\\GitHub\\rust\\src\\libextra\\stats.rs:\n  424  /// Returns a HashMap with the number of occurrences of every element in the\n  425  /// sequence that the iterator exposes.\n  426: pub fn freq_count<T: Iterator<U>, U: Eq+Hash>(mut iter: T) -> hashmap::HashMap<U, uint> {\n  427      let mut map: hashmap::HashMap<U,uint> = hashmap::HashMap::new();\n  428      for elem in iter {\n\nD:\\Repositories\\GitHub\\rust\\src\\libgreen\\message_queue.rs:\n   18  }\n   19  \n   20: pub fn queue<T: Send>() -> (Consumer<T>, Producer<T>) {\n   21      let (a, b) = UnsafeArc::new2(mpsc::Queue::new());\n   22      (Consumer { inner: a }, Producer { inner: b })\n   ..\n   31  }\n   32  \n   33: impl<T: Send> Consumer<T> {\n   34      pub fn pop(&mut self) -> PopResult<T> {\n   35          match unsafe { (*self.inner.get()).pop() } {\n   ..\n   49  }\n   50  \n   51: impl<T: Send> Producer<T> {\n   52      pub fn push(&mut self, t: T) {\n   53          unsafe { (*self.inner.get()).push(t); }\n   ..\n   55  }\n   56  \n   57: impl<T: Send> Clone for Producer<T> {\n   58      fn clone(&self) -> Producer<T> {\n   59          Producer { inner: self.inner.clone() }\n\nD:\\Repositories\\GitHub\\rust\\src\\libnative\\bookkeeping.rs:\n   20  use std::unstable::mutex::{StaticNativeMutex, NATIVE_MUTEX_INIT};\n   21  \n   22: static mut TASK_COUNT: atomics::AtomicUint = atomics::INIT_ATOMIC_UINT;\n   23  static mut TASK_LOCK: StaticNativeMutex = NATIVE_MUTEX_INIT;\n   24  \n\nD:\\Repositories\\GitHub\\rust\\src\\libnative\\io\\timer_timerfd.rs:\n  255      pub static EPOLL_CTL_MOD: libc::c_int = 3;\n  256      pub static EPOLLIN: libc::c_int = 0x001;\n  257:     pub static EPOLLOUT: libc::c_int = 0x004;\n  258      pub static EPOLLPRI: libc::c_int = 0x002;\n  259      pub static EPOLLERR: libc::c_int = 0x008;\n  260      pub static EPOLLRDHUP: libc::c_int = 0x2000;\n  261:     pub static EPOLLET: libc::c_int = 1 << 31;\n  262      pub static EPOLLHUP: libc::c_int = 0x010;\n  263:     pub static EPOLLONESHOT: libc::c_int = 1 << 30;\n  264  \n  265      #[cfg(target_arch = \"x86_64\")]\n\nD:\\Repositories\\GitHub\\rust\\src\\libnum\\bigint.rs:\n   45  pub type BigDigit = u32;\n   46  \n   47: pub static ZERO_BIG_DIGIT: BigDigit = 0;\n   48  \n   49  pub mod BigDigit {\n\nD:\\Repositories\\GitHub\\rust\\src\\libnum\\complex.rs:\n   33  pub type Complex64 = Cmplx<f64>;\n   34  \n   35: impl<T: Clone + Num> Cmplx<T> {\n   36      /// Create a new Cmplx\n   37      #[inline]\n   ..\n   78  }\n   79  \n   80: impl<T: Clone + Float> Cmplx<T> {\n   81      /// Calculate |self|\n   82      #[inline]\n   ..\n   86  }\n   87  \n   88: impl<T: Clone + Float> Cmplx<T> {\n   89      /// Calculate the principal Arg of self.\n   90      #[inline]\n   ..\n  107  /* arithmetic */\n  108  // (a + i b) + (c + i d) == (a + c) + i (b + d)\n  109: impl<T: Clone + Num> Add<Cmplx<T>, Cmplx<T>> for Cmplx<T> {\n  110      #[inline]\n  111      fn add(&self, other: &Cmplx<T>) -> Cmplx<T> {\n  ...\n  114  }\n  115  // (a + i b) - (c + i d) == (a - c) + i (b - d)\n  116: impl<T: Clone + Num> Sub<Cmplx<T>, Cmplx<T>> for Cmplx<T> {\n  117      #[inline]\n  118      fn sub(&self, other: &Cmplx<T>) -> Cmplx<T> {\n  ...\n  121  }\n  122  // (a + i b) * (c + i d) == (a*c - b*d) + i (a*d + b*c)\n  123: impl<T: Clone + Num> Mul<Cmplx<T>, Cmplx<T>> for Cmplx<T> {\n  124      #[inline]\n  125      fn mul(&self, other: &Cmplx<T>) -> Cmplx<T> {\n  ...\n  131  // (a + i b) / (c + i d) == [(a + i b) * (c - i d)] / (c*c + d*d)\n  132  //   == [(a*c + b*d) / (c*c + d*d)] + i [(b*c - a*d) / (c*c + d*d)]\n  133: impl<T: Clone + Num> Div<Cmplx<T>, Cmplx<T>> for Cmplx<T> {\n  134      #[inline]\n  135      fn div(&self, other: &Cmplx<T>) -> Cmplx<T> {\n  ...\n  140  }\n  141  \n  142: impl<T: Clone + Num> Neg<Cmplx<T>> for Cmplx<T> {\n  143      #[inline]\n  144      fn neg(&self) -> Cmplx<T> {\n  ...\n  148  \n  149  /* constants */\n  150: impl<T: Clone + Num> Zero for Cmplx<T> {\n  151      #[inline]\n  152      fn zero() -> Cmplx<T> {\n  ...\n  160  }\n  161  \n  162: impl<T: Clone + Num> One for Cmplx<T> {\n  163      #[inline]\n  164      fn one() -> Cmplx<T> {\n  ...\n  168  \n  169  /* string conversions */\n  170: impl<T: ToStr + Num + Ord> ToStr for Cmplx<T> {\n  171      fn to_str(&self) -> ~str {\n  172          if self.im < Zero::zero() {\n  ...\n  178  }\n  179  \n  180: impl<T: ToStrRadix + Num + Ord> ToStrRadix for Cmplx<T> {\n  181      fn to_str_radix(&self, radix: uint) -> ~str {\n  182          if self.im < Zero::zero() {\n\nD:\\Repositories\\GitHub\\rust\\src\\libnum\\lib.rs:\n   95  \n   96  /// Simultaneous integer division and modulus\n   97: #[inline] pub fn div_rem<T: Integer>(x: T, y: T) -> (T, T) { x.div_rem(&y) }\n   98  /// Floored integer division\n   99: #[inline] pub fn div_floor<T: Integer>(x: T, y: T) -> T { x.div_floor(&y) }\n  100  /// Floored integer modulus\n  101: #[inline] pub fn mod_floor<T: Integer>(x: T, y: T) -> T { x.mod_floor(&y) }\n  102  /// Simultaneous floored integer division and modulus\n  103: #[inline] pub fn div_mod_floor<T: Integer>(x: T, y: T) -> (T, T) { x.div_mod_floor(&y) }\n  104  \n  105  /// Calculates the Greatest Common Divisor (GCD) of the number and `other`. The\n  106  /// result is always positive.\n  107: #[inline(always)] pub fn gcd<T: Integer>(x: T, y: T) -> T { x.gcd(&y) }\n  108  /// Calculates the Lowest Common Multiple (LCM) of the number and `other`.\n  109: #[inline(always)] pub fn lcm<T: Integer>(x: T, y: T) -> T { x.lcm(&y) }\n  110  \n  111  macro_rules! impl_integer_for_int {\n\nD:\\Repositories\\GitHub\\rust\\src\\libnum\\rational.rs:\n   34  pub type BigRational = Ratio<BigInt>;\n   35  \n   36: impl<T: Clone + Integer + Ord>\n   37      Ratio<T> {\n   38      /// Create a ratio representing the integer `t`.\n   ..\n  117  impl Ratio<BigInt> {\n  118      /// Converts a float into a rational number\n  119:     pub fn from_float<T: Float>(f: T) -> Option<BigRational> {\n  120          if !f.is_finite() {\n  121              return None;\n  ...\n  148      // return something other than a Ratio<T>\n  149      (impl $imp:ident, $($method:ident -> $res:ty),+) => {\n  150:         impl<T: Mul<T,T> + $imp> $imp for Ratio<T> {\n  151              $(\n  152                  #[inline]\n  ...\n  165  /* Arithmetic */\n  166  // a/b * c/d = (a*c)/(b*d)\n  167: impl<T: Clone + Integer + Ord>\n  168      Mul<Ratio<T>,Ratio<T>> for Ratio<T> {\n  169      #[inline]\n  ...\n  174  \n  175  // (a/b) / (c/d) = (a*d)/(b*c)\n  176: impl<T: Clone + Integer + Ord>\n  177      Div<Ratio<T>,Ratio<T>> for Ratio<T> {\n  178      #[inline]\n  ...\n  185  macro_rules! arith_impl {\n  186      (impl $imp:ident, $method:ident) => {\n  187:         impl<T: Clone + Integer + Ord>\n  188              $imp<Ratio<T>,Ratio<T>> for Ratio<T> {\n  189              #[inline]\n  ...\n  205  arith_impl!(impl Rem, rem)\n  206  \n  207: impl<T: Clone + Integer + Ord>\n  208      Neg<Ratio<T>> for Ratio<T> {\n  209      #[inline]\n  ...\n  214  \n  215  /* Constants */\n  216: impl<T: Clone + Integer + Ord>\n  217      Zero for Ratio<T> {\n  218      #[inline]\n  ...\n  227  }\n  228  \n  229: impl<T: Clone + Integer + Ord>\n  230      One for Ratio<T> {\n  231      #[inline]\n  ...\n  235  }\n  236  \n  237: impl<T: Clone + Integer + Ord>\n  238      Num for Ratio<T> {}\n  239  \n  240  /* Utils */\n  241: impl<T: Clone + Integer + Ord>\n  242      Round for Ratio<T> {\n  243  \n  ...\n  278  \n  279  /* String conversions */\n  280: impl<T: ToStr> ToStr for Ratio<T> {\n  281      /// Renders as `numer/denom`.\n  282      fn to_str(&self) -> ~str {\n  ...\n  284      }\n  285  }\n  286: impl<T: ToStrRadix> ToStrRadix for Ratio<T> {\n  287      /// Renders as `numer/denom` where the numbers are in base `radix`.\n  288      fn to_str_radix(&self, radix: uint) -> ~str {\n  ...\n  291  }\n  292  \n  293: impl<T: FromStr + Clone + Integer + Ord>\n  294      FromStr for Ratio<T> {\n  295      /// Parses `numer/denom`.\n  ...\n  308      }\n  309  }\n  310: impl<T: FromStrRadix + Clone + Integer + Ord>\n  311      FromStrRadix for Ratio<T> {\n  312      /// Parses `numer/denom` where the numbers are in base `radix`.\n  ...\n  626      #[test]\n  627      fn test_from_float() {\n  628:         fn test<T: Float>(given: T, (numer, denom): (&str, &str)) {\n  629              let ratio: BigRational = Ratio::from_float(given).unwrap();\n  630              assert_eq!(ratio, Ratio::new(\n\nD:\\Repositories\\GitHub\\rust\\src\\librustc\\back\\link.rs:\n  351      unsafe fn configure_llvm(sess: Session) {\n  352          use sync::one::{Once, ONCE_INIT};\n  353:         static mut INIT: Once = ONCE_INIT;\n  354  \n  355          // Copy what clang does by turning on loop vectorization at O2 and\n\nD:\\Repositories\\GitHub\\rust\\src\\librustc\\lib\\llvm.rs:\n 1737                                             UseSoftFP: bool,\n 1738                                             NoFramePointerElim: bool) -> TargetMachineRef;\n 1739:         pub fn LLVMRustDisposeTargetMachine(T: TargetMachineRef);\n 1740:         pub fn LLVMRustAddAnalysisPasses(T: TargetMachineRef,\n 1741                                           PM: PassManagerRef,\n 1742                                           M: ModuleRef);\n ....\n 1745          pub fn LLVMRustAddLibraryInfo(PM: PassManagerRef, M: ModuleRef);\n 1746          pub fn LLVMRustRunFunctionPassManager(PM: PassManagerRef, M: ModuleRef);\n 1747:         pub fn LLVMRustWriteOutputFile(T: TargetMachineRef,\n 1748                                         PM: PassManagerRef,\n 1749                                         M: ModuleRef,\n\nD:\\Repositories\\GitHub\\rust\\src\\librustc\\middle\\const_eval.rs:\n  332  }\n  333  \n  334: pub fn eval_const_expr_partial<T: ty::ExprTyProvider>(tcx: &T, e: &Expr)\n  335                              -> Result<const_val, ~str> {\n  336      use middle::ty;\n\nD:\\Repositories\\GitHub\\rust\\src\\librustc\\middle\\trans\\base.rs:\n 2596      unsafe {\n 2597          use sync::one::{Once, ONCE_INIT};\n 2598:         static mut INIT: Once = ONCE_INIT;\n 2599          static mut POISONED: bool = false;\n 2600          INIT.doit(|| {\n\nD:\\Repositories\\GitHub\\rust\\src\\librustc\\middle\\trans\\builder.rs:\n  906              let FN: ValueRef = llvm::LLVMGetBasicBlockParent(BB);\n  907              let M: ModuleRef = llvm::LLVMGetGlobalParent(FN);\n  908:             let T: ValueRef = \"llvm.trap\".with_c_str(|buf| {\n  909                  llvm::LLVMGetNamedFunction(M, buf)\n  910              });\n\nD:\\Repositories\\GitHub\\rust\\src\\librustc\\middle\\trans\\common.rs:\n  655  }\n  656  \n  657: pub fn C_named_struct(T: Type, elts: &[ValueRef]) -> ValueRef {\n  658      unsafe {\n  659          llvm::LLVMConstNamedStruct(T.to_ref(), elts.as_ptr(), elts.len() as c_uint)\n\nD:\\Repositories\\GitHub\\rust\\src\\librustc\\middle\\trans\\debuginfo.rs:\n  154  use syntax::parse::token::special_idents;\n  155  \n  156: static DW_LANG_RUST: c_uint = 0x9000;\n  157  \n  158  static DW_TAG_auto_variable: c_uint = 0x100;\n\nD:\\Repositories\\GitHub\\rust\\src\\librustc\\middle\\ty.rs:\n  707      def_prim_ty!(TY_F64,    super::ty_float(ast::TyF64),    15)\n  708  \n  709:     pub static TY_BOT: t_box_ = t_box_ {\n  710          sty: super::ty_bot,\n  711          id: 16,\n  ...\n 4547  \n 4548  // Returns the repeat count for a repeating vector expression.\n 4549: pub fn eval_repeat_count<T: ExprTyProvider>(tcx: &T, count_expr: &ast::Expr) -> uint {\n 4550      match const_eval::eval_const_expr_partial(tcx, count_expr) {\n 4551        Ok(ref const_val) => match *const_val {\n ....\n 4956          iter(hash, &mt.mutbl);\n 4957      };\n 4958:     fn iter<T: IterBytes>(hash: &mut SipState, t: &T) {\n 4959          t.iter_bytes(true, |bytes| { hash.input(bytes); true });\n 4960      }\n\nD:\\Repositories\\GitHub\\rust\\src\\librustc\\util\\sha2.rs:\n   61  /// Adds the specified number of bytes to the bit count. fail!() if this would cause numeric\n   62  /// overflow.\n   63: fn add_bytes_to_bits<T: Int + CheckedAdd + ToBits>(bits: T, bytes: T) -> T {\n   64      let (new_high_bits, new_low_bits) = bytes.to_bits();\n   65  \n   ..\n  204  }\n  205  \n  206: impl <T: FixedBuffer> StandardPadding for T {\n  207      fn standard_padding(&mut self, rem: uint, func: |&[u8]|) {\n  208          let size = self.size();\n\nD:\\Repositories\\GitHub\\rust\\src\\librustdoc\\clean.rs:\n   35  }\n   36  \n   37: impl<T: Clean<U>, U> Clean<~[U]> for ~[T] {\n   38      fn clean(&self) -> ~[U] {\n   39          self.iter().map(|x| x.clean()).collect()\n   40      }\n   41  }\n   42: impl<T: Clean<U>, U> Clean<U> for @T {\n   43      fn clean(&self) -> U {\n   44          (**self).clean()\n   ..\n   46  }\n   47  \n   48: impl<T: Clean<U>, U> Clean<Option<U>> for Option<T> {\n   49      fn clean(&self) -> Option<U> {\n   50          match self {\n   ..\n   55  }\n   56  \n   57: impl<T: Clean<U>, U> Clean<~[U]> for syntax::opt_vec::OptVec<T> {\n   58      fn clean(&self) -> ~[U] {\n   59          match self {\n\nD:\\Repositories\\GitHub\\rust\\src\\librustdoc\\fold.rs:\n   41              },\n   42              TraitItem(mut i) => {\n   43:                 fn vtrm<T: DocFolder>(this: &mut T, trm: TraitMethod) -> Option<TraitMethod> {\n   44                      match trm {\n   45                          Required(it) => {\n\nD:\\Repositories\\GitHub\\rust\\src\\librustdoc\\html\\layout.rs:\n   25  }\n   26  \n   27: pub fn render<T: fmt::Show, S: fmt::Show>(\n   28      dst: &mut io::Writer, layout: &Layout, page: &Page, sidebar: &S, t: &T)\n   29      -> fmt::Result\n\nD:\\Repositories\\GitHub\\rust\\src\\librustdoc\\html\\markdown.rs:\n   41  pub struct Markdown<'a>(&'a str);\n   42  \n   43: static OUTPUT_UNIT: libc::size_t = 64;\n   44  static MKDEXT_NO_INTRA_EMPHASIS: libc::c_uint = 1 << 0;\n   45  static MKDEXT_TABLES: libc::c_uint = 1 << 1;\n\nD:\\Repositories\\GitHub\\rust\\src\\librustuv\\uvll.rs:\n   54      pub static EACCES: c_int = -4092;\n   55      pub static ECONNREFUSED: c_int = -4078;\n   56:     pub static ECONNRESET: c_int = -4077;\n   57:     pub static ENOENT: c_int = -4058;\n   58      pub static ENOTCONN: c_int = -4053;\n   59      pub static EPIPE: c_int = -4047;\n   ..\n   70      pub static EACCES: c_int = -libc::EACCES;\n   71      pub static ECONNREFUSED: c_int = -libc::ECONNREFUSED;\n   72:     pub static ECONNRESET: c_int = -libc::ECONNRESET;\n   73:     pub static ENOENT: c_int = -libc::ENOENT;\n   74      pub static ENOTCONN: c_int = -libc::ENOTCONN;\n   75      pub static EPIPE: c_int = -libc::EPIPE;\n\nD:\\Repositories\\GitHub\\rust\\src\\libsemver\\lib.rs:\n  173  }\n  174  \n  175: fn take_num<T: Iterator<char>>(rdr: &mut T) -> Option<(uint, Option<char>)> {\n  176      let (s, ch) = take_nonempty_prefix(rdr, char::is_digit);\n  177      match from_str::<uint>(s) {\n  ...\n  181  }\n  182  \n  183: fn take_ident<T: Iterator<char>>(rdr: &mut T) -> Option<(Identifier, Option<char>)> {\n  184      let (s,ch) = take_nonempty_prefix(rdr, char::is_alphanumeric);\n  185      if s.chars().all(char::is_digit) {\n  ...\n  201  }\n  202  \n  203: fn parse_iter<T: Iterator<char>>(rdr: &mut T) -> Option<Version> {\n  204      let maybe_vers = take_num(rdr).and_then(|(major, ch)| {\n  205          expect(ch, '.').and_then(|_| Some(major))\n\nD:\\Repositories\\GitHub\\rust\\src\\libserialize\\serialize.rs:\n  665  impl<\n  666      S: Encoder,\n  667:     T: Encodable<S> + Hash + IterBytes + Eq\n  668  > Encodable<S> for HashSet<T> {\n  669      fn encode(&self, s: &mut S) {\n  ...\n  680  impl<\n  681      D: Decoder,\n  682:     T: Decodable<D> + Hash + IterBytes + Eq\n  683  > Decodable<D> for HashSet<T> {\n  684      fn decode(d: &mut D) -> HashSet<T> {\n\nD:\\Repositories\\GitHub\\rust\\src\\libstd\\any.rs:\n   49  }\n   50  \n   51: impl<T: 'static> Any for T {\n   52      /// Get the `TypeId` of `self`\n   53      fn get_type_id(&self) -> TypeId {\n   ..\n   74  pub trait AnyRefExt<'a> {\n   75      /// Returns true if the boxed type is the same as `T`\n   76:     fn is<T: 'static>(self) -> bool;\n   77  \n   78      /// Returns some reference to the boxed value if it is of type `T`, or\n   79      /// `None` if it isn't.\n   80:     fn as_ref<T: 'static>(self) -> Option<&'a T>;\n   81  }\n   82  \n   83  impl<'a> AnyRefExt<'a> for &'a Any {\n   84      #[inline]\n   85:     fn is<T: 'static>(self) -> bool {\n   86          // Get TypeId of the type this function is instantiated with\n   87          let t = TypeId::of::<T>();\n   ..\n   95  \n   96      #[inline]\n   97:     fn as_ref<T: 'static>(self) -> Option<&'a T> {\n   98          if self.is::<T>() {\n   99              Some(unsafe { transmute(self.as_void_ptr()) })\n  ...\n  108      /// Returns some mutable reference to the boxed value if it is of type `T`, or\n  109      /// `None` if it isn't.\n  110:     fn as_mut<T: 'static>(self) -> Option<&'a mut T>;\n  111  }\n  112  \n  113  impl<'a> AnyMutRefExt<'a> for &'a mut Any {\n  114      #[inline]\n  115:     fn as_mut<T: 'static>(self) -> Option<&'a mut T> {\n  116          if self.is::<T>() {\n  117              Some(unsafe { transmute(self.as_mut_void_ptr()) })\n  ...\n  126      /// Returns the boxed value if it is of type `T`, or\n  127      /// `Err(Self)` if it isn't.\n  128:     fn move<T: 'static>(self) -> Result<~T, Self>;\n  129  }\n  130  \n  131  impl AnyOwnExt for ~Any {\n  132      #[inline]\n  133:     fn move<T: 'static>(self) -> Result<~T, ~Any> {\n  134          if self.is::<T>() {\n  135              unsafe {\n  ...\n  180      struct Test;\n  181  \n  182:     static TEST: &'static str = \"Test\";\n  183  \n  184      #[test]\n\nD:\\Repositories\\GitHub\\rust\\src\\libstd\\cell.rs:\n  203  }\n  204  \n  205: impl<T: Clone> Clone for RefCell<T> {\n  206      fn clone(&self) -> RefCell<T> {\n  207          let x = self.borrow();\n  ...\n  210  }\n  211  \n  212: impl<T: DeepClone> DeepClone for RefCell<T> {\n  213      fn deep_clone(&self) -> RefCell<T> {\n  214          let x = self.borrow();\n  ...\n  217  }\n  218  \n  219: impl<T: Eq> Eq for RefCell<T> {\n  220      fn eq(&self, other: &RefCell<T>) -> bool {\n  221          let a = self.borrow();\n\nD:\\Repositories\\GitHub\\rust\\src\\libstd\\char.rs:\n   25  \n   26  // UTF-8 ranges and tags for encoding characters\n   27: static TAG_CONT: uint = 128u;\n   28  static MAX_ONE_B: uint = 128u;\n   29  static TAG_TWO_B: uint = 192u;\n   ..\n  232  static V_BASE: uint = 0x1161;\n  233  static T_BASE: uint = 0x11A7;\n  234: static L_COUNT: uint = 19;\n  235: static V_COUNT: uint = 21;\n  236: static T_COUNT: uint = 28;\n  237: static N_COUNT: uint = (V_COUNT * T_COUNT);\n  238: static S_COUNT: uint = (L_COUNT * N_COUNT);\n  239  \n  240  // Decompose a precomposed Hangul syllable\n\nD:\\Repositories\\GitHub\\rust\\src\\libstd\\clone.rs:\n   42  }\n   43  \n   44: impl<T: Clone> Clone for ~T {\n   45      /// Return a copy of the owned box.\n   46      #[inline]\n   ..\n  144  }\n  145  \n  146: impl<T: DeepClone> DeepClone for ~T {\n  147      /// Return a deep copy of the owned box.\n  148      #[inline]\n  ...\n  155  }\n  156  \n  157: // FIXME: #6525: should also be implemented for `T: Send + DeepClone`\n  158: impl<T: Freeze + DeepClone + 'static> DeepClone for @T {\n  159      /// Return a deep copy of the managed box. The `Freeze` trait is required to prevent performing\n  160      /// a deep clone of a potentially cyclical type.\n  ...\n  256  \n  257      fn test_fn_a() -> f64 { 1.0 }\n  258:     fn test_fn_b<T: Empty>(x: T) -> T { x }\n  259      fn test_fn_c(_: int, _: f64, _: ~[int], _: int, _: int, _: int) {}\n  260  \n\nD:\\Repositories\\GitHub\\rust\\src\\libstd\\comm\\mod.rs:\n  332  }\n  333  \n  334: impl<T: Send> Chan<T> {\n  335      /// Creates a new port/channel pair. All data send on the channel returned\n  336      /// will become available on the port as well. See the documentation of\n  ...\n  434  }\n  435  \n  436: impl<T: Send> Clone for Chan<T> {\n  437      fn clone(&self) -> Chan<T> {\n  438          let (packet, sleeper) = match self.inner {\n  ...\n  468  \n  469  #[unsafe_destructor]\n  470: impl<T: Send> Drop for Chan<T> {\n  471      fn drop(&mut self) {\n  472          match self.inner {\n  ...\n  478  }\n  479  \n  480: impl<T: Send> Port<T> {\n  481      fn my_new(inner: Flavor<T>) -> Port<T> {\n  482          Port { inner: inner, receives: Cell::new(0), marker: marker::NoFreeze }\n  ...\n  617  }\n  618  \n  619: impl<T: Send> select::Packet for Port<T> {\n  620      fn can_recv(&self) -> bool {\n  621          loop {\n  ...\n  695  }\n  696  \n  697: impl<'a, T: Send> Iterator<T> for Messages<'a, T> {\n  698      fn next(&mut self) -> Option<T> { self.port.recv_opt() }\n  699  }\n  700  \n  701  #[unsafe_destructor]\n  702: impl<T: Send> Drop for Port<T> {\n  703      fn drop(&mut self) {\n  704          match self.inner {\n  ...\n  832  \n  833      test!(fn stress_shared() {\n  834:         static AMT: uint = 10000;\n  835          static NTHREADS: uint = 8;\n  836          let (p, c) = Chan::<int>::new();\n\nD:\\Repositories\\GitHub\\rust\\src\\libstd\\comm\\oneshot.rs:\n   82  }\n   83  \n   84: impl<T: Send> Packet<T> {\n   85      pub fn new() -> Packet<T> {\n   86          Packet {\n   ..\n  363  \n  364  #[unsafe_destructor]\n  365: impl<T: Send> Drop for Packet<T> {\n  366      fn drop(&mut self) {\n  367          assert_eq!(self.state.load(atomics::SeqCst), DISCONNECTED);\n\nD:\\Repositories\\GitHub\\rust\\src\\libstd\\comm\\select.rs:\n  131      /// does *not* add the port to the port set, for that you must call the\n  132      /// `add` method on the handle itself.\n  133:     pub fn handle<'a, T: Send>(&'a self, port: &'a Port<T>) -> Handle<'a, T> {\n  134          let id = self.next_id.get();\n  135          self.next_id.set(id + 1);\n  ...\n  243  }\n  244  \n  245: impl<'port, T: Send> Handle<'port, T> {\n  246      /// Retrieve the id of this handle.\n  247      #[inline]\n  ...\n  317  \n  318  #[unsafe_destructor]\n  319: impl<'port, T: Send> Drop for Handle<'port, T> {\n  320      fn drop(&mut self) {\n  321          unsafe { self.remove() }\n  ...\n  441  \n  442      test!(fn stress() {\n  443:         static AMT: int = 10000;\n  444          let (p1, c1) = Chan::<int>::new();\n  445          let (p2, c2) = Chan::<int>::new();\n\nD:\\Repositories\\GitHub\\rust\\src\\libstd\\comm\\shared.rs:\n   66  }\n   67  \n   68: impl<T: Send> Packet<T> {\n   69      // Creation of a packet *must* be followed by a call to inherit_blocker\n   70      pub fn new() -> Packet<T> {\n   ..\n  485  \n  486  #[unsafe_destructor]\n  487: impl<T: Send> Drop for Packet<T> {\n  488      fn drop(&mut self) {\n  489          // Note that this load is not only an assert for correctness about\n\nD:\\Repositories\\GitHub\\rust\\src\\libstd\\comm\\stream.rs:\n   74  }\n   75  \n   76: impl<T: Send> Packet<T> {\n   77      pub fn new() -> Packet<T> {\n   78          Packet {\n   ..\n  470  \n  471  #[unsafe_destructor]\n  472: impl<T: Send> Drop for Packet<T> {\n  473      fn drop(&mut self) {\n  474          // Note that this load is not only an assert for correctness about\n\nD:\\Repositories\\GitHub\\rust\\src\\libstd\\default.rs:\n   17  }\n   18  \n   19: impl<T: Default + 'static> Default for @T {\n   20      fn default() -> @T { @Default::default() }\n   21  }\n   22  \n   23: impl<T: Default> Default for ~T {\n   24      fn default() -> ~T { ~Default::default() }\n   25  }\n\nD:\\Repositories\\GitHub\\rust\\src\\libstd\\fmt\\mod.rs:\n  620          $(\n  621              #[doc(hidden)]\n  622:             pub fn $name<T: $trait_>(x: &T, fmt: &mut Formatter) -> Result {\n  623                  x.fmt(fmt)\n  624              }\n  ...\n 1067  }\n 1068  \n 1069: impl<'a, T: str::Str> String for T {\n 1070      fn fmt(&self, f: &mut Formatter) -> Result {\n 1071          f.pad(self.as_slice())\n\nD:\\Repositories\\GitHub\\rust\\src\\libstd\\fmt\\num.rs:\n   32  \n   33      /// Format an integer using the radix using a formatter.\n   34:     fn fmt_int<T: Int>(&self, mut x: T, f: &mut fmt::Formatter) -> fmt::Result {\n   35          // The radix can be as low as 2, so we need a buffer of at least 64\n   36          // characters for a base 2 number.\n\nD:\\Repositories\\GitHub\\rust\\src\\libstd\\gc.rs:\n   41  }\n   42  \n   43: impl<T: 'static> Gc<T> {\n   44      /// Construct a new garbage-collected box\n   45      #[inline]\n   ..\n   82  ///\n   83  /// A `Freeze` bound would also work, but `Send` *or* `Freeze` cannot be expressed.\n   84: impl<T: DeepClone + Send + 'static> DeepClone for Gc<T> {\n   85      #[inline]\n   86      fn deep_clone(&self) -> Gc<T> {\n\nD:\\Repositories\\GitHub\\rust\\src\\libstd\\hashmap.rs:\n  715  \n  716  impl<K: Eq + Hash, V> FromIterator<(K, V)> for HashMap<K, V> {\n  717:     fn from_iterator<T: Iterator<(K, V)>>(iter: &mut T) -> HashMap<K, V> {\n  718          let (lower, _) = iter.size_hint();\n  719          let mut map = HashMap::with_capacity(lower);\n  ...\n  724  \n  725  impl<K: Eq + Hash, V> Extendable<(K, V)> for HashMap<K, V> {\n  726:     fn extend<T: Iterator<(K, V)>>(&mut self, iter: &mut T) {\n  727          for (k, v) in *iter {\n  728              self.insert(k, v);\n  ...\n  893  \n  894  impl<K: Eq + Hash> FromIterator<K> for HashSet<K> {\n  895:     fn from_iterator<T: Iterator<K>>(iter: &mut T) -> HashSet<K> {\n  896          let (lower, _) = iter.size_hint();\n  897          let mut set = HashSet::with_capacity(lower);\n  ...\n  902  \n  903  impl<K: Eq + Hash> Extendable<K> for HashSet<K> {\n  904:     fn extend<T: Iterator<K>>(&mut self, iter: &mut T) {\n  905          for k in *iter {\n  906              self.insert(k);\n\nD:\\Repositories\\GitHub\\rust\\src\\libstd\\io\\mod.rs:\n 1015  pub trait Stream: Reader + Writer { }\n 1016  \n 1017: impl<T: Reader + Writer> Stream for T {}\n 1018  \n 1019  /// An iterator that reads a line on each iteration,\n ....\n 1035  }\n 1036  \n 1037: impl<'r, T: Buffer> Iterator<~str> for Lines<'r, T> {\n 1038      fn next(&mut self) -> Option<~str> {\n 1039          self.buffer.read_line().ok()\n ....\n 1059  }\n 1060  \n 1061: impl<'r, T: Buffer> Iterator<char> for Chars<'r, T> {\n 1062      fn next(&mut self) -> Option<char> {\n 1063          self.buffer.read_char().ok()\n\nD:\\Repositories\\GitHub\\rust\\src\\libstd\\iter.rs:\n   77  pub trait FromIterator<A> {\n   78      /// Build a container with elements from an external iterator.\n   79:     fn from_iterator<T: Iterator<A>>(iterator: &mut T) -> Self;\n   80  }\n   81  \n   ..\n   83  pub trait Extendable<A>: FromIterator<A> {\n   84      /// Extend a container with the elements yielded by an iterator\n   85:     fn extend<T: Iterator<A>>(&mut self, iterator: &mut T);\n   86  }\n   87  \n   ..\n  696  }\n  697  \n  698: impl<'a, A, T: DoubleEndedIterator<&'a mut A>> MutableDoubleEndedIterator for T {\n  699      // FIXME: #5898: should be called `reverse`\n  700      /// Use an iterator to reverse a container in-place\n  ...\n  758  // All adaptors that preserve the size of the wrapped iterator are fine\n  759  // Adaptors that may overflow in `size_hint` are not, i.e. `Chain`.\n  760: impl<A, T: ExactSize<A>> ExactSize<(uint, A)> for Enumerate<T> {}\n  761: impl<'a, A, T: ExactSize<A>> ExactSize<A> for Inspect<'a, A, T> {}\n  762: impl<A, T: ExactSize<A>> ExactSize<A> for Rev<T> {}\n  763: impl<'a, A, B, T: ExactSize<A>> ExactSize<B> for Map<'a, A, B, T> {}\n  764: impl<A, B, T: ExactSize<A>, U: ExactSize<B>> ExactSize<(A, B)> for Zip<T, U> {}\n  765  \n  766  /// An double-ended iterator with the direction inverted\n  ...\n  770  }\n  771  \n  772: impl<A, T: DoubleEndedIterator<A>> Iterator<A> for Rev<T> {\n  773      #[inline]\n  774      fn next(&mut self) -> Option<A> { self.iter.next_back() }\n  ...\n  777  }\n  778  \n  779: impl<A, T: DoubleEndedIterator<A>> DoubleEndedIterator<A> for Rev<T> {\n  780      #[inline]\n  781      fn next_back(&mut self) -> Option<A> { self.iter.next() }\n  782  }\n  783  \n  784: impl<A, T: DoubleEndedIterator<A> + RandomAccessIterator<A>> RandomAccessIterator<A>\n  785      for Rev<T> {\n  786      #[inline]\n  ...\n  797  }\n  798  \n  799: impl<'a, A, T: Iterator<A>> Iterator<A> for ByRef<'a, T> {\n  800      #[inline]\n  801      fn next(&mut self) -> Option<A> { self.iter.next() }\n  ...\n  804  }\n  805  \n  806: impl<'a, A, T: DoubleEndedIterator<A>> DoubleEndedIterator<A> for ByRef<'a, T> {\n  807      #[inline]\n  808      fn next_back(&mut self) -> Option<A> { self.iter.next_back() }\n  ...\n  825  }\n  826  \n  827: impl<A: Add<A, A> + Zero, T: Iterator<A>> AdditiveIterator<A> for T {\n  828      #[inline]\n  829      fn sum(&mut self) -> A {\n  ...\n  853  }\n  854  \n  855: impl<A: Mul<A, A> + One, T: Iterator<A>> MultiplicativeIterator<A> for T {\n  856      #[inline]\n  857      fn product(&mut self) -> A {\n  ...\n  918  }\n  919  \n  920: impl<A: Ord, T: Iterator<A>> OrdIterator<A> for T {\n  921      #[inline]\n  922      fn max(&mut self) -> Option<A> {\n  ...\n  996  }\n  997  \n  998: impl<T: Clone> MinMaxResult<T> {\n  999      /// `into_option` creates an `Option` of type `(T,T)`. The returned `Option` has variant\n 1000      /// `None` if and only if the `MinMaxResult` has variant `NoElements`. Otherwise variant\n ....\n 1042  }\n 1043  \n 1044: impl<A, T: Clone + Iterator<A>> CloneableIterator for T {\n 1045      #[inline]\n 1046      fn cycle(self) -> Cycle<T> {\n ....\n 1056  }\n 1057  \n 1058: impl<A, T: Clone + Iterator<A>> Iterator<A> for Cycle<T> {\n 1059      #[inline]\n 1060      fn next(&mut self) -> Option<A> {\n ....\n 1076  }\n 1077  \n 1078: impl<A, T: Clone + RandomAccessIterator<A>> RandomAccessIterator<A> for Cycle<T> {\n 1079      #[inline]\n 1080      fn indexable(&self) -> uint {\n ....\n 1108  }\n 1109  \n 1110: impl<A, T: Iterator<A>, U: Iterator<A>> Iterator<A> for Chain<T, U> {\n 1111      #[inline]\n 1112      fn next(&mut self) -> Option<A> {\n ....\n 1139  }\n 1140  \n 1141: impl<A, T: DoubleEndedIterator<A>, U: DoubleEndedIterator<A>> DoubleEndedIterator<A>\n 1142  for Chain<T, U> {\n 1143      #[inline]\n ....\n 1150  }\n 1151  \n 1152: impl<A, T: RandomAccessIterator<A>, U: RandomAccessIterator<A>> RandomAccessIterator<A>\n 1153  for Chain<T, U> {\n 1154      #[inline]\n ....\n 1176  }\n 1177  \n 1178: impl<A, B, T: Iterator<A>, U: Iterator<B>> Iterator<(A, B)> for Zip<T, U> {\n 1179      #[inline]\n 1180      fn next(&mut self) -> Option<(A, B)> {\n ....\n 1206  }\n 1207  \n 1208: impl<A, B, T: ExactSize<A>, U: ExactSize<B>> DoubleEndedIterator<(A, B)>\n 1209  for Zip<T, U> {\n 1210      #[inline]\n ....\n 1229  }\n 1230  \n 1231: impl<A, B, T: RandomAccessIterator<A>, U: RandomAccessIterator<B>>\n 1232  RandomAccessIterator<(A, B)> for Zip<T, U> {\n 1233      #[inline]\n ....\n 1264  }\n 1265  \n 1266: impl<'a, A, B, T: Iterator<A>> Iterator<B> for Map<'a, A, B, T> {\n 1267      #[inline]\n 1268      fn next(&mut self) -> Option<B> {\n ....\n 1277  }\n 1278  \n 1279: impl<'a, A, B, T: DoubleEndedIterator<A>> DoubleEndedIterator<B> for Map<'a, A, B, T> {\n 1280      #[inline]\n 1281      fn next_back(&mut self) -> Option<B> {\n ....\n 1285  }\n 1286  \n 1287: impl<'a, A, B, T: RandomAccessIterator<A>> RandomAccessIterator<B> for Map<'a, A, B, T> {\n 1288      #[inline]\n 1289      fn indexable(&self) -> uint {\n ....\n 1303  }\n 1304  \n 1305: impl<'a, A, T: Iterator<A>> Iterator<A> for Filter<'a, A, T> {\n 1306      #[inline]\n 1307      fn next(&mut self) -> Option<A> {\n ....\n 1323  }\n 1324  \n 1325: impl<'a, A, T: DoubleEndedIterator<A>> DoubleEndedIterator<A> for Filter<'a, A, T> {\n 1326      #[inline]\n 1327      fn next_back(&mut self) -> Option<A> {\n ....\n 1347  }\n 1348  \n 1349: impl<'a, A, B, T: Iterator<A>> Iterator<B> for FilterMap<'a, A, B, T> {\n 1350      #[inline]\n 1351      fn next(&mut self) -> Option<B> {\n ....\n 1366  }\n 1367  \n 1368: impl<'a, A, B, T: DoubleEndedIterator<A>> DoubleEndedIterator<B>\n 1369  for FilterMap<'a, A, B, T> {\n 1370      #[inline]\n ....\n 1391  }\n 1392  \n 1393: impl<A, T: Iterator<A>> Iterator<(uint, A)> for Enumerate<T> {\n 1394      #[inline]\n 1395      fn next(&mut self) -> Option<(uint, A)> {\n ....\n 1410  }\n 1411  \n 1412: impl<A, T: ExactSize<A>> DoubleEndedIterator<(uint, A)> for Enumerate<T> {\n 1413      #[inline]\n 1414      fn next_back(&mut self) -> Option<(uint, A)> {\n ....\n 1424  }\n 1425  \n 1426: impl<A, T: RandomAccessIterator<A>> RandomAccessIterator<(uint, A)> for Enumerate<T> {\n 1427      #[inline]\n 1428      fn indexable(&self) -> uint {\n ....\n 1445  }\n 1446  \n 1447: impl<A, T: Iterator<A>> Iterator<A> for Peekable<A, T> {\n 1448      #[inline]\n 1449      fn next(&mut self) -> Option<A> {\n ....\n 1468  }\n 1469  \n 1470: impl<'a, A, T: Iterator<A>> Peekable<A, T> {\n 1471      /// Return a reference to the next element of the iterator with out advancing it,\n 1472      /// or None if the iterator is exhausted.\n ....\n 1496  }\n 1497  \n 1498: impl<'a, A, T: Iterator<A>> Iterator<A> for SkipWhile<'a, A, T> {\n 1499      #[inline]\n 1500      fn next(&mut self) -> Option<A> {\n ....\n 1534  }\n 1535  \n 1536: impl<'a, A, T: Iterator<A>> Iterator<A> for TakeWhile<'a, A, T> {\n 1537      #[inline]\n 1538      fn next(&mut self) -> Option<A> {\n ....\n 1568  }\n 1569  \n 1570: impl<A, T: Iterator<A>> Iterator<A> for Skip<T> {\n 1571      #[inline]\n 1572      fn next(&mut self) -> Option<A> {\n ....\n 1609  }\n 1610  \n 1611: impl<A, T: RandomAccessIterator<A>> RandomAccessIterator<A> for Skip<T> {\n 1612      #[inline]\n 1613      fn indexable(&self) -> uint {\n ....\n 1632  }\n 1633  \n 1634: impl<A, T: Iterator<A>> Iterator<A> for Take<T> {\n 1635      #[inline]\n 1636      fn next(&mut self) -> Option<A> {\n ....\n 1658  }\n 1659  \n 1660: impl<A, T: RandomAccessIterator<A>> RandomAccessIterator<A> for Take<T> {\n 1661      #[inline]\n 1662      fn indexable(&self) -> uint {\n ....\n 1684  }\n 1685  \n 1686: impl<'a, A, B, T: Iterator<A>, St> Iterator<B> for Scan<'a, A, B, T, St> {\n 1687      #[inline]\n 1688      fn next(&mut self) -> Option<B> {\n ....\n 1707  }\n 1708  \n 1709: impl<'a, A, T: Iterator<A>, B, U: Iterator<B>> Iterator<B> for FlatMap<'a, A, T, U> {\n 1710      #[inline]\n 1711      fn next(&mut self) -> Option<B> {\n ....\n 1736  \n 1737  impl<'a,\n 1738:      A, T: DoubleEndedIterator<A>,\n 1739       B, U: DoubleEndedIterator<B>> DoubleEndedIterator<B>\n 1740       for FlatMap<'a, A, T, U> {\n ....\n 1764  }\n 1765  \n 1766: impl<A, T: Iterator<A>> Iterator<A> for Fuse<T> {\n 1767      #[inline]\n 1768      fn next(&mut self) -> Option<A> {\n ....\n 1790  }\n 1791  \n 1792: impl<A, T: DoubleEndedIterator<A>> DoubleEndedIterator<A> for Fuse<T> {\n 1793      #[inline]\n 1794      fn next_back(&mut self) -> Option<A> {\n ....\n 1808  \n 1809  // Allow RandomAccessIterators to be fused without affecting random-access behavior\n 1810: impl<A, T: RandomAccessIterator<A>> RandomAccessIterator<A> for Fuse<T> {\n 1811      #[inline]\n 1812      fn indexable(&self) -> uint {\n ....\n 1848  }\n 1849  \n 1850: impl<'a, A, T: Iterator<A>> Iterator<A> for Inspect<'a, A, T> {\n 1851      #[inline]\n 1852      fn next(&mut self) -> Option<A> {\n ....\n 1861  }\n 1862  \n 1863: impl<'a, A, T: DoubleEndedIterator<A>> DoubleEndedIterator<A>\n 1864  for Inspect<'a, A, T> {\n 1865      #[inline]\n ....\n 1870  }\n 1871  \n 1872: impl<'a, A, T: RandomAccessIterator<A>> RandomAccessIterator<A>\n 1873  for Inspect<'a, A, T> {\n 1874      #[inline]\n ....\n 2197  \n 2198      /// Compare `a` and `b` for equality using `TotalOrd`\n 2199:     pub fn equals<A: TotalEq, T: Iterator<A>>(mut a: T, mut b: T) -> bool {\n 2200          loop {\n 2201              match (a.next(), b.next()) {\n ....\n 2208  \n 2209      /// Order `a` and `b` lexicographically using `TotalOrd`\n 2210:     pub fn cmp<A: TotalOrd, T: Iterator<A>>(mut a: T, mut b: T) -> cmp::Ordering {\n 2211          loop {\n 2212              match (a.next(), b.next()) {\n ....\n 2223  \n 2224      /// Compare `a` and `b` for equality (Using partial equality, `Eq`)\n 2225:     pub fn eq<A: Eq, T: Iterator<A>>(mut a: T, mut b: T) -> bool {\n 2226          loop {\n 2227              match (a.next(), b.next()) {\n ....\n 2234  \n 2235      /// Compare `a` and `b` for nonequality (Using partial equality, `Eq`)\n 2236:     pub fn ne<A: Eq, T: Iterator<A>>(mut a: T, mut b: T) -> bool {\n 2237          loop {\n 2238              match (a.next(), b.next()) {\n ....\n 2245  \n 2246      /// Return `a` < `b` lexicographically (Using partial order, `Ord`)\n 2247:     pub fn lt<A: Eq + Ord, T: Iterator<A>>(mut a: T, mut b: T) -> bool {\n 2248          loop {\n 2249              match (a.next(), b.next()) {\n ....\n 2257  \n 2258      /// Return `a` <= `b` lexicographically (Using partial order, `Ord`)\n 2259:     pub fn le<A: Eq + Ord, T: Iterator<A>>(mut a: T, mut b: T) -> bool {\n 2260          loop {\n 2261              match (a.next(), b.next()) {\n ....\n 2269  \n 2270      /// Return `a` > `b` lexicographically (Using partial order, `Ord`)\n 2271:     pub fn gt<A: Eq + Ord, T: Iterator<A>>(mut a: T, mut b: T) -> bool {\n 2272          loop {\n 2273              match (a.next(), b.next()) {\n ....\n 2281  \n 2282      /// Return `a` >= `b` lexicographically (Using partial order, `Ord`)\n 2283:     pub fn ge<A: Eq + Ord, T: Iterator<A>>(mut a: T, mut b: T) -> bool {\n 2284          loop {\n 2285              match (a.next(), b.next()) {\n ....\n 2819  \n 2820      #[cfg(test)]\n 2821:     fn check_randacc_iter<A: Eq, T: Clone + RandomAccessIterator<A>>(a: T, len: uint)\n 2822      {\n 2823          let mut b = a.clone();\n\nD:\\Repositories\\GitHub\\rust\\src\\libstd\\libc.rs:\n 1500              pub static WSAEBADF: c_int = 10009;\n 1501              pub static WSAEACCES: c_int = 10013;\n 1502:             pub static WSAEFAULT: c_int = 10014;\n 1503              pub static WSAEINVAL: c_int = 10022;\n 1504              pub static WSAEMFILE: c_int = 10024;\n ....\n 1510              pub static WSAEMSGSIZE: c_int = 10040;\n 1511              pub static WSAEPROTOTYPE: c_int = 10041;\n 1512:             pub static WSAENOPROTOOPT: c_int = 10042;\n 1513:             pub static WSAEPROTONOSUPPORT: c_int = 10043;\n 1514:             pub static WSAESOCKTNOSUPPORT: c_int = 10044;\n 1515              pub static WSAEOPNOTSUPP: c_int = 10045;\n 1516:             pub static WSAEPFNOSUPPORT: c_int = 10046;\n 1517:             pub static WSAEAFNOSUPPORT: c_int = 10047;\n 1518              pub static WSAEADDRINUSE: c_int = 10048;\n 1519              pub static WSAEADDRNOTAVAIL: c_int = 10049;\n 1520              pub static WSAENETDOWN: c_int = 10050;\n 1521              pub static WSAENETUNREACH: c_int = 10051;\n 1522:             pub static WSAENETRESET: c_int = 10052;\n 1523              pub static WSAECONNABORTED: c_int = 10053;\n 1524:             pub static WSAECONNRESET: c_int = 10054;\n 1525              pub static WSAENOBUFS: c_int = 10055;\n 1526              pub static WSAEISCONN: c_int = 10056;\n ....\n 1528              pub static WSAESHUTDOWN: c_int = 10058;\n 1529              pub static WSAETOOMANYREFS: c_int = 10059;\n 1530:             pub static WSAETIMEDOUT: c_int = 10060;\n 1531              pub static WSAECONNREFUSED: c_int = 10061;\n 1532              pub static WSAELOOP: c_int = 10062;\n ....\n 1537              pub static WSAEPROCLIM: c_int = 10067;\n 1538              pub static WSAEUSERS: c_int = 10068;\n 1539:             pub static WSAEDQUOT: c_int = 10069;\n 1540              pub static WSAESTALE: c_int = 10070;\n 1541              pub static WSAEREMOTE: c_int = 10071;\n ....\n 1548              pub static WSAEINVALIDPROCTABLE: c_int = 10104;\n 1549              pub static WSAEINVALIDPROVIDER: c_int = 10105;\n 1550:             pub static WSAEPROVIDERFAILEDINIT: c_int = 10106;\n 1551          }\n 1552          pub mod c99 {\n ....\n 1591              use libc::types::os::arch::c95::c_int;\n 1592  \n 1593:             pub static AF_INET: c_int = 2;\n 1594              pub static AF_INET6: c_int = 23;\n 1595              pub static SOCK_STREAM: c_int = 1;\n ....\n 1607  \n 1608              pub static TCP_NODELAY: c_int = 0x0001;\n 1609:             pub static SOL_SOCKET: c_int = 0xffff;\n 1610              pub static SO_KEEPALIVE: c_int = 8;\n 1611:             pub static SO_BROADCAST: c_int = 32;\n 1612              pub static SO_REUSEADDR: c_int = 4;\n 1613          }\n ....\n 1621              pub static O_TEXT : c_int = 16384;\n 1622              pub static O_BINARY : c_int = 32768;\n 1623:             pub static O_NOINHERIT: c_int = 128;\n 1624  \n 1625              pub static ERROR_SUCCESS : c_int = 0;\n ....\n 1729              pub static MOVEFILE_COPY_ALLOWED: DWORD = 2;\n 1730              pub static MOVEFILE_CREATE_HARDLINK: DWORD = 16;\n 1731:             pub static MOVEFILE_DELAY_UNTIL_REBOOT: DWORD = 4;\n 1732              pub static MOVEFILE_FAIL_IF_NOT_TRACKABLE: DWORD = 32;\n 1733              pub static MOVEFILE_REPLACE_EXISTING: DWORD = 1;\n ....\n 1758              pub static FILE_ATTRIBUTE_OFFLINE: DWORD = 0x1000;\n 1759              pub static FILE_ATTRIBUTE_READONLY: DWORD = 0x1;\n 1760:             pub static FILE_ATTRIBUTE_REPARSE_POINT: DWORD = 0x400;\n 1761              pub static FILE_ATTRIBUTE_SPARSE_FILE: DWORD = 0x200;\n 1762              pub static FILE_ATTRIBUTE_SYSTEM: DWORD = 0x4;\n ....\n 1768              pub static FILE_FLAG_NO_BUFFERING: DWORD = 0x20000000;\n 1769              pub static FILE_FLAG_OPEN_NO_RECALL: DWORD = 0x00100000;\n 1770:             pub static FILE_FLAG_OPEN_REPARSE_POINT: DWORD = 0x00200000;\n 1771              pub static FILE_FLAG_OVERLAPPED: DWORD = 0x40000000;\n 1772              pub static FILE_FLAG_POSIX_SEMANTICS: DWORD = 0x0100000;\n ....\n 1783              pub static VOLUME_NAME_GUID: DWORD = 0x1;\n 1784              pub static VOLUME_NAME_NONE: DWORD = 0x4;\n 1785:             pub static VOLUME_NAME_NT: DWORD = 0x2;\n 1786  \n 1787              pub static GENERIC_READ: DWORD = 0x80000000;\n ....\n 1793  \n 1794              pub static FILE_BEGIN: DWORD = 0;\n 1795:             pub static FILE_CURRENT: DWORD = 1;\n 1796              pub static FILE_END: DWORD = 2;\n 1797  \n 1798              pub static MAX_PROTOCOL_CHAIN: DWORD = 7;\n 1799              pub static WSAPROTOCOL_LEN: DWORD = 255;\n 1800:             pub static INVALID_SOCKET: DWORD = !0;\n 1801  \n 1802              pub static DETACHED_PROCESS: DWORD = 0x00000008;\n ....\n 1810              pub static PIPE_READMODE_BYTE: DWORD = 0x00000000;\n 1811              pub static PIPE_READMODE_MESSAGE: DWORD = 0x00000002;\n 1812:             pub static PIPE_WAIT: DWORD = 0x00000000;\n 1813:             pub static PIPE_NOWAIT: DWORD = 0x00000001;\n 1814              pub static PIPE_ACCEPT_REMOTE_CLIENTS: DWORD = 0x00000000;\n 1815              pub static PIPE_REJECT_REMOTE_CLIENTS: DWORD = 0x00000008;\n ....\n 1962              pub static ECHRNG: c_int = 44;\n 1963              pub static EL2NSYNC: c_int = 45;\n 1964:             pub static EL3HLT: c_int = 46;\n 1965:             pub static EL3RST: c_int = 47;\n 1966              pub static ELNRNG: c_int = 48;\n 1967              pub static EUNATCH: c_int = 49;\n 1968              pub static ENOCSI: c_int = 50;\n 1969:             pub static EL2HLT: c_int = 51;\n 1970              pub static EBADE: c_int = 52;\n 1971              pub static EBADR: c_int = 53;\n ....\n 1973              pub static ENOANO: c_int = 55;\n 1974              pub static EBADRQC: c_int = 56;\n 1975:             pub static EBADSLT: c_int = 57;\n 1976  \n 1977              pub static EDEADLOCK: c_int = EDEADLK;\n 1978  \n 1979:             pub static EBFONT: c_int = 59;\n 1980              pub static ENOSTR: c_int = 60;\n 1981              pub static ENODATA: c_int = 61;\n 1982              pub static ETIME: c_int = 62;\n 1983              pub static ENOSR: c_int = 63;\n 1984:             pub static ENONET: c_int = 64;\n 1985              pub static ENOPKG: c_int = 65;\n 1986              pub static EREMOTE: c_int = 66;\n 1987              pub static ENOLINK: c_int = 67;\n 1988              pub static EADV: c_int = 68;\n 1989:             pub static ESRMNT: c_int = 69;\n 1990              pub static ECOMM: c_int = 70;\n 1991              pub static EPROTO: c_int = 71;\n 1992              pub static EMULTIHOP: c_int = 72;\n 1993:             pub static EDOTDOT: c_int = 73;\n 1994              pub static EBADMSG: c_int = 74;\n 1995              pub static EOVERFLOW: c_int = 75;\n ....\n 2003              pub static ELIBEXEC: c_int = 83;\n 2004              pub static EILSEQ: c_int = 84;\n 2005:             pub static ERESTART: c_int = 85;\n 2006              pub static ESTRPIPE: c_int = 86;\n 2007              pub static EUSERS: c_int = 87;\n ....\n 2010              pub static EMSGSIZE: c_int = 90;\n 2011              pub static EPROTOTYPE: c_int = 91;\n 2012:             pub static ENOPROTOOPT: c_int = 92;\n 2013:             pub static EPROTONOSUPPORT: c_int = 93;\n 2014:             pub static ESOCKTNOSUPPORT: c_int = 94;\n 2015              pub static EOPNOTSUPP: c_int = 95;\n 2016:             pub static EPFNOSUPPORT: c_int = 96;\n 2017:             pub static EAFNOSUPPORT: c_int = 97;\n 2018              pub static EADDRINUSE: c_int = 98;\n 2019              pub static EADDRNOTAVAIL: c_int = 99;\n 2020              pub static ENETDOWN: c_int = 100;\n 2021              pub static ENETUNREACH: c_int = 101;\n 2022:             pub static ENETRESET: c_int = 102;\n 2023              pub static ECONNABORTED: c_int = 103;\n 2024:             pub static ECONNRESET: c_int = 104;\n 2025              pub static ENOBUFS: c_int = 105;\n 2026              pub static EISCONN: c_int = 106;\n ....\n 2028              pub static ESHUTDOWN: c_int = 108;\n 2029              pub static ETOOMANYREFS: c_int = 109;\n 2030:             pub static ETIMEDOUT: c_int = 110;\n 2031              pub static ECONNREFUSED: c_int = 111;\n 2032              pub static EHOSTDOWN: c_int = 112;\n ....\n 2040              pub static EISNAM: c_int = 120;\n 2041              pub static EREMOTEIO: c_int = 121;\n 2042:             pub static EDQUOT: c_int = 122;\n 2043  \n 2044              pub static ENOMEDIUM: c_int = 123;\n ....\n 2166              pub static ECHRNG: c_int = 37;\n 2167              pub static EL2NSYNC: c_int = 38;\n 2168:             pub static EL3HLT: c_int = 39;\n 2169:             pub static EL3RST: c_int = 40;\n 2170              pub static ELNRNG: c_int = 41;\n 2171              pub static EUNATCH: c_int = 42;\n 2172              pub static ENOCSI: c_int = 43;\n 2173:             pub static EL2HLT: c_int = 44;\n 2174              pub static EDEADLK: c_int = 45;\n 2175              pub static ENOLCK: c_int = 46;\n ....\n 2179              pub static ENOANO: c_int = 53;\n 2180              pub static EBADRQC: c_int = 54;\n 2181:             pub static EBADSLT: c_int = 55;\n 2182              pub static EDEADLOCK: c_int = 56;\n 2183:             pub static EBFONT: c_int = 59;\n 2184              pub static ENOSTR: c_int = 60;\n 2185              pub static ENODATA: c_int = 61;\n 2186              pub static ETIME: c_int = 62;\n 2187              pub static ENOSR: c_int = 63;\n 2188:             pub static ENONET: c_int = 64;\n 2189              pub static ENOPKG: c_int = 65;\n 2190              pub static EREMOTE: c_int = 66;\n 2191              pub static ENOLINK: c_int = 67;\n 2192              pub static EADV: c_int = 68;\n 2193:             pub static ESRMNT: c_int = 69;\n 2194              pub static ECOMM: c_int = 70;\n 2195              pub static EPROTO: c_int = 71;\n 2196:             pub static EDOTDOT: c_int = 73;\n 2197              pub static EMULTIHOP: c_int = 74;\n 2198              pub static EBADMSG: c_int = 77;\n ....\n 2210              pub static ENOSYS: c_int = 89;\n 2211              pub static ELOOP: c_int = 90;\n 2212:             pub static ERESTART: c_int = 91;\n 2213              pub static ESTRPIPE: c_int = 92;\n 2214              pub static ENOTEMPTY: c_int = 93;\n ....\n 2218              pub static EMSGSIZE: c_int = 97;\n 2219              pub static EPROTOTYPE: c_int = 98;\n 2220:             pub static ENOPROTOOPT: c_int = 99;\n 2221:             pub static EPROTONOSUPPORT: c_int = 120;\n 2222:             pub static ESOCKTNOSUPPORT: c_int = 121;\n 2223              pub static EOPNOTSUPP: c_int = 122;\n 2224:             pub static EPFNOSUPPORT: c_int = 123;\n 2225:             pub static EAFNOSUPPORT: c_int = 124;\n 2226              pub static EADDRINUSE: c_int = 125;\n 2227              pub static EADDRNOTAVAIL: c_int = 126;\n 2228              pub static ENETDOWN: c_int = 127;\n 2229              pub static ENETUNREACH: c_int = 128;\n 2230:             pub static ENETRESET: c_int = 129;\n 2231              pub static ECONNABORTED: c_int = 130;\n 2232:             pub static ECONNRESET: c_int = 131;\n 2233              pub static ENOBUFS: c_int = 132;\n 2234              pub static EISCONN: c_int = 133;\n ....\n 2241              pub static ESHUTDOWN: c_int = 143;\n 2242              pub static ETOOMANYREFS: c_int = 144;\n 2243:             pub static ETIMEDOUT: c_int = 145;\n 2244              pub static ECONNREFUSED: c_int = 146;\n 2245              pub static EHOSTDOWN: c_int = 147;\n ....\n 2265              pub static EHWPOISON: c_int = 168;\n 2266  \n 2267:             pub static EDQUOT: c_int = 1133;\n 2268          }\n 2269          pub mod posix01 {\n ....\n 2354  \n 2355              pub static AF_UNIX: c_int = 1;\n 2356:             pub static AF_INET: c_int = 2;\n 2357              pub static AF_INET6: c_int = 10;\n 2358              pub static SOCK_STREAM: c_int = 1;\n ....\n 2370  \n 2371              pub static TCP_NODELAY: c_int = 1;\n 2372:             pub static SOL_SOCKET: c_int = 1;\n 2373              pub static SO_KEEPALIVE: c_int = 9;\n 2374:             pub static SO_BROADCAST: c_int = 6;\n 2375              pub static SO_REUSEADDR: c_int = 2;\n 2376          }\n ....\n 2803              pub static MINCORE_SUPER : c_int = 0x20;\n 2804  \n 2805:             pub static AF_INET: c_int = 2;\n 2806              pub static AF_INET6: c_int = 28;\n 2807              pub static AF_UNIX: c_int = 1;\n ....\n 2821              pub static TCP_NODELAY: c_int = 1;\n 2822              pub static TCP_KEEPIDLE: c_int = 256;\n 2823:             pub static SOL_SOCKET: c_int = 0xffff;\n 2824              pub static SO_KEEPALIVE: c_int = 0x0008;\n 2825:             pub static SO_BROADCAST: c_int = 0x0020;\n 2826              pub static SO_REUSEADDR: c_int = 0x0004;\n 2827          }\n ....\n 3183  \n 3184              pub static AF_UNIX: c_int = 1;\n 3185:             pub static AF_INET: c_int = 2;\n 3186              pub static AF_INET6: c_int = 30;\n 3187              pub static SOCK_STREAM: c_int = 1;\n ....\n 3200              pub static TCP_NODELAY: c_int = 0x01;\n 3201              pub static TCP_KEEPALIVE: c_int = 0x10;\n 3202:             pub static SOL_SOCKET: c_int = 0xffff;\n 3203              pub static SO_KEEPALIVE: c_int = 0x0008;\n 3204:             pub static SO_BROADCAST: c_int = 0x0020;\n 3205              pub static SO_REUSEADDR: c_int = 0x0004;\n 3206          }\n\nD:\\Repositories\\GitHub\\rust\\src\\libstd\\local_data.rs:\n   66  #[allow(missing_doc)]\n   67  trait LocalData {}\n   68: impl<T: 'static> LocalData for T {}\n   69  \n   70  // The task-local-map stores all TLS information for the currently running task.\n   ..\n  130  }\n  131  \n  132: fn key_to_key_value<T: 'static>(key: Key<T>) -> *u8 {\n  133      unsafe { cast::transmute(key) }\n  134  }\n  ...\n  139  /// A runtime assertion will be triggered it removal of TLS value is attempted\n  140  /// while the value is still loaned out via `get` or `get_mut`.\n  141: pub fn pop<T: 'static>(key: Key<T>) -> Option<T> {\n  142      let map = unsafe { get_local_map() };\n  143      let key_value = key_to_key_value(key);\n  ...\n  180  /// It is considered a runtime error to attempt to get a value which is already\n  181  /// on loan via the `get_mut` method provided.\n  182: pub fn get<T: 'static, U>(key: Key<T>, f: |Option<&T>| -> U) -> U {\n  183      get_with(key, ImmLoan, f)\n  184  }\n  ...\n  190  /// It is considered a runtime error to attempt to get a value which is already\n  191  /// on loan via this or the `get` methods.\n  192: pub fn get_mut<T: 'static, U>(key: Key<T>, f: |Option<&mut T>| -> U) -> U {\n  193      get_with(key, MutLoan, |x| {\n  194          match x {\n  ...\n  291  /// It is considered a runtime error to attempt to set a key which is currently\n  292  /// on loan via the `get` or `get_mut` methods.\n  293: pub fn set<T: 'static>(key: Key<T>, data: T) {\n  294      let map = unsafe { get_local_map() };\n  295      let keyval = key_to_key_value(key);\n  ...\n  341  /// This function will have the same runtime errors as generated from `pop` and\n  342  /// `set` (the key must not currently be on loan\n  343: pub fn modify<T: 'static>(key: Key<T>, f: |Option<T>| -> Option<T>) {\n  344      match f(pop(key)) {\n  345          Some(next) => { set(key, next); }\n\nD:\\Repositories\\GitHub\\rust\\src\\libstd\\managed.rs:\n   47  \n   48  #[cfg(not(test))]\n   49: impl<T: TotalOrd> TotalOrd for @T {\n   50      #[inline]\n   51      fn cmp(&self, other: &@T) -> Ordering { (**self).cmp(*other) }\n   ..\n   53  \n   54  #[cfg(not(test))]\n   55: impl<T: TotalEq> TotalEq for @T {\n   56      #[inline]\n   57      fn equals(&self, other: &@T) -> bool { (**self).equals(*other) }\n\nD:\\Repositories\\GitHub\\rust\\src\\libstd\\num\\mod.rs:\n   38  /// Simultaneous division and remainder\n   39  #[inline]\n   40: pub fn div_rem<T: Div<T, T> + Rem<T, T>>(x: T, y: T) -> (T, T) {\n   41      (x / y, x % y)\n   42  }\n   ..\n   72  \n   73  /// Returns the additive identity, `0`.\n   74: #[inline(always)] pub fn zero<T: Zero>() -> T { Zero::zero() }\n   75  \n   76  /// Defines a multiplicative identity element for `Self`.\n   ..\n   95  \n   96  /// Returns the multiplicative identity, `1`.\n   97: #[inline(always)] pub fn one<T: One>() -> T { One::one() }\n   98  \n   99  pub trait Signed: Num\n  ...\n  110  ///\n  111  /// For float, f32, and f64, `NaN` will be returned if the number is `NaN`\n  112: #[inline(always)] pub fn abs<T: Signed>(value: T) -> T { value.abs() }\n  113  /// The positive difference of two numbers.\n  114  ///\n  115  /// Returns `zero` if the number is less than or equal to `other`,\n  116  /// otherwise the difference between `self` and `other` is returned.\n  117: #[inline(always)] pub fn abs_sub<T: Signed>(x: T, y: T) -> T { x.abs_sub(&y) }\n  118  /// Returns the sign of the number.\n  119  ///\n  ...\n  127  /// - `1` if the number is positive\n  128  /// - `-1` if the number is negative\n  129: #[inline(always)] pub fn signum<T: Signed>(value: T) -> T { value.signum() }\n  130  \n  131  pub trait Unsigned: Num {}\n  ...\n  160  /// ```\n  161  #[inline]\n  162: pub fn pow<T: One + Mul<T, T>>(mut base: T, mut exp: uint) -> T {\n  163      if exp == 1 { base }\n  164      else {\n  ...\n  269  /// Returns the smallest power of 2 greater than or equal to `n`.\n  270  #[inline]\n  271: pub fn next_power_of_two<T: Unsigned + Int>(n: T) -> T {\n  272      let halfbits: T = cast(size_of::<T>() * 4).unwrap();\n  273      let mut tmp: T = n - one();\n  ...\n  284  /// otherwise the power of 2 is wrapped in `Some`.\n  285  #[inline]\n  286: pub fn checked_next_power_of_two<T: Unsigned + Int>(n: T) -> Option<T> {\n  287      let halfbits: T = cast(size_of::<T>() * 4).unwrap();\n  288      let mut tmp: T = n - one();\n  ...\n  451  /// Returns the exponential of the number, minus `1`, `exp(n) - 1`, in a way\n  452  /// that is accurate even if the number is close to zero.\n  453: #[inline(always)] pub fn exp_m1<T: Float>(value: T) -> T { value.exp_m1() }\n  454  /// Returns the natural logarithm of the number plus `1`, `ln(n + 1)`, more\n  455  /// accurately than if the operations were performed separately.\n  456: #[inline(always)] pub fn ln_1p<T: Float>(value: T) -> T { value.ln_1p() }\n  457  /// Fused multiply-add. Computes `(a * b) + c` with only one rounding error.\n  458  ///\n  459  /// This produces a more accurate result with better performance (on some\n  460  /// architectures) than a separate multiplication operation followed by an add.\n  461: #[inline(always)] pub fn mul_add<T: Float>(a: T, b: T, c: T) -> T { a.mul_add(b, c) }\n  462  \n  463  /// Raise a number to a power.\n  ...\n  471  /// assert_eq!(sixteen, 16.0);\n  472  /// ```\n  473: #[inline(always)] pub fn powf<T: Float>(value: T, n: T) -> T { value.powf(&n) }\n  474  /// Take the square root of a number.\n  475: #[inline(always)] pub fn sqrt<T: Float>(value: T) -> T { value.sqrt() }\n  476  /// Take the reciprocal (inverse) square root of a number, `1/sqrt(x)`.\n  477: #[inline(always)] pub fn rsqrt<T: Float>(value: T) -> T { value.rsqrt() }\n  478  /// Take the cubic root of a number.\n  479: #[inline(always)] pub fn cbrt<T: Float>(value: T) -> T { value.cbrt() }\n  480  /// Calculate the length of the hypotenuse of a right-angle triangle given legs\n  481  /// of length `x` and `y`.\n  482: #[inline(always)] pub fn hypot<T: Float>(x: T, y: T) -> T { x.hypot(&y) }\n  483  /// Sine function.\n  484: #[inline(always)] pub fn sin<T: Float>(value: T) -> T { value.sin() }\n  485  /// Cosine function.\n  486: #[inline(always)] pub fn cos<T: Float>(value: T) -> T { value.cos() }\n  487  /// Tangent function.\n  488: #[inline(always)] pub fn tan<T: Float>(value: T) -> T { value.tan() }\n  489  /// Compute the arcsine of the number.\n  490: #[inline(always)] pub fn asin<T: Float>(value: T) -> T { value.asin() }\n  491  /// Compute the arccosine of the number.\n  492: #[inline(always)] pub fn acos<T: Float>(value: T) -> T { value.acos() }\n  493  /// Compute the arctangent of the number.\n  494: #[inline(always)] pub fn atan<T: Float>(value: T) -> T { value.atan() }\n  495  /// Compute the arctangent with 2 arguments.\n  496: #[inline(always)] pub fn atan2<T: Float>(x: T, y: T) -> T { x.atan2(&y) }\n  497  /// Simultaneously computes the sine and cosine of the number.\n  498: #[inline(always)] pub fn sin_cos<T: Float>(value: T) -> (T, T) { value.sin_cos() }\n  499  /// Returns `e^(value)`, (the exponential function).\n  500: #[inline(always)] pub fn exp<T: Float>(value: T) -> T { value.exp() }\n  501  /// Returns 2 raised to the power of the number, `2^(value)`.\n  502: #[inline(always)] pub fn exp2<T: Float>(value: T) -> T { value.exp2() }\n  503  /// Returns the natural logarithm of the number.\n  504: #[inline(always)] pub fn ln<T: Float>(value: T) -> T { value.ln() }\n  505  /// Returns the logarithm of the number with respect to an arbitrary base.\n  506: #[inline(always)] pub fn log<T: Float>(value: T, base: T) -> T { value.log(&base) }\n  507  /// Returns the base 2 logarithm of the number.\n  508: #[inline(always)] pub fn log2<T: Float>(value: T) -> T { value.log2() }\n  509  /// Returns the base 10 logarithm of the number.\n  510: #[inline(always)] pub fn log10<T: Float>(value: T) -> T { value.log10() }\n  511  /// Hyperbolic sine function.\n  512: #[inline(always)] pub fn sinh<T: Float>(value: T) -> T { value.sinh() }\n  513  /// Hyperbolic cosine function.\n  514: #[inline(always)] pub fn cosh<T: Float>(value: T) -> T { value.cosh() }\n  515  /// Hyperbolic tangent function.\n  516: #[inline(always)] pub fn tanh<T: Float>(value: T) -> T { value.tanh() }\n  517  /// Inverse hyperbolic sine function.\n  518: #[inline(always)] pub fn asinh<T: Float>(value: T) -> T { value.asinh() }\n  519  /// Inverse hyperbolic cosine function.\n  520: #[inline(always)] pub fn acosh<T: Float>(value: T) -> T { value.acosh() }\n  521  /// Inverse hyperbolic tangent function.\n  522: #[inline(always)] pub fn atanh<T: Float>(value: T) -> T { value.atanh() }\n  523  \n  524  /// A generic trait for converting a value to a number.\n  ...\n  973  ///\n  974  #[inline]\n  975: pub fn cast<T: NumCast,U: NumCast>(n: T) -> Option<U> {\n  976      NumCast::from(n)\n  977  }\n  ...\n  979  /// An interface for casting between machine scalars\n  980  pub trait NumCast: ToPrimitive {\n  981:     fn from<T: ToPrimitive>(n: T) -> Option<Self>;\n  982  }\n  983  \n  ...\n 1017  \n 1018  /// A utility function that just calls FromStrRadix::from_str_radix.\n 1019: pub fn from_str_radix<T: FromStrRadix>(str: &str, radix: uint) -> Option<T> {\n 1020      FromStrRadix::from_str_radix(str, radix)\n 1021  }\n ....\n 1032  }\n 1033  \n 1034: impl<T: CheckedAdd + CheckedSub + Zero + Ord + Bounded> Saturating for T {\n 1035      #[inline]\n 1036      fn saturating_add(self, v: T) -> T {\n ....\n 1699      #[test]\n 1700      fn test_pow() {\n 1701:         fn naive_pow<T: One + Mul<T, T>>(base: T, exp: uint) -> T {\n 1702              range(0, exp).fold(one::<T>(), |acc, _| acc * base)\n 1703          }\n\nD:\\Repositories\\GitHub\\rust\\src\\libstd\\num\\strconv.rs:\n  134   * - Fails if `radix` < 2 or `radix` > 36.\n  135   */\n  136: pub fn int_to_str_bytes_common<T: Int>(num: T, radix: uint, sign: SignFormat, f: |u8|) {\n  137      assert!(2 <= radix && radix <= 36);\n  138  \n\nD:\\Repositories\\GitHub\\rust\\src\\libstd\\option.rs:\n  366  }\n  367  \n  368: impl<T: Default> Option<T> {\n  369      /// Returns the contained value or default (for this type)\n  370      #[inline]\n  ...\n  381  /////////////////////////////////////////////////////////////////////////////\n  382  \n  383: impl<T: fmt::Show> fmt::Show for Option<T> {\n  384      #[inline]\n  385      fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {\n\nD:\\Repositories\\GitHub\\rust\\src\\libstd\\owned.rs:\n   48  \n   49  #[cfg(not(test))]\n   50: impl<T: TotalOrd> TotalOrd for ~T {\n   51      #[inline]\n   52      fn cmp(&self, other: &~T) -> Ordering { (**self).cmp(*other) }\n   ..\n   54  \n   55  #[cfg(not(test))]\n   56: impl<T: TotalEq> TotalEq for ~T {\n   57      #[inline]\n   58      fn equals(&self, other: &~T) -> bool { (**self).equals(*other) }\n\nD:\\Repositories\\GitHub\\rust\\src\\libstd\\path\\mod.rs:\n  159      /// See individual Path impls for additional restrictions.\n  160      #[inline]\n  161:     fn new<T: BytesContainer>(path: T) -> Self {\n  162          assert!(!contains_nul(path.container_as_bytes()));\n  163          unsafe { GenericPathUnsafe::new_unchecked(path) }\n  ...\n  167      /// The resulting Path will always be normalized.\n  168      #[inline]\n  169:     fn new_opt<T: BytesContainer>(path: T) -> Option<Self> {\n  170          if contains_nul(path.container_as_bytes()) {\n  171              None\n  ...\n  275      /// Fails the task if the filename contains a NUL.\n  276      #[inline]\n  277:     fn set_filename<T: BytesContainer>(&mut self, filename: T) {\n  278          assert!(!contains_nul(filename.container_as_bytes()));\n  279          unsafe { self.set_filename_unchecked(filename) }\n  ...\n  287      ///\n  288      /// Fails the task if the extension contains a NUL.\n  289:     fn set_extension<T: BytesContainer>(&mut self, extension: T) {\n  290          assert!(!contains_nul(extension.container_as_bytes()));\n  291          // borrowck causes problems here too\n  ...\n  339      /// Fails the task if the filename contains a NUL.\n  340      #[inline]\n  341:     fn with_filename<T: BytesContainer>(&self, filename: T) -> Self {\n  342          let mut p = self.clone();\n  343          p.set_filename(filename);\n  ...\n  352      /// Fails the task if the extension contains a NUL.\n  353      #[inline]\n  354:     fn with_extension<T: BytesContainer>(&self, extension: T) -> Self {\n  355          let mut p = self.clone();\n  356          p.set_extension(extension);\n  ...\n  377      /// Fails the task if the path contains a NUL.\n  378      #[inline]\n  379:     fn push<T: BytesContainer>(&mut self, path: T) {\n  380          assert!(!contains_nul(path.container_as_bytes()));\n  381          unsafe { self.push_unchecked(path) }\n  ...\n  384      /// See `push` for details.\n  385      #[inline]\n  386:     fn push_many<T: BytesContainer>(&mut self, paths: &[T]) {\n  387          let t: Option<T> = None;\n  388          if BytesContainer::is_str(t) {\n  ...\n  409      /// Fails the task if the path contains a NUL.\n  410      #[inline]\n  411:     fn join<T: BytesContainer>(&self, path: T) -> Self {\n  412          let mut p = self.clone();\n  413          p.push(path);\n  ...\n  418      /// See `join` for details.\n  419      #[inline]\n  420:     fn join_many<T: BytesContainer>(&self, paths: &[T]) -> Self {\n  421          let mut p = self.clone();\n  422          p.push_many(paths);\n  ...\n  476      /// Creates a new Path without checking for null bytes.\n  477      /// The resulting Path will always be normalized.\n  478:     unsafe fn new_unchecked<T: BytesContainer>(path: T) -> Self;\n  479  \n  480      /// Replaces the filename portion of the path without checking for null\n  481      /// bytes.\n  482      /// See `set_filename` for details.\n  483:     unsafe fn set_filename_unchecked<T: BytesContainer>(&mut self, filename: T);\n  484  \n  485      /// Pushes a path onto `self` without checking for null bytes.\n  486      /// See `push` for details.\n  487:     unsafe fn push_unchecked<T: BytesContainer>(&mut self, path: T);\n  488  }\n  489  \n\nD:\\Repositories\\GitHub\\rust\\src\\libstd\\path\\posix.rs:\n  115  \n  116  impl GenericPathUnsafe for Path {\n  117:     unsafe fn new_unchecked<T: BytesContainer>(path: T) -> Path {\n  118          let path = Path::normalize(path.container_as_bytes());\n  119          assert!(!path.is_empty());\n  ...\n  122      }\n  123  \n  124:     unsafe fn set_filename_unchecked<T: BytesContainer>(&mut self, filename: T) {\n  125          let filename = filename.container_as_bytes();\n  126          match self.sepidx {\n  ...\n  152      }\n  153  \n  154:     unsafe fn push_unchecked<T: BytesContainer>(&mut self, path: T) {\n  155          let path = path.container_as_bytes();\n  156          if !path.is_empty() {\n  ...\n  321      /// Fails the task if the vector contains a NUL.\n  322      #[inline]\n  323:     pub fn new<T: BytesContainer>(path: T) -> Path {\n  324          GenericPath::new(path)\n  325      }\n  ...\n  327      /// Returns a new Path from a byte vector or string, if possible\n  328      #[inline]\n  329:     pub fn new_opt<T: BytesContainer>(path: T) -> Option<Path> {\n  330          GenericPath::new_opt(path)\n  331      }\n\nD:\\Repositories\\GitHub\\rust\\src\\libstd\\path\\windows.rs:\n  157      /// Fails if not valid UTF-8.\n  158      #[inline]\n  159:     unsafe fn new_unchecked<T: BytesContainer>(path: T) -> Path {\n  160          let (prefix, path) = Path::normalize_(path.container_as_str().unwrap());\n  161          assert!(!path.is_empty());\n  ...\n  170      ///\n  171      /// Fails if not valid UTF-8.\n  172:     unsafe fn set_filename_unchecked<T: BytesContainer>(&mut self, filename: T) {\n  173          let filename = filename.container_as_str().unwrap();\n  174          match self.sepidx_or_prefix_len() {\n  ...\n  216      /// the new path is relative to. Otherwise, the new path will be treated\n  217      /// as if it were absolute and will replace the receiver outright.\n  218:     unsafe fn push_unchecked<T: BytesContainer>(&mut self, path: T) {\n  219          let path = path.container_as_str().unwrap();\n  220          fn is_vol_abs(path: &str, prefix: Option<PathPrefix>) -> bool {\n  ...\n  303  impl GenericPath for Path {\n  304      #[inline]\n  305:     fn new_opt<T: BytesContainer>(path: T) -> Option<Path> {\n  306          let s = path.container_as_str();\n  307          match s {\n  ...\n  594      /// Fails if invalid UTF-8.\n  595      #[inline]\n  596:     pub fn new<T: BytesContainer>(path: T) -> Path {\n  597          GenericPath::new(path)\n  598      }\n  ...\n  600      /// Returns a new Path from a byte vector or string, if possible\n  601      #[inline]\n  602:     pub fn new_opt<T: BytesContainer>(path: T) -> Option<Path> {\n  603          GenericPath::new_opt(path)\n  604      }\n\nD:\\Repositories\\GitHub\\rust\\src\\libstd\\rand\\distributions\\mod.rs:\n  112  }\n  113  \n  114: impl<T: Clone> WeightedChoice<T> {\n  115      /// Create a new `WeightedChoice`.\n  116      ///\n  ...\n  146  }\n  147  \n  148: impl<T: Clone> Sample<T> for WeightedChoice<T> {\n  149      fn sample<R: Rng>(&mut self, rng: &mut R) -> T { self.ind_sample(rng) }\n  150  }\n  151  \n  152: impl<T: Clone> IndependentSample<T> for WeightedChoice<T> {\n  153      fn ind_sample<R: Rng>(&self, rng: &mut R) -> T {\n  154          // we want to find the first element that has cumulative\n\nD:\\Repositories\\GitHub\\rust\\src\\libstd\\rand\\isaac.rs:\n  137          let mut b = self.b + self.c;\n  138  \n  139:         static MIDPOINT: uint = RAND_SIZE as uint / 2;\n  140  \n  141          macro_rules! ind (($x:expr) => {\n  ...\n  338          let mut a = self.a;\n  339          let mut b = self.b + self.c;\n  340:         static MIDPOINT: uint =  RAND_SIZE_64 / 2;\n  341          static MP_VEC: [(uint, uint), .. 2] = [(0,MIDPOINT), (MIDPOINT, 0)];\n  342          macro_rules! ind (\n\nD:\\Repositories\\GitHub\\rust\\src\\libstd\\rand\\mod.rs:\n  179      /// ```\n  180      #[inline(always)]\n  181:     fn gen<T: Rand>(&mut self) -> T {\n  182          Rand::rand(self)\n  183      }\n  ...\n  195      /// println!(\"{:?}\", rng.gen_vec::<(f64, bool)>(5));\n  196      /// ```\n  197:     fn gen_vec<T: Rand>(&mut self, len: uint) -> ~[T] {\n  198          vec::from_fn(len, |_| self.gen())\n  199      }\n  ...\n  219      /// println!(\"{}\", m);\n  220      /// ```\n  221:     fn gen_range<T: Ord + SampleRange>(&mut self, low: T, high: T) -> T {\n  222          assert!(low < high, \"Rng.gen_range called with low >= high\");\n  223          Range::new(low, high).ind_sample(self)\n  ...\n  249      /// ```\n  250      fn gen_ascii_str(&mut self, len: uint) -> ~str {\n  251:         static GEN_ASCII_STR_CHARSET: &'static [u8] = bytes!(\"ABCDEFGHIJKLMNOPQRSTUVWXYZ\\\n  252                                                               abcdefghijklmnopqrstuvwxyz\\\n  253                                                               0123456789\");\n  ...\n  260  \n  261      /// Choose an item randomly, failing if `values` is empty.\n  262:     fn choose<T: Clone>(&mut self, values: &[T]) -> T {\n  263          self.choose_option(values).expect(\"Rng.choose: `values` is empty\").clone()\n  264      }\n  ...\n  335      /// println!(\"{:?}\", sample);\n  336      /// ```\n  337:     fn sample<A, T: Iterator<A>>(&mut self, iter: T, n: uint) -> ~[A] {\n  338          let mut reservoir : ~[A] = vec::with_capacity(n);\n  339          for (i, elem) in iter.enumerate() {\n  ...\n  620  /// ```\n  621  #[inline]\n  622: pub fn random<T: Rand>() -> T {\n  623      task_rng().gen()\n  624  }\n\nD:\\Repositories\\GitHub\\rust\\src\\libstd\\rand\\rand_impls.rs:\n  215  }\n  216  \n  217: impl<T: Rand> Rand for ~T {\n  218      #[inline]\n  219      fn rand<R: Rng>(rng: &mut R) -> ~T { ~rng.gen() }\n  220  }\n  221  \n  222: impl<T: Rand + 'static> Rand for @T {\n  223      #[inline]\n  224      fn rand<R: Rng>(rng: &mut R) -> @T { @rng.gen() }\n\nD:\\Repositories\\GitHub\\rust\\src\\libstd\\rc.rs:\n  111  }\n  112  \n  113: impl<T: DeepClone> DeepClone for Rc<T> {\n  114      #[inline]\n  115      fn deep_clone(&self) -> Rc<T> {\n  ...\n  118  }\n  119  \n  120: impl<T: Eq> Eq for Rc<T> {\n  121      #[inline(always)]\n  122      fn eq(&self, other: &Rc<T>) -> bool { *self.borrow() == *other.borrow() }\n  ...\n  126  }\n  127  \n  128: impl<T: Ord> Ord for Rc<T> {\n  129      #[inline(always)]\n  130      fn lt(&self, other: &Rc<T>) -> bool { *self.borrow() < *other.borrow() }\n\nD:\\Repositories\\GitHub\\rust\\src\\libstd\\reference.rs:\n   16  // Equality for region pointers\n   17  #[cfg(not(test))]\n   18: impl<'a, T: Eq> Eq for &'a T {\n   19      #[inline]\n   20      fn eq(&self, other: & &'a T) -> bool {\n   ..\n   29  // Comparison for region pointers\n   30  #[cfg(not(test))]\n   31: impl<'a, T: Ord> Ord for &'a T {\n   32      #[inline]\n   33      fn lt(&self, other: & &'a T) -> bool {\n   ..\n   49  \n   50  #[cfg(not(test))]\n   51: impl<'a, T: TotalOrd> TotalOrd for &'a T {\n   52      #[inline]\n   53      fn cmp(&self, other: & &'a T) -> Ordering { (**self).cmp(*other) }\n   ..\n   55  \n   56  #[cfg(not(test))]\n   57: impl<'a, T: TotalEq> TotalEq for &'a T {\n   58      #[inline]\n   59      fn equals(&self, other: & &'a T) -> bool { (**self).equals(*other) }\n\nD:\\Repositories\\GitHub\\rust\\src\\libstd\\result.rs:\n  207  /////////////////////////////////////////////////////////////////////////////\n  208  \n  209: impl<T: fmt::Show, E: fmt::Show> fmt::Show for Result<T, E> {\n  210      #[inline]\n  211      fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {\n\nD:\\Repositories\\GitHub\\rust\\src\\libstd\\rt\\task.rs:\n  213      /// It is recommended to only use this method when *absolutely necessary*.\n  214      /// This function may not be available in the future.\n  215:     pub fn maybe_take_runtime<T: 'static>(&mut self) -> Option<~T> {\n  216          // This is a terrible, terrible function. The general idea here is to\n  217          // take the runtime, cast it to ~Any, check if it has the right type,\n\nD:\\Repositories\\GitHub\\rust\\src\\libstd\\rt\\thread.rs:\n   69      /// called, when the `Thread` falls out of scope its destructor will block\n   70      /// waiting for the OS thread.\n   71:     pub fn start<T: Send>(main: proc() -> T) -> Thread<T> {\n   72          Thread::start_stack(DEFAULT_STACK_SIZE, main)\n   73      }\n   ..\n   75      /// Performs the same functionality as `start`, but specifies an explicit\n   76      /// stack size for the new thread.\n   77:     pub fn start_stack<T: Send>(stack: uint, main: proc() -> T) -> Thread<T> {\n   78  \n   79          // We need the address of the packet to fill in to be stable so when\n   ..\n  120  }\n  121  \n  122: impl<T: Send> Thread<T> {\n  123      /// Wait for this thread to finish, returning the result of the thread's\n  124      /// calculation.\n  ...\n  133  \n  134  #[unsafe_destructor]\n  135: impl<T: Send> Drop for Thread<T> {\n  136      fn drop(&mut self) {\n  137          // This is required for correctness. If this is not done then the thread\n\nD:\\Repositories\\GitHub\\rust\\src\\libstd\\str.rs:\n 1106      };\n 1107  \n 1108:     static REPLACEMENT: &'static [u8] = bytes!(0xEF, 0xBF, 0xBD); // U+FFFD in UTF-8\n 1109      let mut i = firstbad;\n 1110      let total = v.len();\n ....\n 3059  impl FromIterator<char> for ~str {\n 3060      #[inline]\n 3061:     fn from_iterator<T: Iterator<char>>(iterator: &mut T) -> ~str {\n 3062          let (lower, _) = iterator.size_hint();\n 3063          let mut buf = with_capacity(lower);\n ....\n 3069  impl Extendable<char> for ~str {\n 3070      #[inline]\n 3071:     fn extend<T: Iterator<char>>(&mut self, iterator: &mut T) {\n 3072          let (lower, _) = iterator.size_hint();\n 3073          let reserve = lower + self.len();\n\nD:\\Repositories\\GitHub\\rust\\src\\libstd\\sync\\arc.rs:\n   43  }\n   44  \n   45: unsafe fn new_inner<T: Send>(data: T, refcount: uint) -> *mut ArcData<T> {\n   46      let data = ~ArcData { count: AtomicUint::new(refcount), data: data };\n   47      cast::transmute(data)\n   48  }\n   49  \n   50: impl<T: Send> UnsafeArc<T> {\n   51      /// Creates a new `UnsafeArc` which wraps the given data.\n   52      pub fn new(data: T) -> UnsafeArc<T> {\n   ..\n  105  }\n  106  \n  107: impl<T: Send> Clone for UnsafeArc<T> {\n  108      fn clone(&self) -> UnsafeArc<T> {\n  109          unsafe {\n\nD:\\Repositories\\GitHub\\rust\\src\\libstd\\sync\\deque.rs:\n  140  }\n  141  \n  142: impl<T: Send> BufferPool<T> {\n  143      /// Allocates a new buffer pool which in turn can be used to allocate new\n  144      /// deques.\n  ...\n  179  }\n  180  \n  181: impl<T: Send> Clone for BufferPool<T> {\n  182      fn clone(&self) -> BufferPool<T> { BufferPool { pool: self.pool.clone() } }\n  183  }\n  184  \n  185: impl<T: Send> Worker<T> {\n  186      /// Pushes data onto the front of this work queue.\n  187      pub fn push(&mut self, t: T) {\n  ...\n  202  }\n  203  \n  204: impl<T: Send> Stealer<T> {\n  205      /// Steals work off the end of the queue (opposite of the worker's end)\n  206      pub fn steal(&mut self) -> Stolen<T> {\n  ...\n  216  }\n  217  \n  218: impl<T: Send> Clone for Stealer<T> {\n  219      fn clone(&self) -> Stealer<T> { Stealer { deque: self.deque.clone() } }\n  220  }\n  ...\n  223  // personally going to heavily comment what's going on here.\n  224  \n  225: impl<T: Send> Deque<T> {\n  226      fn new(mut pool: BufferPool<T>) -> Deque<T> {\n  227          let buf = pool.alloc(MIN_BITS);\n  ...\n  329  \n  330  #[unsafe_destructor]\n  331: impl<T: Send> Drop for Deque<T> {\n  332      fn drop(&mut self) {\n  333          let t = self.top.load(SeqCst);\n  ...\n  343  }\n  344  \n  345: impl<T: Send> Buffer<T> {\n  346      unsafe fn new(log_size: int) -> Buffer<T> {\n  347          let size = (1 << log_size) * mem::size_of::<T>();\n  ...\n  387  \n  388  #[unsafe_destructor]\n  389: impl<T: Send> Drop for Buffer<T> {\n  390      fn drop(&mut self) {\n  391          // It is assumed that all buffers are empty on drop.\n  ...\n  423      #[test]\n  424      fn stealpush() {\n  425:         static AMT: int = 100000;\n  426          let mut pool = BufferPool::<int>::new();\n  427          let (mut w, s) = pool.deque();\n  ...\n  449      #[test]\n  450      fn stealpush_large() {\n  451:         static AMT: int = 100000;\n  452          let mut pool = BufferPool::<(int, int)>::new();\n  453          let (mut w, s) = pool.deque();\n  ...\n  519      #[test]\n  520      fn many_stampede() {\n  521:         static AMT: uint = 4;\n  522          let mut pool = BufferPool::<~int>::new();\n  523          let threads = range(0, AMT).map(|_| {\n  ...\n  535      #[test]\n  536      fn stress() {\n  537:         static AMT: int = 100000;\n  538          static NTHREADS: int = 8;\n  539          static mut DONE: AtomicBool = INIT_ATOMIC_BOOL;\n  ...\n  595      #[ignore(cfg(windows))] // apparently windows scheduling is weird?\n  596      fn no_starvation() {\n  597:         static AMT: int = 10000;\n  598          static NTHREADS: int = 4;\n  599          static mut DONE: AtomicBool = INIT_ATOMIC_BOOL;\n\nD:\\Repositories\\GitHub\\rust\\src\\libstd\\sync\\mpmc_bounded_queue.rs:\n   58  }\n   59  \n   60: impl<T: Send> State<T> {\n   61      fn with_capacity(capacity: uint) -> State<T> {\n   62          let capacity = if capacity < 2 || (capacity & (capacity - 1)) != 0 {\n   ..\n  136  }\n  137  \n  138: impl<T: Send> Queue<T> {\n  139      pub fn with_capacity(capacity: uint) -> Queue<T> {\n  140          Queue{\n  ...\n  152  }\n  153  \n  154: impl<T: Send> Clone for Queue<T> {\n  155      fn clone(&self) -> Queue<T> {\n  156          Queue {\n\nD:\\Repositories\\GitHub\\rust\\src\\libstd\\sync\\mpsc_queue.rs:\n   81  }\n   82  \n   83: impl<T: Send> Queue<T> {\n   84      /// Creates a new queue that is safe to share among multiple producers and\n   85      /// one consumer.\n   ..\n  140  \n  141  #[unsafe_destructor]\n  142: impl<T: Send> Drop for Queue<T> {\n  143      fn drop(&mut self) {\n  144          unsafe {\n\nD:\\Repositories\\GitHub\\rust\\src\\libstd\\sync\\spsc_queue.rs:\n   71  }\n   72  \n   73: impl<T: Send> Node<T> {\n   74      fn new() -> *mut Node<T> {\n   75          unsafe {\n   ..\n   82  }\n   83  \n   84: impl<T: Send> Queue<T> {\n   85      /// Creates a new queue. The producer returned is connected to the consumer\n   86      /// to push all data to the consumer.\n   ..\n  210  \n  211  #[unsafe_destructor]\n  212: impl<T: Send> Drop for Queue<T> {\n  213      fn drop(&mut self) {\n  214          unsafe {\n\nD:\\Repositories\\GitHub\\rust\\src\\libstd\\trie.rs:\n   22  \n   23  // FIXME: #5244: need to manually update the TrieNode constructor\n   24: static SHIFT: uint = 4;\n   25  static SIZE: uint = 1 << SHIFT;\n   26  static MASK: uint = SIZE - 1;\n\nD:\\Repositories\\GitHub\\rust\\src\\libstd\\tuple.rs:\n  120              }\n  121  \n  122:             impl<$($T: fmt::Show),+> ToStr for ($($T,)+) {\n  123                  fn to_str(&self) -> ~str {\n  124                      format!(\"{}\", *self)\n  ...\n  126              }\n  127  \n  128:             impl<$($T: fmt::Show),+> fmt::Show for ($($T,)+) {\n  129                  fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {\n  130                      write_tuple!(f.buf, $(self.$refN()),+)\n\nD:\\Repositories\\GitHub\\rust\\src\\libstd\\unstable\\intrinsics.rs:\n  282      /// function will return the same value for a type regardless of whichever\n  283      /// crate it is invoked in.\n  284:     pub fn type_id<T: 'static>() -> TypeId;\n  285  \n  286  \n  ...\n  452  impl TypeId {\n  453      /// Returns the `TypeId` of the type this generic function has been instantiated with\n  454:     pub fn of<T: 'static>() -> TypeId {\n  455          unsafe { type_id::<T>() }\n  456      }\n\nD:\\Repositories\\GitHub\\rust\\src\\libstd\\unstable\\mutex.rs:\n   90  }\n   91  \n   92: pub static NATIVE_MUTEX_INIT: StaticNativeMutex = StaticNativeMutex {\n   93      inner: imp::MUTEX_INIT,\n   94  };\n   ..\n  320          // minus 8 because we have an 'align' field\n  321          #[cfg(target_arch = \"x86_64\")]\n  322:         static __SIZEOF_PTHREAD_MUTEX_T: uint = 40 - 8;\n  323          #[cfg(target_arch = \"x86\")]\n  324:         static __SIZEOF_PTHREAD_MUTEX_T: uint = 24 - 8;\n  325          #[cfg(target_arch = \"arm\")]\n  326:         static __SIZEOF_PTHREAD_MUTEX_T: uint = 24 - 8;\n  327          #[cfg(target_arch = \"x86_64\")]\n  328:         static __SIZEOF_PTHREAD_COND_T: uint = 48 - 8;\n  329          #[cfg(target_arch = \"x86\")]\n  330:         static __SIZEOF_PTHREAD_COND_T: uint = 48 - 8;\n  331          #[cfg(target_arch = \"arm\")]\n  332:         static __SIZEOF_PTHREAD_COND_T: uint = 48 - 8;\n  333  \n  334          pub struct pthread_mutex_t {\n  ...\n  370      }\n  371  \n  372:     pub static MUTEX_INIT: Mutex = Mutex {\n  373          lock: PTHREAD_MUTEX_INITIALIZER,\n  374          cond: PTHREAD_COND_INITIALIZER,\n  ...\n  429  \n  430      type LPCRITICAL_SECTION = *mut c_void;\n  431:     static SPIN_COUNT: DWORD = 4000;\n  432      #[cfg(target_arch = \"x86\")]\n  433      static CRIT_SECTION_SIZE: uint = 24;\n  ...\n  439      }\n  440  \n  441:     pub static MUTEX_INIT: Mutex = Mutex {\n  442          lock: atomics::INIT_ATOMIC_UINT,\n  443          cond: atomics::INIT_ATOMIC_UINT,\n\nD:\\Repositories\\GitHub\\rust\\src\\libstd\\vec.rs:\n  370  }\n  371  \n  372: impl<'a, T: Clone, V: Vector<T>> VectorVector<T> for &'a [V] {\n  373      fn concat_vec(&self) -> ~[T] {\n  374          let size = self.iter().fold(0u, |acc, v| acc + v.as_slice().len());\n  ...\n  501  }\n  502  \n  503: impl<T: Clone> Iterator<~[T]> for Permutations<T> {\n  504      #[inline]\n  505      fn next(&mut self) -> Option<~[T]> {\n  ...\n  678      }\n  679  \n  680:     impl<T: TotalOrd> TotalOrd for ~[T] {\n  681          #[inline]\n  682          fn cmp(&self, other: &~[T]) -> Ordering { self.as_slice().cmp(&other.as_slice()) }\n  683      }\n  684  \n  685:     impl<'a, T: Eq + Ord> Ord for &'a [T] {\n  686          fn lt(&self, other: & &'a [T]) -> bool {\n  687              order::lt(self.iter(), other.iter())\n  ...\n  701      }\n  702  \n  703:     impl<T: Eq + Ord> Ord for ~[T] {\n  704          #[inline]\n  705          fn lt(&self, other: &~[T]) -> bool { self.as_slice() < other.as_slice() }\n  ...\n  775  \n  776  /// Extension methods for vector slices\n  777: impl<'a, T: Clone> CloneableVector<T> for &'a [T] {\n  778      /// Returns a copy of `v`.\n  779      #[inline]\n  ...\n  791  \n  792  /// Extension methods for owned vectors\n  793: impl<T: Clone> CloneableVector<T> for ~[T] {\n  794      #[inline]\n  795      fn to_owned(&self) -> ~[T] { self.clone() }\n  ...\n 1207  \n 1208  /// Extension methods for vectors containing `TotalOrd` elements.\n 1209: pub trait ImmutableTotalOrdVector<T: TotalOrd> {\n 1210      /**\n 1211       * Binary search a sorted vector for a given element.\n ....\n 1216  }\n 1217  \n 1218: impl<'a, T: TotalOrd> ImmutableTotalOrdVector<T> for &'a [T] {\n 1219      fn bsearch_elem(&self, x: &T) -> Option<uint> {\n 1220          self.bsearch(|p| p.cmp(x))\n ....\n 2463      fn sort(self);\n 2464  }\n 2465: impl<'a, T: TotalOrd> MutableTotalOrdVector<T> for &'a mut [T] {\n 2466      #[inline]\n 2467      fn sort(self) {\n ....\n 2644  }\n 2645  \n 2646: impl<'a, T: fmt::Show> fmt::Show for &'a [T] {\n 2647      fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {\n 2648          try!(write!(f.buf, \"[\"));\n ....\n 2660  }\n 2661  \n 2662: impl<T: fmt::Show> fmt::Show for ~[T] {\n 2663      fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {\n 2664          self.as_slice().fmt(f)\n ....\n 2928  \n 2929  impl<A> FromIterator<A> for ~[A] {\n 2930:     fn from_iterator<T: Iterator<A>>(iterator: &mut T) -> ~[A] {\n 2931          let (lower, _) = iterator.size_hint();\n 2932          let mut xs = with_capacity(lower);\n ....\n 2939  \n 2940  impl<A> Extendable<A> for ~[A] {\n 2941:     fn extend<T: Iterator<A>>(&mut self, iterator: &mut T) {\n 2942          let (lower, _) = iterator.size_hint();\n 2943          let len = self.len();\n\nD:\\Repositories\\GitHub\\rust\\src\\libstd\\vec_ng.rs:\n   62  }\n   63  \n   64: impl<T: Clone> Vec<T> {\n   65      pub fn from_elem(length: uint, value: T) -> Vec<T> {\n   66          unsafe {\n\nD:\\Repositories\\GitHub\\rust\\src\\libsync\\comm.rs:\n   56  pub struct SyncPort<T> { priv duplex_stream: DuplexStream<(), T> }\n   57  \n   58: impl<T: Send> SyncChan<T> {\n   59      pub fn send(&self, val: T) {\n   60          assert!(self.try_send(val), \"SyncChan.send: receiving port closed\");\n   ..\n   68  }\n   69  \n   70: impl<T: Send> SyncPort<T> {\n   71      pub fn recv(&self) -> T {\n   72          self.recv_opt().expect(\"SyncPort.recv: sending channel closed\")\n   ..\n   90  /// Creates a stream whose channel, upon sending a message, blocks until the\n   91  /// message is received.\n   92: pub fn rendezvous<T: Send>() -> (SyncPort<T>, SyncChan<T>) {\n   93      let (chan_stream, port_stream) = DuplexStream::new();\n   94      (SyncPort { duplex_stream: port_stream },\n\nD:\\Repositories\\GitHub\\rust\\src\\libsync\\sync\\mpsc_intrusive.rs:\n   55  }\n   56  \n   57: impl<T: Send> Queue<T> {\n   58      pub fn new() -> Queue<T> {\n   59          Queue {\n   ..\n  127  }\n  128  \n  129: impl<T: Send> Node<T> {\n  130      pub fn new(t: T) -> Node<T> {\n  131          Node {\n\nD:\\Repositories\\GitHub\\rust\\src\\libsync\\sync\\mutex.rs:\n  151  /// Static initialization of a mutex. This constant can be used to initialize\n  152  /// other mutex constants.\n  153: pub static MUTEX_INIT: StaticMutex = StaticMutex {\n  154      lock: mutex::NATIVE_MUTEX_INIT,\n  155      state: atomics::INIT_ATOMIC_UINT,\n  ...\n  520      fn lots_and_lots() {\n  521          static mut m: StaticMutex = MUTEX_INIT;\n  522:         static mut CNT: uint = 0;\n  523          static M: uint = 1000;\n  524          static N: uint = 3;\n\nD:\\Repositories\\GitHub\\rust\\src\\libsync\\sync\\one.rs:\n   33  /// use sync::one::{Once, ONCE_INIT};\n   34  ///\n   35: /// static mut START: Once = ONCE_INIT;\n   36  /// unsafe {\n   37  ///     START.doit(|| {\n   ..\n   47  \n   48  /// Initialization value for static `Once` values.\n   49: pub static ONCE_INIT: Once = Once {\n   50      mutex: MUTEX_INIT,\n   51      cnt: atomics::INIT_ATOMIC_INT,\n\nD:\\Repositories\\GitHub\\rust\\src\\libsyntax\\ast.rs:\n   29  \n   30  /// Construct a P<T> from a T value.\n   31: pub fn P<T: 'static>(value: T) -> P<T> {\n   32      @value\n   33  }\n   ..\n  683      // lo, hi position-in-match-array used:\n  684      MatchSeq(~[Matcher], Option<::parse::token::Token>, bool, uint, uint),\n  685:     // parse a Rust NT: name to bind, name of NT, position in match array:\n  686      MatchNonterminal(Ident, Ident, uint)\n  687  }\n  ...\n 1203      use super::*;\n 1204  \n 1205:     fn is_freeze<T: Freeze>() {}\n 1206  \n 1207      // Assert that the AST remains Freeze (#10693).\n\nD:\\Repositories\\GitHub\\rust\\src\\libsyntax\\ast_map.rs:\n   68  pub struct Values<'a, T>(vec::Items<'a, T>);\n   69  \n   70: impl<'a, T: Pod> Iterator<T> for Values<'a, T> {\n   71      fn next(&mut self) -> Option<T> {\n   72          let &Values(ref mut items) = self;\n\nD:\\Repositories\\GitHub\\rust\\src\\libsyntax\\codemap.rs:\n  217  \n  218  impl FileMap {\n  219:     // EFFECT: register a start-of-line offset in the\n  220      // table of line-beginnings.\n  221:     // UNCHECKED INVARIANT: these offsets must be added in the right\n  222      // order and must be in the right places; there is shared knowledge\n  223      // about what ends a line between this file and parse.rs\n\nD:\\Repositories\\GitHub\\rust\\src\\libsyntax\\diagnostic.rs:\n  191          unsafe { libc::isatty(libc::STDERR_FILENO) != 0 }\n  192      }\n  193:     fn write_pretty<T: Writer>(term: &mut term::Terminal<T>, s: &str,\n  194                                 c: term::attr::Attr) -> io::IoResult<()> {\n  195          try!(term.attr(c));\n\nD:\\Repositories\\GitHub\\rust\\src\\libsyntax\\ext\\deriving\\encodable.rs:\n   56      impl<\n   57          S: Encoder,\n   58:         T: Encodable<S>\n   59      > spanned<T>: Encodable<S> {\n   60          fn encode<S:Encoder>(s: &S) {\n   ..\n   68      impl<\n   69          D: Decoder,\n   70:         T: Decodable<D>\n   71      > spanned<T>: Decodable<D> {\n   72          fn decode(d: &D) -> spanned<T> {\n\nD:\\Repositories\\GitHub\\rust\\src\\libsyntax\\ext\\tt\\transcribe.rs:\n  171  \n  172  // return the next token from the TtReader.\n  173: // EFFECT: advances the reader's token field\n  174  pub fn tt_next_token(r: &TtReader) -> TokenAndSpan {\n  175      // FIXME(pcwalton): Bad copy?\n\nD:\\Repositories\\GitHub\\rust\\src\\libsyntax\\fold.rs:\n  316  \n  317  //used in noop_fold_item and noop_fold_crate and noop_fold_crate_directive\n  318: fn fold_meta_item_<T: Folder>(mi: @MetaItem, fld: &mut T) -> @MetaItem {\n  319      @Spanned {\n  320          node:\n  ...\n  332  \n  333  //used in noop_fold_item and noop_fold_crate\n  334: fn fold_attribute_<T: Folder>(at: Attribute, fld: &mut T) -> Attribute {\n  335      Spanned {\n  336          span: fld.new_span(at.span),\n  ...\n  344  \n  345  //used in noop_fold_foreign_item and noop_fold_fn_decl\n  346: fn fold_arg_<T: Folder>(a: &Arg, fld: &mut T) -> Arg {\n  347      Arg {\n  348          id: fld.new_id(a.id), // Needs to be first, for ast_map.\n  ...\n  354  // build a new vector of tts by appling the Folder's fold_ident to\n  355  // all of the identifiers in the token trees.\n  356: pub fn fold_tts<T: Folder>(tts: &[TokenTree], fld: &mut T) -> ~[TokenTree] {\n  357      tts.map(|tt| {\n  358          match *tt {\n  ...\n  372  \n  373  // apply ident folder if it's an ident, otherwise leave it alone\n  374: fn maybe_fold_ident<T: Folder>(t: &token::Token, fld: &mut T) -> token::Token {\n  375      match *t {\n  376          token::IDENT(id, followed_by_colons) => {\n  ...\n  381  }\n  382  \n  383: pub fn noop_fold_fn_decl<T: Folder>(decl: &FnDecl, fld: &mut T) -> P<FnDecl> {\n  384      P(FnDecl {\n  385          inputs: decl.inputs.map(|x| fold_arg_(x, fld)), // bad copy\n  ...\n  390  }\n  391  \n  392: fn fold_ty_param_bound<T: Folder>(tpb: &TyParamBound, fld: &mut T)\n  393                                      -> TyParamBound {\n  394      match *tpb {\n  ...\n  398  }\n  399  \n  400: pub fn fold_ty_param<T: Folder>(tp: &TyParam, fld: &mut T) -> TyParam {\n  401      TyParam {\n  402          ident: tp.ident,\n  ...\n  407  }\n  408  \n  409: pub fn fold_ty_params<T: Folder>(tps: &OptVec<TyParam>, fld: &mut T)\n  410                                     -> OptVec<TyParam> {\n  411      tps.map(|tp| fold_ty_param(tp, fld))\n  412  }\n  413  \n  414: pub fn fold_lifetime<T: Folder>(l: &Lifetime, fld: &mut T) -> Lifetime {\n  415      Lifetime {\n  416          id: fld.new_id(l.id),\n  ...\n  420  }\n  421  \n  422: pub fn fold_lifetimes<T: Folder>(lts: &OptVec<Lifetime>, fld: &mut T)\n  423                                     -> OptVec<Lifetime> {\n  424      lts.map(|l| fold_lifetime(l, fld))\n  425  }\n  426  \n  427: pub fn fold_opt_lifetime<T: Folder>(o_lt: &Option<Lifetime>, fld: &mut T)\n  428                                        -> Option<Lifetime> {\n  429      o_lt.as_ref().map(|lt| fold_lifetime(lt, fld))\n  430  }\n  431  \n  432: pub fn fold_generics<T: Folder>(generics: &Generics, fld: &mut T) -> Generics {\n  433      Generics {ty_params: fold_ty_params(&generics.ty_params, fld),\n  434                lifetimes: fold_lifetimes(&generics.lifetimes, fld)}\n  435  }\n  436  \n  437: fn fold_struct_def<T: Folder>(struct_def: @StructDef, fld: &mut T) -> @StructDef {\n  438      @ast::StructDef {\n  439          fields: struct_def.fields.map(|f| fold_struct_field(f, fld)),\n  ...\n  442  }\n  443  \n  444: fn fold_trait_ref<T: Folder>(p: &TraitRef, fld: &mut T) -> TraitRef {\n  445      ast::TraitRef {\n  446          path: fld.fold_path(&p.path),\n  ...\n  449  }\n  450  \n  451: fn fold_struct_field<T: Folder>(f: &StructField, fld: &mut T) -> StructField {\n  452      Spanned {\n  453          node: ast::StructField_ {\n  ...\n  461  }\n  462  \n  463: fn fold_field_<T: Folder>(field: Field, folder: &mut T) -> Field {\n  464      ast::Field {\n  465          ident: respan(field.ident.span, folder.fold_ident(field.ident.node)),\n  ...\n  469  }\n  470  \n  471: fn fold_mt<T: Folder>(mt: &MutTy, folder: &mut T) -> MutTy {\n  472      MutTy {\n  473          ty: folder.fold_ty(mt.ty),\n  ...\n  476  }\n  477  \n  478: fn fold_opt_bounds<T: Folder>(b: &Option<OptVec<TyParamBound>>, folder: &mut T)\n  479                                -> Option<OptVec<TyParamBound>> {\n  480      b.as_ref().map(|bounds| {\n  ...\n  485  }\n  486  \n  487: fn fold_variant_arg_<T: Folder>(va: &VariantArg, folder: &mut T) -> VariantArg {\n  488      ast::VariantArg {\n  489          ty: folder.fold_ty(va.ty),\n  ...\n  492  }\n  493  \n  494: pub fn noop_fold_view_item<T: Folder>(vi: &ViewItem, folder: &mut T)\n  495                                         -> ViewItem{\n  496      let inner_view_item = match vi.node {\n  ...\n  512  }\n  513  \n  514: pub fn noop_fold_block<T: Folder>(b: P<Block>, folder: &mut T) -> P<Block> {\n  515      let view_items = b.view_items.map(|x| folder.fold_view_item(x));\n  516      let stmts = b.stmts.iter().flat_map(|s| folder.fold_stmt(*s).move_iter()).collect();\n  ...\n  525  }\n  526  \n  527: pub fn noop_fold_item_underscore<T: Folder>(i: &Item_, folder: &mut T) -> Item_ {\n  528      match *i {\n  529          ItemStatic(t, m, e) => {\n  ...\n  579  }\n  580  \n  581: pub fn noop_fold_type_method<T: Folder>(m: &TypeMethod, fld: &mut T) -> TypeMethod {\n  582      TypeMethod {\n  583          id: fld.new_id(m.id), // Needs to be first, for ast_map.\n  ...\n  592  }\n  593  \n  594: pub fn noop_fold_mod<T: Folder>(m: &Mod, folder: &mut T) -> Mod {\n  595      ast::Mod {\n  596          view_items: m.view_items\n  ...\n  601  }\n  602  \n  603: pub fn noop_fold_crate<T: Folder>(c: Crate, folder: &mut T) -> Crate {\n  604      Crate {\n  605          module: folder.fold_mod(&c.module),\n  ...\n  610  }\n  611  \n  612: pub fn noop_fold_item<T: Folder>(i: &Item, folder: &mut T) -> SmallVector<@Item> {\n  613      let id = folder.new_id(i.id); // Needs to be first, for ast_map.\n  614      let node = folder.fold_item_underscore(&i.node);\n  ...\n  631  }\n  632  \n  633: pub fn noop_fold_foreign_item<T: Folder>(ni: &ForeignItem, folder: &mut T) -> @ForeignItem {\n  634      @ForeignItem {\n  635          id: folder.new_id(ni.id), // Needs to be first, for ast_map.\n  ...\n  654  }\n  655  \n  656: pub fn noop_fold_method<T: Folder>(m: &Method, folder: &mut T) -> @Method {\n  657      @Method {\n  658          id: folder.new_id(m.id), // Needs to be first, for ast_map.\n  ...\n  669  }\n  670  \n  671: pub fn noop_fold_pat<T: Folder>(p: @Pat, folder: &mut T) -> @Pat {\n  672      let node = match p.node {\n  673          PatWild => PatWild,\n  ...\n  713  }\n  714  \n  715: pub fn noop_fold_expr<T: Folder>(e: @Expr, folder: &mut T) -> @Expr {\n  716      let node = match e.node {\n  717          ExprVstore(e, v) => {\n  ...\n  835  }\n  836  \n  837: pub fn noop_fold_stmt<T: Folder>(s: &Stmt, folder: &mut T) -> SmallVector<@Stmt> {\n  838      let nodes = match s.node {\n  839          StmtDecl(d, nid) => {\n\nD:\\Repositories\\GitHub\\rust\\src\\libsyntax\\opt_vec.rs:\n  207  \n  208  impl<A> FromIterator<A> for OptVec<A> {\n  209:     fn from_iterator<T: Iterator<A>>(iterator: &mut T) -> OptVec<A> {\n  210          let mut r = Empty;\n  211          for x in *iterator {\n\nD:\\Repositories\\GitHub\\rust\\src\\libsyntax\\parse\\lexer.rs:\n  108  impl Reader for StringReader {\n  109      fn is_eof(&self) -> bool { is_eof(self) }\n  110:     // return the next token. EFFECT: advances the string_reader.\n  111      fn next_token(&self) -> TokenAndSpan {\n  112          let ret_val = {\n  ...\n  197  }\n  198  \n  199: // EFFECT: advance peek_tok and peek_span to refer to the next token.\n  200: // EFFECT: update the interner, maybe.\n  201  fn string_advance_token(r: &StringReader) {\n  202      match consume_whitespace_and_comments(r) {\n  ...\n  246  }\n  247  \n  248: // EFFECT: advance the StringReader by one character. If a newline is\n  249  // discovered, add it to the FileMap's list of line start offsets.\n  250  pub fn bump(rdr: &StringReader) {\n  ...\n  317  }\n  318  \n  319: // EFFECT: eats whitespace and comments.\n  320  // returns a Some(sugared-doc-attr) if one exists, None otherwise.\n  321  fn consume_whitespace_and_comments(rdr: &StringReader)\n  ...\n  330  \n  331  // PRECONDITION: rdr.curr is not whitespace\n  332: // EFFECT: eats any kind of comment.\n  333  // returns a Some(sugared-doc-attr) if one exists, None otherwise\n  334  fn consume_any_line_comment(rdr: &StringReader)\n  ...\n  663  \n  664  // return the next token from the string\n  665: // EFFECT: advances the input past that token\n  666: // EFFECT: updates the interner\n  667  fn next_token_inner(rdr: &StringReader) -> token::Token {\n  668      let c = rdr.curr.get();\n\nD:\\Repositories\\GitHub\\rust\\src\\libsyntax\\parse\\parser.rs:\n  755      }\n  756  \n  757:     // EFFECT: replace the current token and span with the given one\n  758      pub fn replace_token(&mut self,\n  759                           next: token::Token,\n\nD:\\Repositories\\GitHub\\rust\\src\\libsyntax\\parse\\token.rs:\n  356      }\n  357  ) => {\n  358:     static STRICT_KEYWORD_START: Name = first!($( $sk_name, )*);\n  359      static STRICT_KEYWORD_FINAL: Name = last!($( $sk_name, )*);\n  360:     static RESERVED_KEYWORD_START: Name = first!($( $rk_name, )*);\n  361      static RESERVED_KEYWORD_FINAL: Name = last!($( $rk_name, )*);\n  362  \n\nD:\\Repositories\\GitHub\\rust\\src\\libterm\\lib.rs:\n  110  }\n  111  \n  112: impl<T: Writer> Terminal<T> {\n  113      pub fn new(out: T) -> Result<Terminal<T>, ~str> {\n  114          let term = match os::getenv(\"TERM\") {\n  ...\n  258  }\n  259  \n  260: impl<T: Writer> Writer for Terminal<T> {\n  261      fn write(&mut self, buf: &[u8]) -> io::IoResult<()> {\n  262          self.out.write(buf)\n\nD:\\Repositories\\GitHub\\rust\\src\\libtest\\lib.rs:\n  395  }\n  396  \n  397: impl<T: Writer> ConsoleTestState<T> {\n  398      pub fn new(opts: &TestOpts,\n  399                 _: Option<T>) -> io::IoResult<ConsoleTestState<StdWriter>> {\n  ...\n  673  pub fn run_tests_console(opts: &TestOpts,\n  674                           tests: ~[TestDescAndFn]) -> io::IoResult<bool> {\n  675:     fn callback<T: Writer>(event: &TestEvent,\n  676                             st: &mut ConsoleTestState<T>) -> io::IoResult<()> {\n  677          debug!(\"callback(event={:?})\", event);\n\nD:\\Repositories\\GitHub\\rust\\src\\libuuid\\lib.rs:\n  491  \n  492  // FIXME #9845: Test these more thoroughly\n  493: impl<T: Encoder> Encodable<T> for Uuid {\n  494      /// Encode a UUID as a hypenated string\n  495      fn encode(&self, e: &mut T) {\n  ...\n  498  }\n  499  \n  500: impl<T: Decoder> Decodable<T> for Uuid {\n  501      /// Decode a UUID from a string\n  502      fn decode(d: &mut T) -> Uuid {\n\nD:\\Repositories\\GitHub\\rust\\src\\test\\auxiliary\\issue-11225-1.rs:\n   19  }\n   20  \n   21: pub fn foo<T: inner::Trait>(t: T) {\n   22      t.f();\n   23  }\n\nD:\\Repositories\\GitHub\\rust\\src\\test\\auxiliary\\issue-11225-2.rs:\n   23  \n   24  pub trait Outer {\n   25:     fn foo<T: Trait>(&self, t: T) { t.f(); }\n   26  }\n   27  \n   28  impl Outer for int {}\n   29  \n   30: pub fn foo<T: Outer>(t: T) {\n   31      t.foo(inner::Foo);\n   32  }\n\nD:\\Repositories\\GitHub\\rust\\src\\test\\auxiliary\\nested_item.rs:\n   27  // issue 8134\n   28  pub struct Parser<T>;\n   29: impl<T: std::iter::Iterator<char>> Parser<T> {\n   30      fn in_doctype(&mut self) {\n   31          static DOCTYPEPattern: [char, ..6] = ['O', 'C', 'T', 'Y', 'P', 'E'];\n\nD:\\Repositories\\GitHub\\rust\\src\\test\\auxiliary\\typeid-intrinsic.rs:\n   31  pub unsafe fn id_H() -> TypeId { intrinsics::type_id::<H>() }\n   32  \n   33: pub unsafe fn foo<T: 'static>() -> TypeId { intrinsics::type_id::<T>() }\n   34  \n\nD:\\Repositories\\GitHub\\rust\\src\\test\\auxiliary\\typeid-intrinsic2.rs:\n   31  pub unsafe fn id_H() -> TypeId { intrinsics::type_id::<H>() }\n   32  \n   33: pub unsafe fn foo<T: 'static>() -> TypeId { intrinsics::type_id::<T>() }\n   34  \n\nD:\\Repositories\\GitHub\\rust\\src\\test\\bench\\shootout-mandelbrot.rs:\n   18  \n   19  static ITER: int = 50;\n   20: static LIMIT: f64 = 2.0;\n   21  \n   22  fn main() {\n\nD:\\Repositories\\GitHub\\rust\\src\\test\\compile-fail\\builtin-superkinds-double-superkind.rs:\n   14  trait Foo : Send+Freeze { }\n   15  \n   16: impl <T: Freeze> Foo for (T,) { } //~ ERROR cannot implement this trait\n   17  \n   18: impl <T: Send> Foo for (T,T) { } //~ ERROR cannot implement this trait\n   19  \n   20: impl <T: Send+Freeze> Foo for (T,T,T) { } // (ok)\n   21  \n   22  fn main() { }\n\nD:\\Repositories\\GitHub\\rust\\src\\test\\compile-fail\\builtin-superkinds-self-type.rs:\n   18  }\n   19  \n   20: impl <T: Freeze> Foo for T { }\n   21  \n   22  fn main() {\n\nD:\\Repositories\\GitHub\\rust\\src\\test\\compile-fail\\builtin-superkinds-typaram-not-send.rs:\n   13  trait Foo : Send { }\n   14  \n   15: impl <T: Freeze> Foo for T { } //~ ERROR cannot implement this trait\n   16  \n   17  fn main() { }\n\nD:\\Repositories\\GitHub\\rust\\src\\test\\compile-fail\\comm-not-freeze.rs:\n    9  // except according to those terms.\n   10  \n   11: fn test<T: Freeze>() {}\n   12  \n   13  fn main() {\n\nD:\\Repositories\\GitHub\\rust\\src\\test\\compile-fail\\impl-bounds-checking.rs:\n   14  \n   15  \n   16: trait Getter<T: Clone2> {\n   17      fn get(&self) -> T;\n   18  }\n\nD:\\Repositories\\GitHub\\rust\\src\\test\\compile-fail\\lint-dead-code-1.rs:\n   30  pub static used_static2: int = used_static;\n   31  static USED_STATIC: int = 0;\n   32: static STATIC_USED_IN_ENUM_DISCRIMINANT: uint = 10;\n   33  \n   34  pub type typ = ~UsedStruct4;\n\nD:\\Repositories\\GitHub\\rust\\src\\test\\compile-fail\\mut-not-freeze.rs:\n   11  use std::cell::RefCell;\n   12  \n   13: fn f<T: Freeze>(_: T) {}\n   14  \n   15  fn main() {\n\nD:\\Repositories\\GitHub\\rust\\src\\test\\compile-fail\\mutable-enum-indirect.rs:\n   16  enum Foo { A(marker::NoFreeze) }\n   17  \n   18: fn bar<T: Freeze>(_: T) {}\n   19  \n   20  fn main() {\n\nD:\\Repositories\\GitHub\\rust\\src\\test\\compile-fail\\no_freeze-enum.rs:\n   13  enum Foo { A(marker::NoFreeze) }\n   14  \n   15: fn bar<T: Freeze>(_: T) {}\n   16  \n   17  fn main() {\n\nD:\\Repositories\\GitHub\\rust\\src\\test\\compile-fail\\no_freeze-rc.rs:\n   12  use std::cell::RefCell;\n   13  \n   14: fn bar<T: Freeze>(_: T) {}\n   15  \n   16  fn main() {\n\nD:\\Repositories\\GitHub\\rust\\src\\test\\compile-fail\\no_freeze-struct.rs:\n   13  struct Foo { a: int, m: marker::NoFreeze }\n   14  \n   15: fn bar<T: Freeze>(_: T) {}\n   16  \n   17  fn main() {\n\nD:\\Repositories\\GitHub\\rust\\src\\test\\compile-fail\\no_send-enum.rs:\n   15  }\n   16  \n   17: fn bar<T: Send>(_: T) {}\n   18  \n   19  fn main() {\n\nD:\\Repositories\\GitHub\\rust\\src\\test\\compile-fail\\no_send-rc.rs:\n   11  use std::rc::Rc;\n   12  \n   13: fn bar<T: Send>(_: T) {}\n   14  \n   15  fn main() {\n\nD:\\Repositories\\GitHub\\rust\\src\\test\\compile-fail\\no_send-struct.rs:\n   16  }\n   17  \n   18: fn bar<T: Send>(_: T) {}\n   19  \n   20  fn main() {\n\nD:\\Repositories\\GitHub\\rust\\src\\test\\compile-fail\\unsized-bare-typaram.rs:\n   10  \n   11  // error-pattern: instantiating a type parameter with an incompatible type\n   12: fn bar<T: Sized>() { }\n   13  fn foo<T>() { bar::<T>() }\n   14  fn main() { }\n\nD:\\Repositories\\GitHub\\rust\\src\\test\\compile-fail\\unsized-enum.rs:\n   10  \n   11  // error-pattern: instantiating a type parameter with an incompatible type\n   12: fn bar<T: Sized>() { }\n   13  fn foo<T>() { bar::<Option<T>>() }\n   14  fn main() { }\n\nD:\\Repositories\\GitHub\\rust\\src\\test\\compile-fail\\unsized-struct.rs:\n   13  struct Foo<T> { data: T }\n   14  \n   15: fn bar<T: Sized>() { }\n   16  fn foo<T>() { bar::<Foo<T>>() }\n   17  fn main() { }\n\nD:\\Repositories\\GitHub\\rust\\src\\test\\run-pass\\assignability-trait.rs:\n   29  }\n   30  \n   31: fn length<A, T: iterable<A>>(x: T) -> uint {\n   32      let mut len = 0;\n   33      x.iterate(|_y| {\n\nD:\\Repositories\\GitHub\\rust\\src\\test\\run-pass\\bug-7183-generics.rs:\n   24  }\n   25  \n   26: impl<T: Speak> Speak for Option<T> {\n   27      fn say(&self, s:&str) -> ~str {\n   28          match *self {\n\nD:\\Repositories\\GitHub\\rust\\src\\test\\run-pass\\builtin-superkinds-capabilities-transitive.rs:\n   18  trait Foo : Bar { }\n   19  \n   20: impl <T: Send> Foo for T { }\n   21: impl <T: Send> Bar for T { }\n   22  \n   23: fn foo<T: Foo>(val: T, chan: Chan<T>) {\n   24      chan.send(val);\n   25  }\n\nD:\\Repositories\\GitHub\\rust\\src\\test\\run-pass\\builtin-superkinds-capabilities-xc.rs:\n   22  struct X<T>(T);\n   23  \n   24: impl <T: Freeze> RequiresFreeze for X<T> { }\n   25: impl <T: Freeze+Send> RequiresRequiresFreezeAndSend for X<T> { }\n   26  \n   27: fn foo<T: RequiresRequiresFreezeAndSend>(val: T, chan: Chan<T>) {\n   28      chan.send(val);\n   29  }\n\nD:\\Repositories\\GitHub\\rust\\src\\test\\run-pass\\builtin-superkinds-capabilities.rs:\n   15  trait Foo : Send { }\n   16  \n   17: impl <T: Send> Foo for T { }\n   18  \n   19: fn foo<T: Foo>(val: T, chan: Chan<T>) {\n   20      chan.send(val);\n   21  }\n\nD:\\Repositories\\GitHub\\rust\\src\\test\\run-pass\\builtin-superkinds-self-type.rs:\n   18  }\n   19  \n   20: impl <T: Send> Foo for T { }\n   21  \n   22  pub fn main() {\n\nD:\\Repositories\\GitHub\\rust\\src\\test\\run-pass\\builtin-superkinds-typaram.rs:\n   14  trait Foo : Send { }\n   15  \n   16: impl <T: Send> Foo for T { }\n   17  \n   18  pub fn main() { }\n\nD:\\Repositories\\GitHub\\rust\\src\\test\\run-pass\\const-binops.rs:\n   45  static S: uint = 1 | 3;\n   46  \n   47: static T: int = 3 ^ 1;\n   48  static U: uint = 1 ^ 3;\n   49  \n\nD:\\Repositories\\GitHub\\rust\\src\\test\\run-pass\\default-method-supertrait-vtable.rs:\n   13  // a default method\n   14  \n   15: fn require_y<T: Y>(x: T) -> int { x.y() }\n   16  \n   17  trait Y {\n\nD:\\Repositories\\GitHub\\rust\\src\\test\\run-pass\\deriving-encodable-decodable.rs:\n   55  }\n   56  \n   57: fn roundtrip<'a, T: Rand + Eq + Encodable<Encoder> +\n   58                      Decodable<Decoder<'a>>>() {\n   59      let obj: T = random();\n\nD:\\Repositories\\GitHub\\rust\\src\\test\\run-pass\\deriving-zero.rs:\n   16  struct Vector2<T>(T, T);\n   17  \n   18: impl<T: Add<T, T>> Add<Vector2<T>, Vector2<T>> for Vector2<T> {\n   19      fn add(&self, other: &Vector2<T>) -> Vector2<T> {\n   20          match (self, other) {\n   ..\n   31  }\n   32  \n   33: impl<T: Add<T, T>> Add<Vector3<T>, Vector3<T>> for Vector3<T> {\n   34      fn add(&self, other: &Vector3<T>) -> Vector3<T> {\n   35          Vector3 {\n   ..\n   48  }\n   49  \n   50: impl<T: Add<T, T>> Add<Matrix3x2<T>, Matrix3x2<T>> for Matrix3x2<T> {\n   51      fn add(&self, other: &Matrix3x2<T>) -> Matrix3x2<T> {\n   52          Matrix3x2 {\n\nD:\\Repositories\\GitHub\\rust\\src\\test\\run-pass\\issue-2734.rs:\n   12  impl<A> hax for A { }\n   13  \n   14: fn perform_hax<T: 'static>(x: ~T) -> ~hax: {\n   15      ~x as ~hax:\n   16  }\n\nD:\\Repositories\\GitHub\\rust\\src\\test\\run-pass\\issue-2735.rs:\n   12  impl<A> hax for A { }\n   13  \n   14: fn perform_hax<T: 'static>(x: ~T) -> ~hax: {\n   15      ~x as ~hax:\n   16  }\n\nD:\\Repositories\\GitHub\\rust\\src\\test\\run-pass\\issue-4016.rs:\n   20  trait JD : Decodable<json::Decoder> { }\n   21  \n   22: fn exec<T: JD>() {\n   23      let doc = json::from_str(\"\").unwrap();\n   24      let mut decoder = json::Decoder::new(doc);\n\nD:\\Repositories\\GitHub\\rust\\src\\test\\run-pass\\issue-4252.rs:\n   29  \n   30  #[unsafe_destructor]\n   31: impl<T: X> Drop for Z<T> {\n   32      fn drop(&mut self) {\n   33          // These statements used to cause an ICE.\n\nD:\\Repositories\\GitHub\\rust\\src\\test\\run-pass\\issue-5554.rs:\n   18  \n   19  // reordering these bounds stops the ICE\n   20: impl<T: Default + Eq + Default> Default for X<T> {\n   21      fn default() -> X<T> {\n   22          X { a: Default::default() }\n\nD:\\Repositories\\GitHub\\rust\\src\\test\\run-pass\\issue-5572.rs:\n    9  // except according to those terms.\n   10  \n   11: fn foo<T: ::std::cmp::Eq>(_t: T) { }\n   12  \n   13  pub fn main() { }\n\nD:\\Repositories\\GitHub\\rust\\src\\test\\run-pass\\issue-7673-cast-generically-implemented-trait.rs:\n   18  \n   19  trait A {}\n   20: impl<T: 'static> A for T {}\n   21  \n   22: fn owned1<T: 'static>(a: T) { ~a as ~A:; } /* note `:` */\n   23: fn owned2<T: 'static>(a: ~T) { a as ~A:; }\n   24: fn owned3<T: 'static>(a: ~T) { ~a as ~A:; }\n   25  \n\nD:\\Repositories\\GitHub\\rust\\src\\test\\run-pass\\issue-8171-default-method-self-inherit-builtin-trait.rs:\n   15  */\n   16  \n   17: fn require_send<T: Send>(_: T){}\n   18  \n   19  trait TragicallySelfIsNotSend: Send {\n\nD:\\Repositories\\GitHub\\rust\\src\\test\\run-pass\\issue-8860.rs:\n   15  static mut DROP: int = 0i;\n   16  static mut DROP_S: int = 0i;\n   17: static mut DROP_T: int = 0i;\n   18  \n   19  #[start]\n\nD:\\Repositories\\GitHub\\rust\\src\\test\\run-pass\\no-landing-pads.rs:\n   14  use std::task;\n   15  \n   16: static mut HIT: bool = false;\n   17  \n   18  struct A;\n\nD:\\Repositories\\GitHub\\rust\\src\\test\\run-pass\\owned-implies-static.rs:\n    9  // except according to those terms.\n   10  \n   11: fn f<T: 'static>(_x: T) {}\n   12  \n   13  pub fn main() {\n\nD:\\Repositories\\GitHub\\rust\\src\\test\\run-pass\\simd-generics.rs:\n   17  #[simd] struct f32x4(f32, f32, f32, f32);\n   18  \n   19: fn add<T: ops::Add<T, T>>(lhs: T, rhs: T) -> T {\n   20      lhs + rhs\n   21  }\n\nD:\\Repositories\\GitHub\\rust\\src\\test\\run-pass\\sized-borrowed-pointer.rs:\n   11  // Possibly-dynamic size of typaram should be cleared at pointer boundary.\n   12  \n   13: fn bar<T: Sized>() { }\n   14  fn foo<T>() { bar::<&T>() }\n   15  pub fn main() { }\n\nD:\\Repositories\\GitHub\\rust\\src\\test\\run-pass\\sized-owned-pointer.rs:\n   11  // Possibly-dynamic size of typaram should be cleared at pointer boundary.\n   12  \n   13: fn bar<T: Sized>() { }\n   14  fn foo<T>() { bar::<~T>() }\n   15  pub fn main() { }\n\nD:\\Repositories\\GitHub\\rust\\src\\test\\run-pass\\trait-default-method-xc.rs:\n   16  use aux::B;\n   17  \n   18: fn f<T: aux::A>(i: T) {\n   19      assert_eq!(i.g(), 10);\n   20  }\n   ..\n   36  }\n   37  \n   38: fn eq<T: TestEquality>(lhs: &T, rhs: &T) -> bool {\n   39      lhs.test_eq(rhs)\n   40  }\n   41: fn neq<T: TestEquality>(lhs: &T, rhs: &T) -> bool {\n   42      lhs.test_neq(rhs)\n   43  }\n\nD:\\Repositories\\GitHub\\rust\\src\\test\\run-pass\\trait-generic.rs:\n   38  }\n   39  \n   40: fn foo<U, T: map<U>>(x: T) -> ~[~str] {\n   41      x.map(|_e| ~\"hi\" )\n   42  }\n\nD:\\Repositories\\GitHub\\rust\\src\\test\\run-pass\\trait-inheritance-call-bound-inherited.rs:\n   17  impl Bar for A { fn g(&self) -> int { 20 } }\n   18  \n   19: // Call a function on Foo, given a T: Bar\n   20  fn gg<T:Bar>(a: &T) -> int {\n   21      a.f()\n\nD:\\Repositories\\GitHub\\rust\\src\\test\\run-pass\\trait-inheritance-call-bound-inherited2.rs:\n   19  impl Baz for A { fn h(&self) -> int { 30 } }\n   20  \n   21: // Call a function on Foo, given a T: Baz,\n   22  // which is inherited via Bar\n   23  fn gg<T:Baz>(a: &T) -> int {\n\nD:\\Repositories\\GitHub\\rust\\src\\test\\run-pass\\trait-with-bounds-default.rs:\n   16  }\n   17  \n   18: trait Getter<T: Clone> {\n   19      fn do_get(&self) -> T;\n   20  \n   ..\n   30  }\n   31  \n   32: impl<T: Clone> Getter<T> for Option<T> {\n   33      fn do_get(&self) -> T { self.get_ref().clone() }\n   34  }\n\n594 matches across 147 files\n",
 			"settings":
 			{
-				"buffer_size": 3502,
+				"buffer_size": 116390,
+				"line_ending": "Windows",
+				"name": "Find Results",
+				"scratch": true
+			}
+		},
+		{
+			"file": "/D/Repositories/GitHub/rust/src/libnum/rational.rs",
+			"settings":
+			{
+				"buffer_size": 19394,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/D/Repositories/GitHub/rust/src/libnum/complex.rs",
+			"settings":
+			{
+				"buffer_size": 10053,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "event/mod.rs",
+			"settings":
+			{
+				"buffer_size": 148,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "/D/Projects/hollobock/layer/gui_layer.rs",
+			"file": "layer/mod.rs",
 			"settings":
 			{
-				"buffer_size": 1159,
+				"buffer_size": 503,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "/D/Projects/hollobock/c.bat",
+			"file": "layer/gui_layer.rs",
 			"settings":
 			{
-				"buffer_size": 151,
+				"buffer_size": 1457,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "/D/Projects/hollobock/entity/enemy.rs",
+			"file": "gui/bar.rs",
 			"settings":
 			{
-				"buffer_size": 3090,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "/D/Projects/hollobock/layer/game_layer.rs",
-			"settings":
-			{
-				"buffer_size": 1090,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "/D/Projects/hollobock/entity/enemy_spawner.rs",
-			"settings":
-			{
-				"buffer_size": 2145,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "/D/Projects/hollobock/resource_store.rs",
-			"settings":
-			{
-				"buffer_size": 5336,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "/D/Projects/hollobock/entity/sprite_renderer.rs",
-			"settings":
-			{
-				"buffer_size": 1300,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "/D/Projects/hollobock/entity/animated_renderer.rs",
-			"settings":
-			{
-				"buffer_size": 3173,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "/D/Projects/hollobock/entity/renderer.rs",
-			"settings":
-			{
-				"buffer_size": 317,
+				"buffer_size": 1669,
 				"line_ending": "Windows"
 			}
 		}
@@ -276,24 +254,43 @@
 	},
 	"file_history":
 	[
-		"/D/Projects/hollobock/layer/game_layer.rs",
-		"/D/Projects/hollobock/resource_store.rs",
-		"/D/Projects/hollobock/entity/renderer.rs",
-		"/D/Projects/Hollobock/hollobock.sublime-project",
-		"/D/Projects/hollobock/level.json",
-		"/C/MinGW/msys/1.0/bin/rustc",
+		"/D/Repositories/GitHub/hollobock/gui/bar.rs",
+		"/D/Repositories/GitHub/hollobock/entity/player.rs",
+		"/D/Repositories/GitHub/hollobock/event/mod.rs",
+		"/D/Repositories/GitHub/hollobock/entity/enemy.rs",
+		"/D/Repositories/GitHub/hollobock/math.rs",
+		"/D/Repositories/GitHub/hollobock/entity/mod.rs",
+		"/D/Repositories/GitHub/hollobock/entity/world.rs",
+		"/D/Repositories/GitHub/hollobock/layer/game_layer.rs",
+		"/D/Repositories/GitHub/hollobock/layer/mod.rs",
+		"/D/Repositories/GitHub/hollobock/layer/gui_layer.rs",
+		"/D/Repositories/GitHub/hollobock/health_bar.png",
+		"/D/Repositories/GitHub/rust/src/libstd/num/f32.rs",
+		"/D/Repositories/GitHub/hollobock/hollobock.rs",
+		"/D/Repositories/GitHub/hollobock/gui/mod.rs",
+		"/D/Repositories/GitHub/rust-sfml/src/rsfml/graphics/rectangle_shape/mod.rs",
+		"/D/Repositories/GitHub/rust-sfml/src/rsfml/graphics/rectangle_shape/rc.rs",
+		"/D/Repositories/GitHub/rust-sfml/src/rsfml/graphics/rect.rs",
+		"/D/Repositories/GitHub/hollobock/hollobock.sublime-project",
+		"/D/Repositories/GitHub/Hollobock/hollobock.sublime-project",
 		"/D/Projects/hollobock/entity/enemy_spawner.rs",
 		"/D/Projects/hollobock/entity/enemy.rs",
-		"/D/Projects/hollobock/entity/world.rs",
+		"/D/Projects/hollobock/hollobock.rs",
+		"/D/Projects/hollobock/entity/mod.rs",
 		"/D/Projects/hollobock/entity/player.rs",
+		"/D/Projects/Hollobock/hollobock.sublime-project",
+		"/D/Projects/hollobock/level.json",
+		"/D/Projects/hollobock/layer/game_layer.rs",
+		"/C/MinGW/msys/1.0/bin/rustc",
+		"/D/Projects/hollobock/entity/world.rs",
 		"/D/Projects/hollobock/entity/player_bullet.rs",
 		"/D/Projects/hollobock/input.rs",
 		"/D/Projects/hollobock/math.rs",
-		"/D/Projects/hollobock/hollobock.rs",
+		"/D/Projects/hollobock/entity/renderer.rs",
 		"/D/Projects/hollobock/entity/sprite_renderer.rs",
+		"/D/Projects/hollobock/resource_store.rs",
 		"/D/Projects/hollobock/s.bat",
 		"/D/Projects/hollobock/README.md",
-		"/D/Projects/hollobock/entity/mod.rs",
 		"/D/Projects/Hollobock/bin/level.json",
 		"/D/Projects/Hollobock/entity/renderer.rs",
 		"/D/Projects/Hollobock/level.json",
@@ -377,13 +374,16 @@
 	],
 	"find":
 	{
-		"height": 34.0
+		"height": 26.0
 	},
 	"find_in_files":
 	{
 		"height": 90.0,
 		"where_history":
 		[
+			"D:\\Repositories\\GitHub\\rust,*.rs",
+			"D:\\Repositories\\GitHub\\rust-sfml,*.rs",
+			"D:\\Repositories\\GitHub\\hollobock,*.rs",
 			"D:\\Projects\\Hollobock,*.rs",
 			"",
 			"EntityUpdateResult"
@@ -391,9 +391,15 @@
 	},
 	"find_state":
 	{
-		"case_sensitive": false,
+		"case_sensitive": true,
 		"find_history":
 		[
+			"T: ",
+			"<T",
+			"epsilon",
+			"abs",
+			"epsilon",
+			"abs",
 			"Enemy ",
 			"is_pla",
 			"is_p",
@@ -415,7 +421,7 @@
 		"highlight": true,
 		"in_selection": false,
 		"preserve_case": false,
-		"regex": true,
+		"regex": false,
 		"replace_history":
 		[
 			"    ",
@@ -436,24 +442,24 @@
 	"groups":
 	[
 		{
-			"selected": 3,
+			"selected": 0,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "/D/Projects/hollobock/entity/mod.rs",
+					"file": "hollobock.rs",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1601,
+						"buffer_size": 2719,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1290,
-								1290
+								0,
+								0
 							]
 						],
 						"settings":
@@ -464,354 +470,18 @@
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 11,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "/D/Projects/hollobock/hollobock.rs",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2381,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1094,
-								1094
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Rust/Rust.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": -0.0,
-						"translation.y": 270.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 5,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "/D/Projects/hollobock/entity/player.rs",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3502,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								411,
-								411
-							]
-						],
-						"settings":
-						{
-							"history_list_is_closing": true,
-							"syntax": "Packages/Rust/Rust.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 1836.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 10,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "/D/Projects/hollobock/layer/gui_layer.rs",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1159,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								679,
-								679
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Rust/Rust.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 108.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
 					"type": "text"
 				},
 				{
-					"buffer": 4,
-					"file": "/D/Projects/hollobock/c.bat",
-					"semi_transient": false,
+					"buffer": 1,
+					"file": "gui/mod.rs",
+					"semi_transient": true,
 					"settings":
 					{
-						"buffer_size": 151,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								151,
-								151
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Batch File/Batch File.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 8,
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "/D/Projects/hollobock/entity/enemy.rs",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3090,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Rust/Rust.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 324.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 7,
-					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"file": "/D/Projects/hollobock/layer/game_layer.rs",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1090,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Rust/Rust.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": -0.0,
-						"translation.y": 486.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 6,
-					"type": "text"
-				},
-				{
-					"buffer": 7,
-					"file": "/D/Projects/hollobock/entity/enemy_spawner.rs",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2145,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Rust/Rust.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 12,
-					"type": "text"
-				}
-			]
-		},
-		{
-			"selected": 2,
-			"sheets":
-			[
-				{
-					"buffer": 2,
-					"file": "/D/Projects/hollobock/entity/player.rs",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3502,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"history_list_is_closing": true,
-							"syntax": "Packages/Rust/Rust.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 9,
-					"type": "text"
-				},
-				{
-					"buffer": 8,
-					"file": "/D/Projects/hollobock/resource_store.rs",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 5336,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								974,
-								973
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Rust/Rust.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 121.0,
-						"translation.y": 1674.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 3,
-					"type": "text"
-				},
-				{
-					"buffer": 9,
-					"file": "/D/Projects/hollobock/entity/sprite_renderer.rs",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1300,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Rust/Rust.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 324.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 10,
-					"file": "/D/Projects/hollobock/entity/animated_renderer.rs",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3173,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Rust/Rust.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 540.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 11,
-					"file": "/D/Projects/hollobock/entity/renderer.rs",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 317,
+						"buffer_size": 12,
 						"regions":
 						{
 						},
@@ -830,7 +500,2601 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 116390,
+						"regions":
+						{
+							"match":
+							{
+								"flags": 112,
+								"regions":
+								[
+									[
+										135,
+										138
+									],
+									[
+										311,
+										314
+									],
+									[
+										518,
+										521
+									],
+									[
+										692,
+										695
+									],
+									[
+										848,
+										851
+									],
+									[
+										1046,
+										1049
+									],
+									[
+										1263,
+										1266
+									],
+									[
+										1572,
+										1575
+									],
+									[
+										1817,
+										1820
+									],
+									[
+										1995,
+										1998
+									],
+									[
+										2180,
+										2183
+									],
+									[
+										2352,
+										2355
+									],
+									[
+										2525,
+										2528
+									],
+									[
+										2677,
+										2680
+									],
+									[
+										2822,
+										2825
+									],
+									[
+										2970,
+										2973
+									],
+									[
+										3164,
+										3167
+									],
+									[
+										3370,
+										3373
+									],
+									[
+										3556,
+										3559
+									],
+									[
+										3724,
+										3727
+									],
+									[
+										3895,
+										3898
+									],
+									[
+										4065,
+										4068
+									],
+									[
+										4300,
+										4303
+									],
+									[
+										4547,
+										4550
+									],
+									[
+										4705,
+										4708
+									],
+									[
+										4911,
+										4914
+									],
+									[
+										5099,
+										5102
+									],
+									[
+										5264,
+										5267
+									],
+									[
+										5463,
+										5466
+									],
+									[
+										5632,
+										5635
+									],
+									[
+										5831,
+										5834
+									],
+									[
+										6184,
+										6187
+									],
+									[
+										6459,
+										6462
+									],
+									[
+										6656,
+										6659
+									],
+									[
+										6825,
+										6828
+									],
+									[
+										6980,
+										6983
+									],
+									[
+										7278,
+										7281
+									],
+									[
+										7605,
+										7608
+									],
+									[
+										7819,
+										7822
+									],
+									[
+										7931,
+										7934
+									],
+									[
+										8129,
+										8132
+									],
+									[
+										8292,
+										8295
+									],
+									[
+										8409,
+										8412
+									],
+									[
+										8526,
+										8529
+									],
+									[
+										8725,
+										8728
+									],
+									[
+										8940,
+										8943
+									],
+									[
+										9163,
+										9166
+									],
+									[
+										9462,
+										9465
+									],
+									[
+										9630,
+										9633
+									],
+									[
+										9784,
+										9787
+									],
+									[
+										9911,
+										9914
+									],
+									[
+										10059,
+										10062
+									],
+									[
+										10218,
+										10221
+									],
+									[
+										10512,
+										10515
+									],
+									[
+										10634,
+										10637
+									],
+									[
+										10752,
+										10755
+									],
+									[
+										10900,
+										10903
+									],
+									[
+										11127,
+										11130
+									],
+									[
+										11288,
+										11291
+									],
+									[
+										11500,
+										11503
+									],
+									[
+										11726,
+										11729
+									],
+									[
+										11978,
+										11981
+									],
+									[
+										12149,
+										12152
+									],
+									[
+										12309,
+										12312
+									],
+									[
+										12513,
+										12516
+									],
+									[
+										12686,
+										12689
+									],
+									[
+										12822,
+										12825
+									],
+									[
+										12935,
+										12938
+									],
+									[
+										13047,
+										13050
+									],
+									[
+										13143,
+										13146
+									],
+									[
+										13267,
+										13270
+									],
+									[
+										13417,
+										13420
+									],
+									[
+										13629,
+										13632
+									],
+									[
+										13776,
+										13779
+									],
+									[
+										14013,
+										14016
+									],
+									[
+										14380,
+										14383
+									],
+									[
+										14761,
+										14764
+									],
+									[
+										14831,
+										14834
+									],
+									[
+										15203,
+										15206
+									],
+									[
+										15469,
+										15472
+									],
+									[
+										15764,
+										15767
+									],
+									[
+										16097,
+										16100
+									],
+									[
+										16335,
+										16338
+									],
+									[
+										16639,
+										16642
+									],
+									[
+										16881,
+										16884
+									],
+									[
+										17076,
+										17079
+									],
+									[
+										17340,
+										17343
+									],
+									[
+										17674,
+										17677
+									],
+									[
+										17838,
+										17841
+									],
+									[
+										18070,
+										18073
+									],
+									[
+										18236,
+										18239
+									],
+									[
+										18371,
+										18374
+									],
+									[
+										18525,
+										18528
+									],
+									[
+										18798,
+										18801
+									],
+									[
+										19055,
+										19058
+									],
+									[
+										19328,
+										19331
+									],
+									[
+										19644,
+										19647
+									],
+									[
+										19689,
+										19692
+									],
+									[
+										19953,
+										19956
+									],
+									[
+										20010,
+										20013
+									],
+									[
+										20231,
+										20234
+									],
+									[
+										20448,
+										20451
+									],
+									[
+										20684,
+										20687
+									],
+									[
+										20968,
+										20971
+									],
+									[
+										21141,
+										21144
+									],
+									[
+										21345,
+										21348
+									],
+									[
+										21577,
+										21580
+									],
+									[
+										21750,
+										21753
+									],
+									[
+										21885,
+										21888
+									],
+									[
+										22087,
+										22090
+									],
+									[
+										22377,
+										22380
+									],
+									[
+										22527,
+										22530
+									],
+									[
+										22802,
+										22805
+									],
+									[
+										22931,
+										22934
+									],
+									[
+										23093,
+										23096
+									],
+									[
+										23224,
+										23227
+									],
+									[
+										23373,
+										23376
+									],
+									[
+										23535,
+										23538
+									],
+									[
+										23788,
+										23791
+									],
+									[
+										23980,
+										23983
+									],
+									[
+										24014,
+										24017
+									],
+									[
+										24048,
+										24051
+									],
+									[
+										24082,
+										24085
+									],
+									[
+										24133,
+										24136
+									],
+									[
+										24301,
+										24304
+									],
+									[
+										24429,
+										24432
+									],
+									[
+										24614,
+										24617
+									],
+									[
+										24647,
+										24650
+									],
+									[
+										24945,
+										24948
+									],
+									[
+										25140,
+										25143
+									],
+									[
+										25363,
+										25366
+									],
+									[
+										25544,
+										25547
+									],
+									[
+										25673,
+										25676
+									],
+									[
+										25866,
+										25869
+									],
+									[
+										26005,
+										26008
+									],
+									[
+										26173,
+										26176
+									],
+									[
+										26343,
+										26346
+									],
+									[
+										26536,
+										26539
+									],
+									[
+										26674,
+										26677
+									],
+									[
+										27029,
+										27032
+									],
+									[
+										27213,
+										27216
+									],
+									[
+										27370,
+										27373
+									],
+									[
+										27548,
+										27551
+									],
+									[
+										27749,
+										27752
+									],
+									[
+										27946,
+										27949
+									],
+									[
+										28175,
+										28178
+									],
+									[
+										28313,
+										28316
+									],
+									[
+										28538,
+										28541
+									],
+									[
+										28660,
+										28663
+									],
+									[
+										28888,
+										28891
+									],
+									[
+										29034,
+										29037
+									],
+									[
+										29306,
+										29309
+									],
+									[
+										29581,
+										29584
+									],
+									[
+										29795,
+										29798
+									],
+									[
+										30070,
+										30073
+									],
+									[
+										30337,
+										30340
+									],
+									[
+										30561,
+										30564
+									],
+									[
+										30809,
+										30812
+									],
+									[
+										31035,
+										31038
+									],
+									[
+										31178,
+										31181
+									],
+									[
+										31354,
+										31357
+									],
+									[
+										31677,
+										31680
+									],
+									[
+										31889,
+										31892
+									],
+									[
+										31994,
+										31997
+									],
+									[
+										32357,
+										32360
+									],
+									[
+										32434,
+										32437
+									],
+									[
+										32504,
+										32507
+									],
+									[
+										32570,
+										32573
+									],
+									[
+										32642,
+										32645
+									],
+									[
+										32821,
+										32824
+									],
+									[
+										33001,
+										33004
+									],
+									[
+										33186,
+										33189
+									],
+									[
+										33350,
+										33353
+									],
+									[
+										33524,
+										33527
+									],
+									[
+										33744,
+										33747
+									],
+									[
+										33900,
+										33903
+									],
+									[
+										34054,
+										34057
+									],
+									[
+										34193,
+										34196
+									],
+									[
+										34459,
+										34462
+									],
+									[
+										34608,
+										34611
+									],
+									[
+										34763,
+										34766
+									],
+									[
+										34938,
+										34941
+									],
+									[
+										35104,
+										35107
+									],
+									[
+										35265,
+										35268
+									],
+									[
+										35432,
+										35435
+									],
+									[
+										35609,
+										35612
+									],
+									[
+										35756,
+										35759
+									],
+									[
+										35930,
+										35933
+									],
+									[
+										36092,
+										36095
+									],
+									[
+										36281,
+										36284
+									],
+									[
+										36460,
+										36463
+									],
+									[
+										36619,
+										36622
+									],
+									[
+										36808,
+										36811
+									],
+									[
+										36976,
+										36979
+									],
+									[
+										37121,
+										37124
+									],
+									[
+										37288,
+										37291
+									],
+									[
+										37472,
+										37475
+									],
+									[
+										37651,
+										37654
+									],
+									[
+										37808,
+										37811
+									],
+									[
+										38029,
+										38032
+									],
+									[
+										38191,
+										38194
+									],
+									[
+										38349,
+										38352
+									],
+									[
+										38495,
+										38498
+									],
+									[
+										38661,
+										38664
+									],
+									[
+										38807,
+										38810
+									],
+									[
+										38980,
+										38983
+									],
+									[
+										39148,
+										39151
+									],
+									[
+										39333,
+										39336
+									],
+									[
+										39502,
+										39505
+									],
+									[
+										39648,
+										39651
+									],
+									[
+										39903,
+										39906
+									],
+									[
+										40073,
+										40076
+									],
+									[
+										40233,
+										40236
+									],
+									[
+										40377,
+										40380
+									],
+									[
+										40597,
+										40600
+									],
+									[
+										40830,
+										40833
+									],
+									[
+										41076,
+										41079
+									],
+									[
+										41316,
+										41319
+									],
+									[
+										41559,
+										41562
+									],
+									[
+										41803,
+										41806
+									],
+									[
+										42046,
+										42049
+									],
+									[
+										42290,
+										42293
+									],
+									[
+										42484,
+										42487
+									],
+									[
+										42786,
+										42789
+									],
+									[
+										43083,
+										43086
+									],
+									[
+										43148,
+										43151
+									],
+									[
+										43213,
+										43216
+									],
+									[
+										43335,
+										43338
+									],
+									[
+										43397,
+										43400
+									],
+									[
+										43698,
+										43701
+									],
+									[
+										43820,
+										43823
+									],
+									[
+										44120,
+										44123
+									],
+									[
+										44413,
+										44416
+									],
+									[
+										44734,
+										44737
+									],
+									[
+										44906,
+										44909
+									],
+									[
+										45138,
+										45141
+									],
+									[
+										45253,
+										45256
+									],
+									[
+										45496,
+										45499
+									],
+									[
+										45771,
+										45774
+									],
+									[
+										46128,
+										46131
+									],
+									[
+										46498,
+										46501
+									],
+									[
+										46840,
+										46843
+									],
+									[
+										47036,
+										47039
+									],
+									[
+										47273,
+										47276
+									],
+									[
+										47551,
+										47554
+									],
+									[
+										47614,
+										47617
+									],
+									[
+										47936,
+										47939
+									],
+									[
+										47986,
+										47989
+									],
+									[
+										48187,
+										48190
+									],
+									[
+										48443,
+										48446
+									],
+									[
+										48567,
+										48570
+									],
+									[
+										48816,
+										48819
+									],
+									[
+										49066,
+										49069
+									],
+									[
+										49269,
+										49272
+									],
+									[
+										49533,
+										49536
+									],
+									[
+										49802,
+										49805
+									],
+									[
+										49861,
+										49864
+									],
+									[
+										49920,
+										49923
+									],
+									[
+										50030,
+										50033
+									],
+									[
+										50086,
+										50089
+									],
+									[
+										50359,
+										50362
+									],
+									[
+										50471,
+										50474
+									],
+									[
+										50746,
+										50749
+									],
+									[
+										51019,
+										51022
+									],
+									[
+										51240,
+										51243
+									],
+									[
+										51290,
+										51293
+									],
+									[
+										51491,
+										51494
+									],
+									[
+										51750,
+										51753
+									],
+									[
+										51853,
+										51856
+									],
+									[
+										52102,
+										52105
+									],
+									[
+										52352,
+										52355
+									],
+									[
+										52502,
+										52505
+									],
+									[
+										52763,
+										52766
+									],
+									[
+										53035,
+										53038
+									],
+									[
+										53094,
+										53097
+									],
+									[
+										53154,
+										53157
+									],
+									[
+										53266,
+										53269
+									],
+									[
+										53323,
+										53326
+									],
+									[
+										53599,
+										53602
+									],
+									[
+										53711,
+										53714
+									],
+									[
+										53986,
+										53989
+									],
+									[
+										54216,
+										54219
+									],
+									[
+										54383,
+										54386
+									],
+									[
+										54610,
+										54613
+									],
+									[
+										54720,
+										54723
+									],
+									[
+										54916,
+										54919
+									],
+									[
+										55188,
+										55191
+									],
+									[
+										55308,
+										55311
+									],
+									[
+										55504,
+										55507
+									],
+									[
+										55785,
+										55788
+									],
+									[
+										55905,
+										55908
+									],
+									[
+										56123,
+										56126
+									],
+									[
+										56300,
+										56303
+									],
+									[
+										56567,
+										56570
+									],
+									[
+										56871,
+										56874
+									],
+									[
+										57139,
+										57142
+									],
+									[
+										57431,
+										57434
+									],
+									[
+										57733,
+										57736
+									],
+									[
+										57966,
+										57969
+									],
+									[
+										58143,
+										58146
+									],
+									[
+										58407,
+										58410
+									],
+									[
+										58590,
+										58593
+									],
+									[
+										58799,
+										58802
+									],
+									[
+										59001,
+										59004
+									],
+									[
+										59295,
+										59298
+									],
+									[
+										59527,
+										59530
+									],
+									[
+										59670,
+										59673
+									],
+									[
+										59903,
+										59906
+									],
+									[
+										60159,
+										60162
+									],
+									[
+										60496,
+										60499
+									],
+									[
+										60733,
+										60736
+									],
+									[
+										61079,
+										61082
+									],
+									[
+										61274,
+										61277
+									],
+									[
+										61406,
+										61409
+									],
+									[
+										61565,
+										61568
+									],
+									[
+										61689,
+										61692
+									],
+									[
+										61890,
+										61893
+									],
+									[
+										61995,
+										61998
+									],
+									[
+										62100,
+										62103
+									],
+									[
+										62206,
+										62209
+									],
+									[
+										62330,
+										62333
+									],
+									[
+										62457,
+										62460
+									],
+									[
+										62585,
+										62588
+									],
+									[
+										62717,
+										62720
+									],
+									[
+										62870,
+										62873
+									],
+									[
+										63016,
+										63019
+									],
+									[
+										63163,
+										63166
+									],
+									[
+										63296,
+										63299
+									],
+									[
+										63454,
+										63457
+									],
+									[
+										63601,
+										63604
+									],
+									[
+										63737,
+										63740
+									],
+									[
+										63854,
+										63857
+									],
+									[
+										63972,
+										63975
+									],
+									[
+										64091,
+										64094
+									],
+									[
+										64216,
+										64219
+									],
+									[
+										64344,
+										64347
+									],
+									[
+										64473,
+										64476
+									],
+									[
+										64640,
+										64643
+									],
+									[
+										64846,
+										64849
+									],
+									[
+										65021,
+										65024
+									],
+									[
+										65173,
+										65176
+									],
+									[
+										65392,
+										65395
+									],
+									[
+										65682,
+										65685
+									],
+									[
+										65875,
+										65878
+									],
+									[
+										66101,
+										66104
+									],
+									[
+										66323,
+										66326
+									],
+									[
+										66500,
+										66503
+									],
+									[
+										66788,
+										66791
+									],
+									[
+										67067,
+										67070
+									],
+									[
+										67313,
+										67316
+									],
+									[
+										67604,
+										67607
+									],
+									[
+										67890,
+										67893
+									],
+									[
+										68140,
+										68143
+									],
+									[
+										68378,
+										68381
+									],
+									[
+										68627,
+										68630
+									],
+									[
+										68862,
+										68865
+									],
+									[
+										69067,
+										69070
+									],
+									[
+										69361,
+										69364
+									],
+									[
+										69602,
+										69605
+									],
+									[
+										69803,
+										69806
+									],
+									[
+										69999,
+										70002
+									],
+									[
+										70220,
+										70223
+									],
+									[
+										70424,
+										70427
+									],
+									[
+										70664,
+										70667
+									],
+									[
+										70882,
+										70885
+									],
+									[
+										71137,
+										71140
+									],
+									[
+										71411,
+										71414
+									],
+									[
+										71779,
+										71782
+									],
+									[
+										72043,
+										72046
+									],
+									[
+										72250,
+										72253
+									],
+									[
+										72468,
+										72471
+									],
+									[
+										72665,
+										72668
+									],
+									[
+										72791,
+										72794
+									],
+									[
+										72947,
+										72950
+									],
+									[
+										73270,
+										73273
+									],
+									[
+										73473,
+										73476
+									],
+									[
+										73739,
+										73742
+									],
+									[
+										73922,
+										73925
+									],
+									[
+										74108,
+										74111
+									],
+									[
+										74423,
+										74426
+									],
+									[
+										74761,
+										74764
+									],
+									[
+										74996,
+										74999
+									],
+									[
+										75226,
+										75229
+									],
+									[
+										75370,
+										75373
+									],
+									[
+										75504,
+										75507
+									],
+									[
+										75695,
+										75698
+									],
+									[
+										75830,
+										75833
+									],
+									[
+										76001,
+										76004
+									],
+									[
+										76272,
+										76275
+									],
+									[
+										76453,
+										76456
+									],
+									[
+										76603,
+										76606
+									],
+									[
+										76791,
+										76794
+									],
+									[
+										77080,
+										77083
+									],
+									[
+										77464,
+										77467
+									],
+									[
+										77879,
+										77882
+									],
+									[
+										78163,
+										78166
+									],
+									[
+										78346,
+										78349
+									],
+									[
+										78533,
+										78536
+									],
+									[
+										78781,
+										78784
+									],
+									[
+										79007,
+										79010
+									],
+									[
+										79247,
+										79250
+									],
+									[
+										79497,
+										79500
+									],
+									[
+										79695,
+										79698
+									],
+									[
+										79872,
+										79875
+									],
+									[
+										80059,
+										80062
+									],
+									[
+										80227,
+										80230
+									],
+									[
+										80378,
+										80381
+									],
+									[
+										80538,
+										80541
+									],
+									[
+										80728,
+										80731
+									],
+									[
+										80946,
+										80949
+									],
+									[
+										81124,
+										81127
+									],
+									[
+										81266,
+										81269
+									],
+									[
+										81461,
+										81464
+									],
+									[
+										81668,
+										81671
+									],
+									[
+										81870,
+										81873
+									],
+									[
+										82077,
+										82080
+									],
+									[
+										82274,
+										82277
+									],
+									[
+										82535,
+										82538
+									],
+									[
+										82752,
+										82755
+									],
+									[
+										82949,
+										82952
+									],
+									[
+										83088,
+										83091
+									],
+									[
+										83271,
+										83274
+									],
+									[
+										83460,
+										83463
+									],
+									[
+										83634,
+										83637
+									],
+									[
+										83750,
+										83753
+									],
+									[
+										83960,
+										83963
+									],
+									[
+										84193,
+										84196
+									],
+									[
+										84388,
+										84391
+									],
+									[
+										84587,
+										84590
+									],
+									[
+										84989,
+										84992
+									],
+									[
+										85175,
+										85178
+									],
+									[
+										85365,
+										85368
+									],
+									[
+										85609,
+										85612
+									],
+									[
+										85715,
+										85718
+									],
+									[
+										85821,
+										85824
+									],
+									[
+										85929,
+										85932
+									],
+									[
+										86034,
+										86037
+									],
+									[
+										86139,
+										86142
+									],
+									[
+										86267,
+										86270
+									],
+									[
+										86472,
+										86475
+									],
+									[
+										86634,
+										86637
+									],
+									[
+										86830,
+										86833
+									],
+									[
+										87044,
+										87047
+									],
+									[
+										87203,
+										87206
+									],
+									[
+										87400,
+										87403
+									],
+									[
+										87586,
+										87589
+									],
+									[
+										87805,
+										87808
+									],
+									[
+										87980,
+										87983
+									],
+									[
+										88224,
+										88227
+									],
+									[
+										88358,
+										88361
+									],
+									[
+										88570,
+										88573
+									],
+									[
+										88713,
+										88716
+									],
+									[
+										88893,
+										88896
+									],
+									[
+										89116,
+										89119
+									],
+									[
+										89339,
+										89342
+									],
+									[
+										89557,
+										89560
+									],
+									[
+										89808,
+										89811
+									],
+									[
+										89990,
+										89993
+									],
+									[
+										90276,
+										90279
+									],
+									[
+										90531,
+										90534
+									],
+									[
+										90647,
+										90650
+									],
+									[
+										90931,
+										90934
+									],
+									[
+										91171,
+										91174
+									],
+									[
+										91393,
+										91396
+									],
+									[
+										91563,
+										91566
+									],
+									[
+										91771,
+										91774
+									],
+									[
+										91997,
+										92000
+									],
+									[
+										92171,
+										92174
+									],
+									[
+										92385,
+										92388
+									],
+									[
+										92624,
+										92627
+									],
+									[
+										92738,
+										92741
+									],
+									[
+										93092,
+										93095
+									],
+									[
+										93387,
+										93390
+									],
+									[
+										93553,
+										93556
+									],
+									[
+										93796,
+										93799
+									],
+									[
+										94102,
+										94105
+									],
+									[
+										94291,
+										94294
+									],
+									[
+										94506,
+										94509
+									],
+									[
+										94793,
+										94796
+									],
+									[
+										95020,
+										95023
+									],
+									[
+										95214,
+										95217
+									],
+									[
+										95418,
+										95421
+									],
+									[
+										95598,
+										95601
+									],
+									[
+										95754,
+										95757
+									],
+									[
+										95957,
+										95960
+									],
+									[
+										96120,
+										96123
+									],
+									[
+										96327,
+										96330
+									],
+									[
+										96546,
+										96549
+									],
+									[
+										96796,
+										96799
+									],
+									[
+										97014,
+										97017
+									],
+									[
+										97189,
+										97192
+									],
+									[
+										97354,
+										97357
+									],
+									[
+										97556,
+										97559
+									],
+									[
+										97716,
+										97719
+									],
+									[
+										97936,
+										97939
+									],
+									[
+										98124,
+										98127
+									],
+									[
+										98327,
+										98330
+									],
+									[
+										98616,
+										98619
+									],
+									[
+										98786,
+										98789
+									],
+									[
+										98989,
+										98992
+									],
+									[
+										99149,
+										99152
+									],
+									[
+										99319,
+										99322
+									],
+									[
+										99576,
+										99579
+									],
+									[
+										99795,
+										99798
+									],
+									[
+										99994,
+										99997
+									],
+									[
+										100164,
+										100167
+									],
+									[
+										100338,
+										100341
+									],
+									[
+										100612,
+										100615
+									],
+									[
+										100923,
+										100926
+									],
+									[
+										101073,
+										101076
+									],
+									[
+										101150,
+										101153
+									],
+									[
+										101324,
+										101327
+									],
+									[
+										101539,
+										101542
+									],
+									[
+										101788,
+										101791
+									],
+									[
+										102022,
+										102025
+									],
+									[
+										102075,
+										102078
+									],
+									[
+										102299,
+										102302
+									],
+									[
+										102574,
+										102577
+									],
+									[
+										102719,
+										102722
+									],
+									[
+										102913,
+										102916
+									],
+									[
+										103087,
+										103090
+									],
+									[
+										103301,
+										103304
+									],
+									[
+										103615,
+										103618
+									],
+									[
+										103904,
+										103907
+									],
+									[
+										104067,
+										104070
+									],
+									[
+										104289,
+										104292
+									],
+									[
+										104458,
+										104461
+									],
+									[
+										104564,
+										104567
+									],
+									[
+										104747,
+										104750
+									],
+									[
+										105082,
+										105085
+									],
+									[
+										105317,
+										105320
+									],
+									[
+										105504,
+										105507
+									],
+									[
+										105692,
+										105695
+									],
+									[
+										105779,
+										105782
+									],
+									[
+										105865,
+										105868
+									],
+									[
+										106052,
+										106055
+									],
+									[
+										106244,
+										106247
+									],
+									[
+										106473,
+										106476
+									],
+									[
+										106628,
+										106631
+									],
+									[
+										106885,
+										106888
+									],
+									[
+										107064,
+										107067
+									],
+									[
+										107250,
+										107253
+									],
+									[
+										107429,
+										107432
+									],
+									[
+										107597,
+										107600
+									],
+									[
+										107788,
+										107791
+									],
+									[
+										107934,
+										107937
+									],
+									[
+										108091,
+										108094
+									],
+									[
+										108237,
+										108240
+									],
+									[
+										108462,
+										108465
+									],
+									[
+										108705,
+										108708
+									],
+									[
+										108909,
+										108912
+									],
+									[
+										109093,
+										109096
+									],
+									[
+										109279,
+										109282
+									],
+									[
+										109525,
+										109528
+									],
+									[
+										109561,
+										109564
+									],
+									[
+										109606,
+										109609
+									],
+									[
+										109805,
+										109808
+									],
+									[
+										109857,
+										109860
+									],
+									[
+										109938,
+										109941
+									],
+									[
+										110165,
+										110168
+									],
+									[
+										110210,
+										110213
+									],
+									[
+										110389,
+										110392
+									],
+									[
+										110570,
+										110573
+									],
+									[
+										110743,
+										110746
+									],
+									[
+										110937,
+										110940
+									],
+									[
+										111112,
+										111115
+									],
+									[
+										111354,
+										111357
+									],
+									[
+										111546,
+										111549
+									],
+									[
+										111726,
+										111729
+									],
+									[
+										112004,
+										112007
+									],
+									[
+										112187,
+										112190
+									],
+									[
+										112381,
+										112384
+									],
+									[
+										112606,
+										112609
+									],
+									[
+										112847,
+										112850
+									],
+									[
+										113097,
+										113100
+									],
+									[
+										113295,
+										113298
+									],
+									[
+										113343,
+										113346
+									],
+									[
+										113408,
+										113411
+									],
+									[
+										113458,
+										113461
+									],
+									[
+										113645,
+										113648
+									],
+									[
+										113870,
+										113873
+									],
+									[
+										114024,
+										114027
+									],
+									[
+										114201,
+										114204
+									],
+									[
+										114390,
+										114393
+									],
+									[
+										114640,
+										114643
+									],
+									[
+										114891,
+										114894
+									],
+									[
+										115081,
+										115084
+									],
+									[
+										115179,
+										115182
+									],
+									[
+										115275,
+										115278
+									],
+									[
+										115457,
+										115460
+									],
+									[
+										115718,
+										115721
+									],
+									[
+										115971,
+										115974
+									],
+									[
+										116166,
+										116169
+									],
+									[
+										116255,
+										116258
+									]
+								],
+								"scope": ""
+							}
+						},
+						"selection":
+						[
+							[
+								12167,
+								12167
+							]
+						],
+						"settings":
+						{
+							"detect_indentation": false,
+							"line_numbers": false,
+							"output_tag": 1,
+							"result_base_dir": "",
+							"result_file_regex": "^([A-Za-z\\\\/<].*):$",
+							"result_line_regex": "^ +([0-9]+):",
+							"scroll_past_end": true,
+							"syntax": "Packages/Default/Find Results.hidden-tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 6277.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "/D/Repositories/GitHub/rust/src/libnum/rational.rs",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 19394,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								5021,
+								5021
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Rust/Rust.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 5113.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "/D/Repositories/GitHub/rust/src/libnum/complex.rs",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 10053,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1020,
+								1020
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Rust/Rust.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 2438.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 8,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "event/mod.rs",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 148,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Rust/Rust.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "layer/mod.rs",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 503,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Rust/Rust.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "layer/gui_layer.rs",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1457,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								463,
+								463
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Rust/Rust.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 9.0,
+						"zoom_level": 1.0
+					},
 					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "gui/bar.rs",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1669,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1661,
+								1661
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Rust/Rust.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 785.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
 					"type": "text"
 				}
 			]
@@ -838,7 +3102,7 @@
 	],
 	"incremental_find":
 	{
-		"height": 23.0
+		"height": 26.0
 	},
 	"input":
 	{
@@ -853,18 +3117,11 @@
 				0,
 				1,
 				1
-			],
-			[
-				1,
-				0,
-				2,
-				1
 			]
 		],
 		"cols":
 		[
 			0.0,
-			0.5,
 			1.0
 		],
 		"rows":
@@ -885,7 +3142,7 @@
 	"project": "hollobock.sublime-project",
 	"replace":
 	{
-		"height": 62.0
+		"height": 48.0
 	},
 	"save_all_on_build": true,
 	"select_file":
@@ -894,28 +3151,12 @@
 		"selected_items":
 		[
 			[
-				"gui",
+				"gui_",
 				"layer\\gui_layer.rs"
 			],
 			[
-				"h",
-				"hollobock.rs"
-			],
-			[
-				"guila",
-				"layer\\gui_layer.rs"
-			],
-			[
-				"hollob",
-				"hollobock.rs"
-			],
-			[
-				"hollo",
-				"hollobock.rs"
-			],
-			[
-				"c.bat",
-				"c.bat"
+				"bar.rs",
+				"gui\\bar.rs"
 			],
 			[
 				"player.rs",

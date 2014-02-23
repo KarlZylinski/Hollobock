@@ -22,14 +22,15 @@ impl GameLayer {
 
 impl Layer for GameLayer {
     fn update(&self, dt: f32, input: &Input) -> LayerUpdateResult {
-        let new_world = self.world.update(dt, input);
+        let world_update_result = self.world.update(dt, input);
         
         let new_game_layer = ~GameLayer {
-            world: new_world,
+            world: world_update_result.world,
         };
 
         return LayerUpdateResult {
-            new_layers: ~[ new_game_layer as ~Layer: ]
+            new_layers: ~[ new_game_layer as ~Layer: ],
+            events: world_update_result.events
         };
     }
 

@@ -6,6 +6,7 @@ pub mod gui_layer;
 
 pub trait Layer {
     fn update(&self, dt: f32, input: &Input) -> LayerUpdateResult;
+    fn handle_event(&self, event: &Event) -> LayerUpdateResult;
     fn draw(&self, window: &mut RenderWindow);
     fn clone(&self) -> ~Layer:;
 }
@@ -17,5 +18,6 @@ impl Clone for ~Layer: {
 }
 
 pub struct LayerUpdateResult {
-    new_layers: ~[~Layer:]
+    new_layers: ~[~Layer:],
+    events: ~[Event]
 }

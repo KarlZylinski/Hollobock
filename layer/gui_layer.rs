@@ -10,6 +10,18 @@ pub struct GuiLayer {
     health_bar: Option<Bar>
 }
 
+impl EventPropagator for GuiLayer {
+    fn propagate_event(&mut self, event: &Event) -> bool {
+        match event {
+            UpdateHealthBar { health } => {
+                self.health_bar.set_target(health);
+                true
+            },
+            _ => false
+        }
+    }
+}
+
 impl GuiLayer {
     pub fn new(rs: &mut ResourceStore) -> GuiLayer {
         let health_bar = rs.load_texture(~"health_bar.png").map(|t| {
@@ -29,7 +41,8 @@ impl Layer for GuiLayer {
                 ~GuiLayer {
                     health_bar: self.health_bar.as_ref().map(|hb| { hb.update(dt) })
                 } as ~Layer:
-            ]
+            ],
+            events: ~[]
         }
     }
 

@@ -12,6 +12,7 @@ use layer::game_layer::GameLayer;
 use layer::gui_layer::GuiLayer;
 use std::vec;
 use resource_store::ResourceStore;
+use event::Event;
 
 pub mod input;
 pub mod math;
@@ -19,6 +20,7 @@ pub mod layer;
 pub mod resource_store;
 pub mod entity;
 pub mod gui;
+pub mod event;
 
 #[start]
 fn start(argc: int, argv: **u8) -> int {
@@ -65,13 +67,23 @@ fn main() {
         window.clear(&Color::new_RGB(0, 200, 200));
 
         let mut new_layers: ~[~Layer:] = ~[];
+        let mut events: ~[Event] = ~[];
         
         for layer in layers.iter() {
             let update_result = layer.update(dt, &input);
             new_layers = vec::append(new_layers, update_result.new_layers);
+            events = vec::append(events, update_result.events);
             layer.draw(&mut window);
         }
-        
+
+        for event in events.iter() {
+            for layer in layers.iter() {
+                if layer.handle_event(&event) {
+                    break;
+                }
+            }
+        }
+
         layers = new_layers;
         
         window.display()

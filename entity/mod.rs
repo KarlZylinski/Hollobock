@@ -60,5 +60,6 @@ impl Entity {
 }
 
 pub struct EntityUpdateResult {
-    new_entities: ~[Entity]
+    new_entities: ~[Entity],
+    events: ~[Event]
 }
