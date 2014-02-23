@@ -1,46 +1,45 @@
-use std::rc::Rc;
-use std::cell::RefCell;
-
 use rsfml::system::Vector2f;
-use rsfml::graphics::{RenderWindow, Texture};
-use rsfml::graphics::rc::Sprite;
+use rsfml::graphics::RenderWindow;
 
 use layer::{Layer, LayerUpdateResult};
 use input::Input;
 use resource_store::ResourceStore;
+use gui::bar::Bar;
 
 pub struct GuiLayer {
-    health_bar_texture: Option<Rc<RefCell<Texture>>>
+    health_bar: Option<Bar>
 }
 
-impl GuiLayer {    
+impl GuiLayer {
     pub fn new(rs: &mut ResourceStore) -> GuiLayer {
+        let health_bar = rs.load_texture(~"health_bar.png").map(|t| {
+            Bar::new(100., 100., t, &Vector2f::new(10., 10.), &Vector2f::new(100., 1.))
+        });
+
         GuiLayer {
-            health_bar_texture: rs.load_texture(~"health_bar.png")
+            health_bar: health_bar
         }
     }
 }
 
 impl Layer for GuiLayer {
-    fn update(&self, _dt: f32, _input: &Input) -> LayerUpdateResult {
+    fn update(&self, dt: f32, _input: &Input) -> LayerUpdateResult {
         LayerUpdateResult {
-            new_layers: ~[self.clone()]
+            new_layers: ~[
+                ~GuiLayer {
+                    health_bar: self.health_bar.as_ref().map(|hb| { hb.update(dt) })
+                } as ~Layer:
+            ]
         }
     }
 
     fn draw(&self, window: &mut RenderWindow) {
-        self.health_bar_texture.clone().map(|t| {
-            Sprite::new_with_texture(t).map(|mut s| {
-                s.set_position(&Vector2f::new(10.,10.));
-                s.set_scale(&Vector2f::new(100., 1.));
-                window.draw(&s);
-            });
-        });
+        self.health_bar.as_ref().map(|hb| { hb.draw(window) });
     }
 
     fn clone(&self) -> ~Layer: {
         ~GuiLayer {
-            health_bar_texture: self.health_bar_texture.clone()
+            health_bar: self.health_bar.as_ref().map(|hb| { hb.clone() })
         } as ~Layer:
     }
 }

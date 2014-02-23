@@ -18,6 +18,7 @@ pub mod math;
 pub mod layer;
 pub mod resource_store;
 pub mod entity;
+pub mod gui;
 
 #[start]
 fn start(argc: int, argv: **u8) -> int {

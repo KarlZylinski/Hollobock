@@ -68,8 +68,16 @@ impl EntityTrait for EnemyStruct {
             None => fail!("No player found in world.")
         };
 
-        let direction = math::normalize(player.position() - self.position);
-        let new_position = self.position + direction * 100.0f32 * dt;
+        let dist_to_player = player.position() - self.position;
+        let direction = math::normalize(dist_to_player);
+
+        let speed = if math::length(&dist_to_player) < 50. {
+            0.0f32
+        } else {
+            100.0f32
+        };
+
+        let new_position = self.position + direction * speed * dt;
         let new_rotation = f32::atan2(direction.y, direction.x).to_degrees();
 
         let intersecting_with_bullet = intersecting_with_bullet(self, world);

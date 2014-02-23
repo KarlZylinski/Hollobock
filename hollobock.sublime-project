@@ -3,15 +3,15 @@
 	[
 		{
 			"cmd": "c.bat",
-    		"working_dir": "D:\\Projects\\hollobock",
-			"name": "Rust (Hollobock)"
+			"name": "Rust (Hollobock)",
+			"working_dir": "D:\\Repositories\\GitHub\\hollobock"
 		}
 	],
 	"folders":
 	[
 		{
 			"follow_symlinks": true,
-			"path": "D:\\Projects\\hollobock"
+			"path": "."
 		}
 	]
 }
