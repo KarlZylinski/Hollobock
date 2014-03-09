@@ -1,0 +1,56 @@
+* eventhandler
+* event
+
+How to register on event?
+
+- Static list in event
+- List with handlers
+- How to affect entity list
+
+
+A trait which is implemented by entity is required so that the entity can return it's new self. It is then either replaced, removed or spawns new things.
+
+foreach h in handlers
+	h.handle()
+
+pub struct UpdateHealthBarEvent {
+	health: f32,
+	static priv mut handlers: ~[~UpdateHealthBarEventHandler]
+	static priv mut fired: ~[~UpdateHealthBarEvent]
+}
+
+impl UpdateHealthBarEvent {
+	fn pub add_handler(handler: UpdateHealthBarEventHandler) { ... }
+	fn pub handle_fired() { ... }
+	fn pub fire(event: UpdateHealthBarEvent) { ... }
+}
+
+pub struct UpdateHealthBarEventHandler {
+	fn pub handle()
+}
+
+pub enum Event {
+    UpdateHealthBar {
+        health: f32
+    }
+}
+
+trait EventHandler {
+	fn handle_entity_event() -> ~[Entity];
+	fn handle_gui_bar_event() -> Bar;
+}
+
+gui_bars = ~[Bar]
+entities = ~[Entity]
+
+for g in gui_bars
+	new_bars = vec::append(new_bars, g.handle())
+
+trait EntityEventHandler {
+	fn handle(&self) -> ~[Entity]
+}
+
+trait EntityListEventPropagator {
+	fn propagate(&self) -> ~[Entity]
+}
+

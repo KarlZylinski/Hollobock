@@ -12,6 +12,7 @@ use layer::game_layer::GameLayer;
 use layer::gui_layer::GuiLayer;
 use std::vec;
 use resource_store::ResourceStore;
+use rsfml::graphics::rc::Sprite;
 
 pub mod input;
 pub mod math;
@@ -41,6 +42,8 @@ fn main() {
         ~GuiLayer::new(&mut resource_store) as ~Layer:
     ];
 
+    let background_texture = resource_store.load_texture(~"background.png");
+
     while window.is_open() {
         let dt = frame_timer.get_elapsed_time().as_seconds();
         frame_timer.restart();
@@ -63,6 +66,12 @@ fn main() {
         }
 
         window.clear(&Color::new_RGB(0, 200, 200));
+
+        background_texture.clone().map(|t| {
+            Sprite::new_with_texture(t).map(|s| {
+                window.draw(&s);
+            });
+        });
 
         let mut new_layers: ~[~Layer:] = ~[];
         

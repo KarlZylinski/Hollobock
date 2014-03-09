@@ -1,0 +1,19 @@
+Process events:
+	- Send all events for same listener in a chunk
+	- Collect new objects
+		- I need some kind of event propagation result builder which takes the results of a kind of events handles what should be done with the result.
+
+		eventHandler:
+		f(e) -> r
+
+		eventResultHandler:
+		f([r])
+
+
+eventResultHandler
+	got events?
+		-> propagte
+		-> might return 0..* new objects of same type
+		-> put stuff that returned with an event in a to-be-processed-list
+
+	mut collection to modify
