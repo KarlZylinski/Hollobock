@@ -2,8 +2,10 @@ extern crate native;
 extern crate rsfml;
 extern crate extra;
 
+use std::rc::Rc;
+
 use rsfml::system::{Clock, Vector2i};
-use rsfml::window::{ContextSettings, VideoMode, event, Close };
+use rsfml::window::{ContextSettings, VideoMode, Close };
 use rsfml::graphics::{RenderWindow, Color};
 
 use input::Input;
@@ -20,6 +22,7 @@ pub mod layer;
 pub mod resource_store;
 pub mod entity;
 pub mod gui;
+pub mod event;
 
 #[start]
 fn start(argc: int, argv: **u8) -> int {
@@ -38,8 +41,8 @@ fn main() {
     let mut resource_store = ResourceStore::new();
 
     let mut layers = ~[
-        ~GameLayer::new(&mut resource_store) as ~Layer:,
-        ~GuiLayer::new(&mut resource_store) as ~Layer:
+        Rc::new(~GameLayer::new(&mut resource_store) as ~Layer:),
+        Rc::new(~GuiLayer::new(&mut resource_store) as ~Layer:)
     ];
 
     let background_texture = resource_store.load_texture(~"background.png");
@@ -54,13 +57,13 @@ fn main() {
             let event = window.poll_event();
 
             match event {
-                event::Closed => window.close(),
-                event::KeyPressed { code, .. } => input.set_key_pressed(code),
-                event::KeyReleased { code, .. } => input.set_key_released(code),
-                event::MouseMoved { x, y } => input.mouse_position = Vector2i::new(x as i32, y as i32),
-                event::MouseButtonPressed { button, .. } => input.set_mouse_button_pressed(button),
-                event::MouseButtonReleased { button, .. } => input.set_mouse_button_released(button),
-                event::NoEvent => break,
+                rsfml::window::event::Closed => window.close(),
+                rsfml::window::event::KeyPressed { code, .. } => input.set_key_pressed(code),
+                rsfml::window::event::KeyReleased { code, .. } => input.set_key_released(code),
+                rsfml::window::event::MouseMoved { x, y } => input.mouse_position = Vector2i::new(x as i32, y as i32),
+                rsfml::window::event::MouseButtonPressed { button, .. } => input.set_mouse_button_pressed(button),
+                rsfml::window::event::MouseButtonReleased { button, .. } => input.set_mouse_button_released(button),
+                rsfml::window::event::NoEvent => break,
                 _ => {}
             }
         }
@@ -76,12 +79,20 @@ fn main() {
         let mut new_layers: ~[~Layer:] = ~[];
         
         for layer in layers.iter() {
-            let update_result = layer.update(dt, &input);
+            let update_result = layer.borrow().update(dt, &input);
             new_layers = vec::append(new_layers, update_result.new_layers);
-            layer.draw(&mut window);
+            layer.borrow().draw(&mut window);
         }
+
+        // TODO: this is shit. Immutable layers have gone to shit.
+        // Can't delete stuff and recreate it allt the time since
+        // it'll break event handlers. What the shit.
         
-        layers = new_layers;
+        layers = ~[];
+
+        for layer in new_layers.move_iter() {
+            layers = vec::append_one(layers, Rc::new(layer));
+        }
         
         window.display()
     }

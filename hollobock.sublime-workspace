@@ -4,6 +4,14 @@
 		"selected_items":
 		[
 			[
+				"han",
+				"handlers"
+			],
+			[
+				"new",
+				"new_health"
+			],
+			[
 				"hea",
 				"health_bar_texture"
 			],
@@ -38,10 +46,6 @@
 			[
 				"Spi",
 				"SpriteRenderer"
-			],
-			[
-				"new",
-				"new_sprite"
 			],
 			[
 				"SPrit",
@@ -148,7 +152,31 @@
 	"buffers":
 	[
 		{
-			"file": "/D/Projects/hollobock/entity/mod.rs",
+			"file": "event/mod.rs",
+			"settings":
+			{
+				"buffer_size": 129,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "entity/player.rs",
+			"settings":
+			{
+				"buffer_size": 3608,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "entity/enemy.rs",
+			"settings":
+			{
+				"buffer_size": 3263,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "entity/mod.rs",
 			"settings":
 			{
 				"buffer_size": 1601,
@@ -156,47 +184,23 @@
 			}
 		},
 		{
-			"file": "/D/Projects/hollobock/hollobock.rs",
+			"file": "docs/event_shit",
 			"settings":
 			{
-				"buffer_size": 2381,
+				"buffer_size": 1646,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "/D/Projects/hollobock/entity/player.rs",
+			"file": "layer/gui_layer.rs",
 			"settings":
 			{
-				"buffer_size": 3502,
+				"buffer_size": 1790,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "/D/Projects/hollobock/layer/gui_layer.rs",
-			"settings":
-			{
-				"buffer_size": 1159,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "/D/Projects/hollobock/c.bat",
-			"settings":
-			{
-				"buffer_size": 151,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "/D/Projects/hollobock/entity/enemy.rs",
-			"settings":
-			{
-				"buffer_size": 3090,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "/D/Projects/hollobock/layer/game_layer.rs",
+			"file": "layer/game_layer.rs",
 			"settings":
 			{
 				"buffer_size": 1090,
@@ -204,42 +208,36 @@
 			}
 		},
 		{
-			"file": "/D/Projects/hollobock/entity/enemy_spawner.rs",
+			"file": "layer/mod.rs",
 			"settings":
 			{
-				"buffer_size": 2145,
+				"buffer_size": 417,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "/D/Projects/hollobock/resource_store.rs",
+			"file": "gui/bar.rs",
 			"settings":
 			{
-				"buffer_size": 5336,
+				"buffer_size": 1721,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "/D/Projects/hollobock/entity/sprite_renderer.rs",
+			"contents": "Searching 20 files for \"{min\" (regex)\n\nInvalid content of repeat range.  The error occurred while parsing the regular expression: '{>>>HERE>>>min'. in regular expression {min\n\n0 matches across 0 files\n\n\nSearching 20 files for \"{ min\" (regex)\n\nInvalid content of repeat range.  The error occurred while parsing the regular expression: '{ >>>HERE>>>min'. in regular expression { min\n\n0 matches across 0 files\n\n\nSearching 20 files for \"min, \" (regex)\n\nD:\\Projects\\Hollobock\\gui\\bar.rs:\n    7  use rsfml::graphics::rc::Sprite;\n    8  \n    9: use std::f32::{min, max};\n   10  \n   11  #[deriving(Clone)]\n\n1 match in 1 file\n\n\nSearching 20 files for \"max\" (regex)\n\nD:\\Projects\\Hollobock\\entity\\player.rs:\n   54  fn process_weapon_input(old_cooldown: f32, dt: f32, mouse_1_down: bool) -> (f32, bool)\n   55  {\n   56:     let cooldown = cmp::max(0., old_cooldown - dt);\n   57  \n   58      if mouse_1_down && cooldown == 0. {\n\nD:\\Projects\\Hollobock\\gui\\bar.rs:\n    7  use rsfml::graphics::rc::Sprite;\n    8  \n    9: use std::f32::{min, max};\n   10  \n   11  #[deriving(Clone)]\n   12  pub struct Bar {\n   13: 	max: f32,\n   14      current: f32,\n   15      target: f32,\n   ..\n   21  \n   22  impl Bar {\n   23: 	pub fn new(max: f32, current: f32, texture: Rc<RefCell<Texture>>, position: &Vector2f, size: &Vector2f) -> Bar {\n   24  		Bar {\n   25: 			max: max,\n   26  			current: current,\n   27  			target: current,\n   ..\n   43  \n   44          Bar {\n   45:         	max: self.max,\n   46          	current: current,\n   47          	target: self.target,\n   ..\n   56          Sprite::new_with_texture(self.texture.clone()).map(|mut s| {\n   57              s.set_position(&self.position);\n   58:             let size = Vector2f::new(self.size.x * self.current / self.max, self.size.y);\n   59              s.set_scale(&size);\n   60              window.draw(&s);\n   ..\n   63  \n   64      pub fn set_target(&mut self, target: f32) {\n   65:         self.target = std::max(std::min(target, self.max), 0.0);\n   66      }\n   67  }\n\n11 matches across 2 files\n\n\nSearching 20 files for \"refcell\" (regex)\n\nD:\\Projects\\Hollobock\\entity\\animated_renderer.rs:\n    1  use std::rc::Rc;\n    2: use std::cell::RefCell;\n    3  \n    4  use rsfml::system::{Vector2f};\n    .\n   17  \n   18  impl AnimatedRenderer {\n   19:     pub fn new(texture: Rc<RefCell<Texture>>, frames: i32, time_per_frame: f32) -> Option<AnimatedRenderer> {\n   20          let texture_size = texture.borrow().with(|t| t.get_size());\n   21  \n\nD:\\Projects\\Hollobock\\gui\\bar.rs:\n    1  use std::rc::Rc;\n    2: use std::cell::RefCell;\n    3  use std::num::abs;\n    4  \n    .\n   15      target: f32,\n   16      change_rate_multiplier: f32,\n   17:     texture: Rc<RefCell<Texture>>,\n   18      position: Vector2f,\n   19      size: Vector2f\n   ..\n   21  \n   22  impl Bar {\n   23: 	pub fn new(max: f32, current: f32, texture: Rc<RefCell<Texture>>, position: &Vector2f, size: &Vector2f) -> Bar {\n   24  		Bar {\n   25  			max: max,\n\nD:\\Projects\\Hollobock\\resource_store.rs:\n    1  use std::rc::Rc;\n    2: use std::cell::RefCell;\n    3  use std::hashmap::HashMap;\n    4  use std::vec;\n    .\n   22  \n   23  pub struct ResourceStore {\n   24:     textures: HashMap<~str, Option<Rc<RefCell<Texture>>>>\n   25  }\n   26  \n   ..\n   49      }\n   50  \n   51:     pub fn load_texture(&mut self, filename: ~str) -> Option<Rc<RefCell<Texture>>> {\n   52          self.textures.find_or_insert_with(filename, |filename_to_load_from|\n   53              Texture::new_from_file(*filename_to_load_from).map(|new_texture|\n   54:                  Rc::new(RefCell::new(new_texture))\n   55              )   \n   56          ).take()\n\n9 matches across 3 files\n",
 			"settings":
 			{
-				"buffer_size": 1300,
-				"line_ending": "Windows"
+				"buffer_size": 3653,
+				"line_ending": "Windows",
+				"name": "Find Results",
+				"scratch": true
 			}
 		},
 		{
-			"file": "/D/Projects/hollobock/entity/animated_renderer.rs",
+			"file": "hollobock.rs",
 			"settings":
 			{
-				"buffer_size": 3173,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "/D/Projects/hollobock/entity/renderer.rs",
-			"settings":
-			{
-				"buffer_size": 317,
+				"buffer_size": 3129,
 				"line_ending": "Windows"
 			}
 		}
@@ -276,24 +274,37 @@
 	},
 	"file_history":
 	[
-		"/D/Projects/hollobock/layer/game_layer.rs",
+		"/D/Projects/Hollobock/docs/event_stuff",
+		"/D/Projects/Hollobock/layer/game_layer.rs",
+		"/D/Projects/Hollobock/entity/world.rs",
+		"/D/Projects/Hollobock/entity/player.rs",
+		"/D/Projects/Hollobock/events/mod.rs",
+		"/D/Projects/Hollobock/entity/mod.rs",
+		"/D/Projects/Hollobock/events/event.rs",
+		"/D/Projects/Hollobock/events/event_handler.rs",
+		"/D/Projects/Hollobock/gui/bar.rs",
+		"/D/Projects/Hollobock/event/mod.rs",
+		"/D/Projects/hollobock/entity/player.rs",
+		"/D/Projects/hollobock/layer/gui_layer.rs",
 		"/D/Projects/hollobock/resource_store.rs",
-		"/D/Projects/hollobock/entity/renderer.rs",
+		"/D/Projects/hollobock/entity/sprite_renderer.rs",
 		"/D/Projects/Hollobock/hollobock.sublime-project",
+		"/D/Projects/hollobock/entity/animated_renderer.rs",
+		"/D/Projects/hollobock/entity/renderer.rs",
+		"/D/Projects/hollobock/entity/mod.rs",
+		"/D/Projects/hollobock/hollobock.rs",
+		"/D/Projects/hollobock/c.bat",
+		"/D/Projects/hollobock/entity/enemy.rs",
+		"/D/Projects/hollobock/layer/game_layer.rs",
+		"/D/Projects/hollobock/entity/enemy_spawner.rs",
 		"/D/Projects/hollobock/level.json",
 		"/C/MinGW/msys/1.0/bin/rustc",
-		"/D/Projects/hollobock/entity/enemy_spawner.rs",
-		"/D/Projects/hollobock/entity/enemy.rs",
 		"/D/Projects/hollobock/entity/world.rs",
-		"/D/Projects/hollobock/entity/player.rs",
 		"/D/Projects/hollobock/entity/player_bullet.rs",
 		"/D/Projects/hollobock/input.rs",
 		"/D/Projects/hollobock/math.rs",
-		"/D/Projects/hollobock/hollobock.rs",
-		"/D/Projects/hollobock/entity/sprite_renderer.rs",
 		"/D/Projects/hollobock/s.bat",
 		"/D/Projects/hollobock/README.md",
-		"/D/Projects/hollobock/entity/mod.rs",
 		"/D/Projects/Hollobock/bin/level.json",
 		"/D/Projects/Hollobock/entity/renderer.rs",
 		"/D/Projects/Hollobock/level.json",
@@ -306,13 +317,11 @@
 		"/D/Projects/Hollobock/layer/gui_layer.rs",
 		"/D/Projects/hollobock/.gitattributes",
 		"/D/Projects/hollobock/lib/librsfml-fe88034a-0.2.rlib",
-		"/D/Projects/hollobock/layer/gui_layer.rs",
 		"/D/Projects/hollobock/list.rs",
 		"/D/Projects/hollobock/layer/mod.rs",
 		"/D/Projects/Hollobock/entity/sprite_renderer.rs",
 		"/D/Projects/Hollobock/entity/player_input_component.rs",
 		"/D/Projects/Hollobock/entity/player_update_component.rs",
-		"/D/Projects/Hollobock/entity/mod.rs",
 		"/D/Projects/hollobock/world.rs",
 		"/D/Projects/Hollobock/layer/mod.rs",
 		"/D/Projects/hollobock/game_layer.rs",
@@ -394,6 +403,11 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"refcell",
+			"max",
+			"min, ",
+			"{ min",
+			"{min",
 			"Enemy ",
 			"is_pla",
 			"is_p",
@@ -441,19 +455,19 @@
 			[
 				{
 					"buffer": 0,
-					"file": "/D/Projects/hollobock/entity/mod.rs",
+					"file": "event/mod.rs",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1601,
+						"buffer_size": 129,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1290,
-								1290
+								52,
+								52
 							]
 						],
 						"settings":
@@ -466,24 +480,24 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 11,
+					"stack_index": 3,
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "/D/Projects/hollobock/hollobock.rs",
+					"file": "entity/player.rs",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2381,
+						"buffer_size": 3608,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1094,
-								1094
+								3416,
+								3416
 							]
 						],
 						"settings":
@@ -492,109 +506,20 @@
 							"tab_size": 4,
 							"translate_tabs_to_spaces": true
 						},
-						"translation.x": -0.0,
-						"translation.y": 270.0,
+						"translation.x": 0.0,
+						"translation.y": 1620.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 5,
+					"stack_index": 2,
 					"type": "text"
 				},
 				{
 					"buffer": 2,
-					"file": "/D/Projects/hollobock/entity/player.rs",
+					"file": "entity/enemy.rs",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 3502,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								411,
-								411
-							]
-						],
-						"settings":
-						{
-							"history_list_is_closing": true,
-							"syntax": "Packages/Rust/Rust.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 1836.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 10,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "/D/Projects/hollobock/layer/gui_layer.rs",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1159,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								679,
-								679
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Rust/Rust.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 108.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "/D/Projects/hollobock/c.bat",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 151,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								151,
-								151
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Batch File/Batch File.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 8,
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "/D/Projects/hollobock/entity/enemy.rs",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3090,
+						"buffer_size": 3263,
 						"regions":
 						{
 						},
@@ -612,7 +537,96 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 324.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "entity/mod.rs",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1601,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								107,
+								107
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Rust/Rust.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": -0.0,
+						"translation.y": 162.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "docs/event_shit",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1646,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1322,
+								1322
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 586.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 9,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "layer/gui_layer.rs",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1790,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								805,
+								805
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Rust/Rust.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": -0.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 7,
@@ -620,7 +634,7 @@
 				},
 				{
 					"buffer": 6,
-					"file": "/D/Projects/hollobock/layer/game_layer.rs",
+					"file": "layer/game_layer.rs",
 					"semi_transient": false,
 					"settings":
 					{
@@ -642,7 +656,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": -0.0,
-						"translation.y": 486.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 6,
@@ -650,168 +664,11 @@
 				},
 				{
 					"buffer": 7,
-					"file": "/D/Projects/hollobock/entity/enemy_spawner.rs",
+					"file": "layer/mod.rs",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2145,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Rust/Rust.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 12,
-					"type": "text"
-				}
-			]
-		},
-		{
-			"selected": 2,
-			"sheets":
-			[
-				{
-					"buffer": 2,
-					"file": "/D/Projects/hollobock/entity/player.rs",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3502,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"history_list_is_closing": true,
-							"syntax": "Packages/Rust/Rust.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 9,
-					"type": "text"
-				},
-				{
-					"buffer": 8,
-					"file": "/D/Projects/hollobock/resource_store.rs",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 5336,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								974,
-								973
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Rust/Rust.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 121.0,
-						"translation.y": 1674.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 3,
-					"type": "text"
-				},
-				{
-					"buffer": 9,
-					"file": "/D/Projects/hollobock/entity/sprite_renderer.rs",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1300,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Rust/Rust.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 324.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 10,
-					"file": "/D/Projects/hollobock/entity/animated_renderer.rs",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3173,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Rust/Rust.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 540.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 11,
-					"file": "/D/Projects/hollobock/entity/renderer.rs",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 317,
+						"buffer_size": 417,
 						"regions":
 						{
 						},
@@ -826,11 +683,198 @@
 						{
 							"syntax": "Packages/Rust/Rust.tmLanguage"
 						},
+						"translation.x": -0.0,
+						"translation.y": 108.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "gui/bar.rs",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1721,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1685,
+								1685
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Rust/Rust.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 540.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 10,
+					"type": "text"
+				},
+				{
+					"buffer": 9,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3653,
+						"regions":
+						{
+							"match":
+							{
+								"flags": 112,
+								"regions":
+								[
+									[
+										553,
+										558
+									],
+									[
+										831,
+										834
+									],
+									[
+										1024,
+										1027
+									],
+									[
+										1096,
+										1099
+									],
+									[
+										1206,
+										1209
+									],
+									[
+										1333,
+										1336
+									],
+									[
+										1338,
+										1341
+									],
+									[
+										1449,
+										1452
+									],
+									[
+										1459,
+										1462
+									],
+									[
+										1746,
+										1749
+									],
+									[
+										1943,
+										1946
+									],
+									[
+										1969,
+										1972
+									],
+									[
+										2171,
+										2178
+									],
+									[
+										2305,
+										2312
+									],
+									[
+										2552,
+										2559
+									],
+									[
+										2688,
+										2695
+									],
+									[
+										2851,
+										2858
+									],
+									[
+										3040,
+										3047
+									],
+									[
+										3197,
+										3204
+									],
+									[
+										3332,
+										3339
+									],
+									[
+										3552,
+										3559
+									]
+								],
+								"scope": ""
+							}
+						},
+						"selection":
+						[
+							[
+								2032,
+								2032
+							]
+						],
+						"settings":
+						{
+							"detect_indentation": false,
+							"line_numbers": false,
+							"output_tag": 5,
+							"result_base_dir": "",
+							"result_file_regex": "^([A-Za-z\\\\/<].*):$",
+							"result_line_regex": "^ +([0-9]+):",
+							"scroll_past_end": true,
+							"syntax": "Packages/Default/Find Results.hidden-tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1422.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 8,
+					"type": "text"
+				},
+				{
+					"buffer": 10,
+					"file": "hollobock.rs",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3129,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								164,
+								164
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Rust/Rust.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 4,
+					"stack_index": 5,
 					"type": "text"
 				}
 			]
@@ -853,18 +897,11 @@
 				0,
 				1,
 				1
-			],
-			[
-				1,
-				0,
-				2,
-				1
 			]
 		],
 		"cols":
 		[
 			0.0,
-			0.5,
 			1.0
 		],
 		"rows":

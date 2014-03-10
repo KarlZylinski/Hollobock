@@ -1,0 +1,19 @@
+ObservableObject<T> {
+    health: ObservableItem<u8>
+}
+
+
+
+    Set(val: T)
+        val = T
+        RaiseChanged(val)
+
+    Value() -> T
+
+    priv:
+        RaiseChanged(val: T)
+        val: T
+
+
+
+

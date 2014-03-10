@@ -17,3 +17,71 @@ eventResultHandler
 		-> put stuff that returned with an event in a to-be-processed-list
 
 	mut collection to modify
+
+----
+
+Just mutate but do it in a single pass after everything else.
+
+-----
+
+match e {
+	PlayerHealthChanged(health: u8) => {
+		player.change_health(health);
+	}
+}
+
+
+---------------
+
+push "events" from source to target
+
+change in player health should directly push new health to whoever wanted to know this
+
+There sohuld be something "stuce" to the value which we push, some metadata, which describes the observers of this data so that it can be pushed directly there without a handlers list or whatnot.
+
+However, we cant have the obsever as a member of this observable object, because of rusts mem model.
+
+Can we have some kind of piece inbetween?
+
+Player -> rc<Obeservable<u8>> -> GuiHealthBar
+
+Player
+	health: u8,
+	health_bar: Subscriber<GuiBar>
+
+
+Obeservable<T>
+	value: T
+
+GuiHealthBar
+	player_health: rc<Obeservable<u8>>
+
+----------
+
+enum EventType {
+	PlayerHealthChanged
+}
+
+enum EventArgs {
+	PlayerHealthChangedArgs(u8)
+}
+
+enum Event {
+	PlayerHealthChangedEvent(u8, |u8|)
+}
+
+Subscriber<T>
+	rc<T> subscriber,
+	event(Args)
+	
+--------------
+
+enum Event {
+	PlayerHealthChanged(u8)
+}
+
+trait EventHandler {
+	handle_event(&Event)
+}
+
+~[EventHandler] event_handlers

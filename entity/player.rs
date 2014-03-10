@@ -18,7 +18,8 @@ pub struct PlayerStruct {
     position: Vector2f,
     rotation: f32,
     renderer: Option<~Renderer:>,
-    weapon_cooldown: f32
+    weapon_cooldown: f32,
+    health: u8
 }
 
 struct PlayerInput {
@@ -67,7 +68,8 @@ impl PlayerStruct {
             position: position,
             rotation: 0.,
             renderer: renderer,
-            weapon_cooldown: 0.
+            weapon_cooldown: 0.,
+            health: 100
         }
     }
 }
@@ -86,6 +88,7 @@ impl EntityTrait for PlayerStruct {
             rotation: new_rotation,
             renderer: self.renderer.as_ref().map_or(None, |r| r.update(&new_position, new_rotation, dt)),
             weapon_cooldown: weapon_cooldown,
+            health: self.health
         };
 
         let mut new_entities = ~[Player(~new_player)];
@@ -118,7 +121,8 @@ impl EntityTrait for PlayerStruct {
             position: self.position.clone(),
             rotation: self.rotation,
             renderer: self.renderer.as_ref().map_or(None, |r| r.clone()),
-            weapon_cooldown: self.weapon_cooldown
+            weapon_cooldown: self.weapon_cooldown,
+            health: self.health
         });
     }
 }

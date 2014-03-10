@@ -6,6 +6,8 @@ use rsfml::system::Vector2f;
 use rsfml::graphics::{RenderWindow, Texture};
 use rsfml::graphics::rc::Sprite;
 
+use std::cmp::{min, max};
+
 #[deriving(Clone)]
 pub struct Bar {
 	max: f32,
@@ -57,5 +59,9 @@ impl Bar {
             s.set_scale(&size);
             window.draw(&s);
         });
+    }
+
+    pub fn set_target(&mut self, target: f32) {
+        self.target = max(min(target, self.max), 0.0);
     }
 }

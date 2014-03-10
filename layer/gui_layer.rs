@@ -1,3 +1,7 @@
+use std::rc::Rc;
+use std::cell::RefCell;
+use event::{Event, EventHandler, PlayerHealthChanged};
+
 use rsfml::system::Vector2f;
 use rsfml::graphics::RenderWindow;
 
@@ -5,6 +9,23 @@ use layer::{Layer, LayerUpdateResult};
 use input::Input;
 use resource_store::ResourceStore;
 use gui::bar::Bar;
+
+pub struct GuiEventHandler {
+    gui: Rc<RefCell<GuiLayer>>
+}
+
+impl EventHandler for GuiEventHandler {
+    fn handle_event(&mut self, event: Event) -> bool {
+        return match event {
+            PlayerHealthChanged(health) => {
+                self.gui.borrow().try_borrow_mut().map(|mut gui| {
+                    gui.get().set_health(health);
+                });
+                true
+            }
+        }
+    }
+}
 
 pub struct GuiLayer {
     health_bar: Option<Bar>
@@ -19,6 +40,10 @@ impl GuiLayer {
         GuiLayer {
             health_bar: health_bar
         }
+    }
+
+    pub fn set_health(&mut self, health: u8) {
+        self.health_bar.as_mut().map(|h| { h.set_target(health as f32) });
     }
 }
 
