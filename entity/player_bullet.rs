@@ -95,7 +95,7 @@ impl EntityTrait for PlayerBulletStruct {
             ~[]
         };
 
-        return EntityUpdateResult { new_entities: new_entities };
+        return EntityUpdateResult { new_entities: new_entities, events: ~[] };
     }
 
     fn draw(&self, window: &mut RenderWindow) {

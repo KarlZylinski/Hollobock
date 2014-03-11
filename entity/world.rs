@@ -2,6 +2,7 @@ use rsfml::graphics::{FloatRect, RenderWindow};
 use entity::Entity;
 use input::Input;
 use std::vec;
+use event::Event;
 
 pub struct World {
     entities: ~[Entity],
@@ -16,15 +17,20 @@ impl World {
         }
     }
 
-    pub fn update(&self, dt: f32, input: &Input) -> World {
+    pub fn update(&self, dt: f32, input: &Input) -> WorldUpdateResult {
         let mut new_entities: ~[Entity] = ~[];
+        let mut new_events: ~[Event] = ~[];
         
         for entity in self.entities.iter() {
             let update_result = entity.update(dt, self, input);
             new_entities = vec::append(new_entities, update_result.new_entities);
+            new_events = vec::append(new_events, update_result.events);
         }
 
-        World::new(new_entities, self.bounds)
+        WorldUpdateResult {
+            world: World::new(new_entities, self.bounds),
+            events: new_events
+        }
     }
 
     pub fn draw(&self, window: &mut RenderWindow) {
@@ -39,4 +45,9 @@ impl World {
             bounds: self.bounds
         }
     }
+}
+
+pub struct WorldUpdateResult {
+    world: World,
+    events: ~[Event]
 }

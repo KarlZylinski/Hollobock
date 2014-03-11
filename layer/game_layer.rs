@@ -1,17 +1,18 @@
-use layer::{Layer, LayerUpdateResult};
+use layer::{LayerTrait, GameLayer, Layer};
 use rsfml::graphics::{FloatRect, RenderWindow};
 use input::Input;
 use resource_store::ResourceStore;
-use entity::world::World;
+use entity::world::{WorldUpdateResult, World};
 use entity::renderer::Renderer;
+use event::Event;
 
-pub struct GameLayer {
+pub struct GameLayerStruct {
     world: World
 }
 
-impl GameLayer {    
-    pub fn new(resource_store: &mut ResourceStore) -> GameLayer {
-        GameLayer {
+impl GameLayerStruct {    
+    pub fn new(resource_store: &mut ResourceStore) -> GameLayerStruct {
+        GameLayerStruct {
             world: World::new(
                 resource_store.load_level(~"level.json"),
                 FloatRect::new(0.0, 0.0, 800.0, 600.0)
@@ -20,26 +21,25 @@ impl GameLayer {
     }
 }
 
-impl Layer for GameLayer {
-    fn update(&self, dt: f32, input: &Input) -> LayerUpdateResult {
-        let new_world = self.world.update(dt, input);
-        
-        let new_game_layer = ~GameLayer {
-            world: new_world,
-        };
+impl LayerTrait for GameLayerStruct {
+    fn update(&mut self, dt: f32, input: &Input) -> ~[Event] {
+        let world_update_result = self.world.update(dt, input);
 
-        return LayerUpdateResult {
-            new_layers: ~[ new_game_layer as ~Layer: ]
-        };
+        match world_update_result {
+            WorldUpdateResult { world, events } => {
+                self.world = world;
+                return events;
+            }
+        }
     }
 
     fn draw(&self, window: &mut RenderWindow) {     
         self.world.draw(window);
     }
 
-    fn clone(&self) -> ~Layer: {
-        ~GameLayer {
+    fn clone(&self) -> Layer {
+        GameLayer(~GameLayerStruct {
             world: self.world.clone()
-        } as ~Layer:
+        })
     }
 }

@@ -13,6 +13,7 @@ use entity::world::World;
 use entity::player_bullet::PlayerBulletStruct;
 use entity::renderer::Renderer;
 use entity::EntityTrait;
+use event::{Event, PlayerHealthChanged};
 
 pub struct PlayerStruct {
     position: Vector2f,
@@ -92,6 +93,7 @@ impl EntityTrait for PlayerStruct {
         };
 
         let mut new_entities = ~[Player(~new_player)];
+        let mut events: ~[Event] = ~[];
 
         if weapon_fired {
             new_entities.push(
@@ -102,9 +104,13 @@ impl EntityTrait for PlayerStruct {
                     1
                 ))
             );
+
+            events.push(
+                PlayerHealthChanged(50)
+            );
         }
         
-        return EntityUpdateResult { new_entities: new_entities };
+        return EntityUpdateResult { new_entities: new_entities, events: events };
     }
 
     fn position(&self) -> Vector2f

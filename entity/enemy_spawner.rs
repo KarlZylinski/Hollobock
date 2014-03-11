@@ -60,7 +60,7 @@ impl EntityTrait for EnemySpawnerStruct {
             ]
         };
 
-        return EntityUpdateResult { new_entities: new_entities };
+        return EntityUpdateResult { new_entities: new_entities, events: ~[] };
     }
 
 

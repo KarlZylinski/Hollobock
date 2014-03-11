@@ -100,7 +100,8 @@ impl EntityTrait for EnemyStruct {
         };
 
         EntityUpdateResult {
-            new_entities: new_entities
+            new_entities: new_entities,
+            events: ~[]
         }
     }
     

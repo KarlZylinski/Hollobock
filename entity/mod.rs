@@ -2,6 +2,7 @@ use rsfml::graphics::RenderWindow;
 use rsfml::system::Vector2f;
 use input::Input;
 use entity::world::World;
+use event::Event;
 
 pub mod player;
 pub mod player_bullet;
@@ -60,5 +61,6 @@ impl Entity {
 }
 
 pub struct EntityUpdateResult {
-    new_entities: ~[Entity]
+    new_entities: ~[Entity],
+    events: ~[Event]
 }

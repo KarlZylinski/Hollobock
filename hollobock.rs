@@ -3,18 +3,20 @@ extern crate rsfml;
 extern crate extra;
 
 use std::rc::Rc;
+use std::cell::RefCell;
+use std::vec;
 
 use rsfml::system::{Clock, Vector2i};
 use rsfml::window::{ContextSettings, VideoMode, Close };
 use rsfml::graphics::{RenderWindow, Color};
 
 use input::Input;
-use layer::Layer;
-use layer::game_layer::GameLayer;
-use layer::gui_layer::GuiLayer;
-use std::vec;
+use layer::{Layer, LayerTrait, GameLayer, GuiLayer};
+use layer::game_layer::{GameLayerStruct};
+use layer::gui_layer::{GuiLayerStruct, GuiEventHandler};
 use resource_store::ResourceStore;
 use rsfml::graphics::rc::Sprite;
+use event::{Event, EventHandler};
 
 pub mod input;
 pub mod math;
@@ -40,9 +42,14 @@ fn main() {
     let mut input = Input::init(window.get_mouse_position());
     let mut resource_store = ResourceStore::new();
 
+    let mut event_handlers: ~[~EventHandler:] = ~[];
+
+    let gui_layer = Rc::new(RefCell::new(GuiLayer(~GuiLayerStruct::new(&mut resource_store))));
+    event_handlers = vec::append_one(event_handlers, ~GuiEventHandler { gui: gui_layer.clone() } as ~EventHandler:);
+
     let mut layers = ~[
-        Rc::new(~GameLayer::new(&mut resource_store) as ~Layer:),
-        Rc::new(~GuiLayer::new(&mut resource_store) as ~Layer:)
+        Rc::new(RefCell::new(GameLayer(~GameLayerStruct::new(&mut resource_store)))),
+        gui_layer
     ];
 
     let background_texture = resource_store.load_texture(~"background.png");
@@ -76,24 +83,19 @@ fn main() {
             });
         });
 
-        let mut new_layers: ~[~Layer:] = ~[];
+        let mut events: ~[Event] = ~[];
         
-        for layer in layers.iter() {
-            let update_result = layer.borrow().update(dt, &input);
-            new_layers = vec::append(new_layers, update_result.new_layers);
-            layer.borrow().draw(&mut window);
+        for layer in layers.mut_iter() {
+            events = vec::append(events, layer.borrow().borrow_mut().get().update(dt, &input));
+            layer.borrow().borrow().get().draw(&mut window);
         }
 
-        // TODO: this is shit. Immutable layers have gone to shit.
-        // Can't delete stuff and recreate it allt the time since
-        // it'll break event handlers. What the shit.
-        
-        layers = ~[];
-
-        for layer in new_layers.move_iter() {
-            layers = vec::append_one(layers, Rc::new(layer));
+        for event in events.iter() {
+            for event_handler in event_handlers.mut_iter() {
+                event_handler.handle(event.clone());
+            }
         }
-        
+
         window.display()
     }
 }

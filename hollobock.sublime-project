@@ -4,7 +4,7 @@
 		{
 			"cmd": "c.bat",
 			"name": "Rust (Hollobock)",
-			"working_dir": "D:\\Projects\\Hollobock"
+			"working_dir": "D:\\Repositories\\GitHub\\hollobock"
 		}
 	],
 	"folders":
